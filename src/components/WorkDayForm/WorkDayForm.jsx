@@ -70,7 +70,8 @@ function WorkDayForm() {
 {/* ENVIRONMENT */}
             <fieldset>
                 <legend>Work Environment</legend>
-                <select ref={workEnvironment} name="environments" id="working-environment"> 
+                <select ref={workEnvironment} name="environments" id="working-environment" required defaultValue='default'> 
+                    <option value="default" disabled>Select an environment</option>
                     { environmentOptions.map(environment => ( 
                         <option key={environment} value={environment}> 
                             {environment} 
