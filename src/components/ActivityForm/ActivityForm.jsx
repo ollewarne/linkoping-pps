@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import styles from "./ActivityForm.module.css"
 
-const categories = ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations"]
+const categories = ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
 function ActivityForm() {
-    const [activities, setActivities] = useState(null)
-    const activityId = useRef(1)
+    const [activities, setActivities] = useState([]);
+    const activityId = useRef(1);
+    const categoryId = useRef(0);
 
+    console.log(activities);
     function handleSubmit(e) {
         e.preventDefault()
         const newActivity = {
@@ -19,12 +21,11 @@ function ActivityForm() {
             breakTime: e.target.breakTime.value,
             currentlyActive: false,
             totalTimeSpent: 0
-        }
+        };
 
         activityId.current++
 
-        setActivities({...activities, newActivity});
-        console.log(activities);
+        setActivities([...activities, {...newActivity}]);
     }
 
     return (
@@ -37,7 +38,10 @@ function ActivityForm() {
                     <select name="category" className="category">
                         <option value="">Pick a category</option>
                         {
-                            categories.map(category => <option value={category}>{category}</option>)
+                            categories.map((category) => {
+                                categoryId.current++
+                                return (<option key={categoryId.current} value={category}>{category}</option>)
+                            })
                         }
                     </select>
                     <label htmlFor="activityTitle">Title</label>
@@ -53,16 +57,16 @@ function ActivityForm() {
                 <fieldset>
                     <legend>Estimated duration</legend>
                     <label htmlFor="hours">Hours</label>
-                    <input name="hours" type="number" value={0} />
+                    <input name="hours" type="number" defaultValue={0} />
                     <label htmlFor="minutes">Minutes</label>
-                    <input name="minutes" type="number" value={0} />
+                    <input name="minutes" type="number" defaultValue={0} />
                 </fieldset>
                 <fieldset>
                     <legend>Time structure</legend>
                     <label htmlFor="activeTime">Active</label>
-                    <input type="number" name="activeTime" value={25} />
+                    <input type="number" name="activeTime" defaultValue={25} />
                     <label htmlFor="breakTime">Break</label>
-                    <input type="number" name="breakTime" value={5} />
+                    <input type="number" name="breakTime" defaultValue={5} />
                 </fieldset>
                 <button type="submit">Add Activity</button>
             </form>
