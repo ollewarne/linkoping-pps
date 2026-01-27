@@ -112,6 +112,9 @@ function WorkDayForm() {
     }
 
     return (
+        <>
+        <h2>Register Workday</h2>
+
         <form onSubmit={handleSubmit}>
 
             {/* WORKING HOURS */}
@@ -191,6 +194,7 @@ function WorkDayForm() {
 
             <button type="submit">Save</button>
         </form>
+        </>
     );
 }
 
