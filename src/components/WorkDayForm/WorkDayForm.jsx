@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { toTotalMinutes } from "../../utils/ValidateTime";
+import { toTotalMinutes } from "../../utils/validateTime.js";
 import styles from "./WorkDayForm.module.css"
 
 
