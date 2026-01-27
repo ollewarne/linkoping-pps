@@ -4,3 +4,19 @@
     border: 5px solid #C5D9E8;
     border-radius: 1em;
 }
+
+.explanation {
+    font-weight: bold;
+    font-size: small;
+}
+
+.error {
+    font-size: small;
+    color: red;
+}
+
+.submitted {
+    font-weight: bold;
+    font-size: small;
+    color: green;
+}

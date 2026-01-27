@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { toTotalMinutes } from "../../utils/ValidateTime";
+import styles from "./WorkDayForm.module.css"
 
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
@@ -21,6 +22,7 @@ function WorkDayForm() {
 
     const [errors, setErrors] = useState({});
     const [hasNonWorkHours, setHasNonWorkHours] = useState(false);
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const environmentOptions = [ 'Home', 'Private office', 'Shared Office', 'Open-plan Office', 'Public Place', 'Hybrid work'];
 
@@ -83,10 +85,12 @@ function WorkDayForm() {
 
         if (Object.keys(workDayFormErrors).length > 0) {
             setErrors(workDayFormErrors);
+            setIsSubmitted(false);
             return;
         }
 
         setErrors({});
+        setIsSubmitted(true);
 
         const workdayData = {
             workHours: { start: workStart, end: workEnd },
@@ -121,7 +125,7 @@ function WorkDayForm() {
             <fieldset>
                 <legend>Working hours</legend>
 
-                <p>Förklarande text???</p>
+                <p className={styles.explanation}>Förklarande text???</p>
 
                 <label htmlFor="work-hours-start">Start:</label>
                 <input ref={workHoursStart} type="time" id="work-hours-start" required/>
@@ -129,7 +133,9 @@ function WorkDayForm() {
                 <label htmlFor="work-hours-end">End:</label>
                 <input ref={workHoursEnd} type="time" id="work-hours-end" required/>
 
-                {errors.workHours && <p>{errors.workHours}</p>}
+                {errors.workHours && <p className={styles.error}>{errors.workHours}</p>}
+
+
             </fieldset>
 
             {/* NON-WORKING HOURS */}
@@ -148,7 +154,8 @@ function WorkDayForm() {
             
                 <fieldset>
                     <legend>Non-working hours</legend>
-                    <p>Förklarande text???</p>
+                    <p className={styles.explanation}>Förklarande text???</p>
+
 
                     <label htmlFor="non-work-hours-start">Start:</label>
                     <input
@@ -165,7 +172,7 @@ function WorkDayForm() {
                     />
 
                     {errors.nonWorkHours && (
-                        <p>{errors.nonWorkHours}</p>
+                        <p className={styles.error}>{errors.nonWorkHours}</p>
                     )}
                 </fieldset>
             )}
@@ -189,10 +196,12 @@ function WorkDayForm() {
                     ))}
                 </select>
 
-                {errors.environment && <p>{errors.environment}</p>}
+                {errors.environment && <p className={styles.error}>{errors.environment}</p>}
             </fieldset>
 
             <button type="submit">Save</button>
+
+            {isSubmitted && <p className={styles.submitted}>Workday settings saved</p>}
         </form>
         </>
     );
