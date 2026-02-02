@@ -2,6 +2,12 @@ import { useRef, useState } from "react";
 import { toTotalMinutes } from "../../utils/validateTime.js";
 import styles from "./WorkDayForm.module.css"
 
+import { languageLibrary } from "../../locales/language.js";
+import { userOptions } from "../../constants/userOptions.js";
+
+
+let language = 'en' // HÅRDKOD FÖR TEST TA BORT SEN
+
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
 const convertStringTimeToMinutes = (time) => {
@@ -24,7 +30,8 @@ function WorkDayForm() {
     const [hasNonWorkHours, setHasNonWorkHours] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const environmentOptions = [ 'Home', 'Private office', 'Shared Office', 'Open-plan Office', 'Public Place', 'Hybrid work'];
+    const environmentOptions = userOptions[language].workEnvironment
+    // [ 'Home', 'Private office', 'Shared Office', 'Open-plan Office', 'Public Place', 'Hybrid work'];
 
  
     function handleSubmit(e) {
@@ -117,20 +124,20 @@ function WorkDayForm() {
 
     return (
         <>
-        <h2>Register Workday</h2>
+        <h2>{languageLibrary[language].form1Header}</h2> {/* ---- */}
 
         <form onSubmit={handleSubmit}>
 
             {/* WORKING HOURS */}
             <fieldset>
-                <legend>Working hours</legend>
+                <legend>{languageLibrary[language].form1WorkH}</legend>
 
-                <p className={styles.explanation}>Förklarande text???</p>
+                <p className={styles.explanation}>{languageLibrary[language].form1WorkHExplanation}</p>
 
-                <label htmlFor="work-hours-start">Start:</label>
+                <label htmlFor="work-hours-start">{languageLibrary[language].start}</label>
                 <input ref={workHoursStart} type="time" id="work-hours-start" required/>
 
-                <label htmlFor="work-hours-end">End:</label>
+                <label htmlFor="work-hours-end">{languageLibrary[language].end}</label>
                 <input ref={workHoursEnd} type="time" id="work-hours-end" required/>
 
                 {errors.workHours && <p className={styles.error}>{errors.workHours}</p>}
@@ -147,24 +154,24 @@ function WorkDayForm() {
             />
 
             <label htmlFor="register-non-work">
-                I have non-working hours to register (example: lunchbreak)
+                {languageLibrary[language].form1Checkbox}
             </label>
 
             {hasNonWorkHours && (
             
                 <fieldset>
-                    <legend>Non-working hours</legend>
-                    <p className={styles.explanation}>Förklarande text???</p>
+                    <legend>{languageLibrary[language].nonWorkH}</legend>
+                    <p className={styles.explanation}>{languageLibrary[language].nonWorkHExplanation}</p>
 
 
-                    <label htmlFor="non-work-hours-start">Start:</label>
+                    <label htmlFor="non-work-hours-start">{languageLibrary[language].start}</label>
                     <input
                         ref={nonWorkHoursStart}
                         type="time"
                         id="non-work-hours-start"
                     />
 
-                    <label htmlFor="non-work-hours-end">End:</label>
+                    <label htmlFor="non-work-hours-end">{languageLibrary[language].end}</label>
                     <input
                         ref={nonWorkHoursEnd}
                         type="time"
@@ -179,7 +186,7 @@ function WorkDayForm() {
             
             {/* ENVIRONMENT */}
             <fieldset>
-                <legend>Work Environment</legend>
+                <legend>{languageLibrary[language].workEnvironment}</legend>
                 <select
                     ref={workEnvironment}
                     id="working-environment"
@@ -187,7 +194,7 @@ function WorkDayForm() {
                     required
                 >
                     <option value="default" disabled>
-                        Select an environment
+                        {languageLibrary[language].workEnvironmentDefault}
                     </option>
                     {environmentOptions.map((environment) => (
                         <option key={environment} value={environment}>
