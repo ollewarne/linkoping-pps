@@ -1,12 +1,25 @@
-import { createContext, useContext, useState, useEffect, useMemo } from 'react'
+import { createContext, useContext, useState, useEffect, useMemo, useReducer } from 'react'
 
 const activityContext = createContext(null);
 
+
+function activitiesReducer(state, action) {
+    switch (action.type) {
+        case "ADD_ACTIVITY":
+            return [...state, action.payload];
+        case "ADD_MEETING":
+            return [...state, action.payload];
+        default:
+            return state;
+    }
+
+}
+
 export function ActivityProvider({children}) {
-    const [activities, setActivities] = useState([]);
+    const [activities, dispatch] = useReducer(activitiesReducer, [])
 
     const value = useMemo(() => ({
-        activities, setActivities
+        activities, dispatch
     }), [activities])
 
     return (

@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styles from "./ActivityForm.module.css"
 import { useActivities } from "../../contexts/activityContext";
+import { calculateDuration } from "../../utils/validateTime";
 
 const categories = ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
@@ -8,7 +9,7 @@ function ActivityForm() {
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const activityId = useRef(1);
-    const { activities, setActivities } = useActivities();
+    const { activities, dispatch } = useActivities();
 
     const MEETING_RANKING = "5";
 
@@ -49,21 +50,36 @@ function ActivityForm() {
         }
 
         e.preventDefault()
-        const newActivity = {
-            id: activityId.current,
-            category: form.category.value,
-            title: form.activityTitle.value,
-            ranking: form.activityRating?.value ?? MEETING_RANKING,
-            estimatedDuration: { hours: hoursInput.value, minutes: minutesInput.value },
-            activeTime: form.activeTime.value,
-            breakTime: form.breakTime.value,
-            currentlyActive: false,
-            totalTimeSpent: 0
-        };
+        if (form.category.value === "Meeting") {
+            const newActivity = {
+                id: activityId.current,
+                category: form.category.value,
+                isMeeting: true,
+                title: form.activityTitle.value,
+                ranking: MEETING_RANKING,
+                meetingTimes: { start: hoursInput.value, end: minutesInput.value },
+                estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
+                currentlyActive: false,
+                totalTimeSpent: 0
+            };
+            dispatch({type: "ADD_MEETING", payload: {...newActivity}})
+        } else {
+            const newActivity = {
+                id: activityId.current,
+                category: form.category.value,
+                title: form.activityTitle.value,
+                ranking: form.activityRating.value,
+                estimatedDuration: { hours: hoursInput.value, minutes: minutesInput.value },
+                activeTime: form.activeTime.value,
+                breakTime: form.breakTime.value,
+                currentlyActive: false,
+                totalTimeSpent: 0
+            };
+            dispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
+        }
 
         activityId.current++
 
-        setActivities([...activities, { ...newActivity }]);
 
         form.reset();
 
@@ -93,11 +109,11 @@ function ActivityForm() {
                 {
                     selectedCategory === "Meeting" ? (
                         <fieldset>
-                            <legend>Duration</legend>
-                            <label htmlFor="hours">Hours</label>
-                            <input name="hours" type="number" defaultValue={0} onBlur={handleBlur} />
-                            <label htmlFor="minutes">Minutes</label>
-                            <input name="minutes" type="number" defaultValue={0} onBlur={handleBlur} />
+                            <legend>Times</legend>
+                            <label htmlFor="hours">Start</label>
+                            <input name="hours" type="time" step={60} required />
+                            <label htmlFor="minutes">End</label>
+                            <input name="minutes" type="time" step={60} required />
                         </fieldset>
                     ) : (
                         <>
