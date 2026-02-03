@@ -5,21 +5,24 @@ import { calculateDuration, toTotalMinutes } from "../../utils/validateTime";
 
 import { userOptions } from "../../constants/userOptions";
 import { languageLibrary } from "../../locales/language";
-
-// -------------------------
-let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
-// -------------------------
+import { useTranslator } from "../../contexts/languageContext";
 
 
 
-const categories = userOptions[language].category
-// ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
+
+
+
 
 function ActivityForm() {
+    const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const activityId = useRef(1);
     const { activities, dispatch } = useActivities();
+
+    const categories = userOptions[language].category
+    // ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
+
 
     const MEETING_RANKING = "5";
 
