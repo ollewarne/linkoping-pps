@@ -3,7 +3,17 @@ import styles from "./ActivityForm.module.css"
 import { useActivities } from "../../contexts/activityContext";
 import { calculateDuration, toTotalMinutes } from "../../utils/validateTime";
 
-const categories = ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
+import { userOptions } from "../../constants/userOptions";
+import { languageLibrary } from "../../locales/language";
+
+// -------------------------
+let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
+// -------------------------
+
+
+
+const categories = userOptions[language].category
+// ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
 function ActivityForm() {
     const [validationError, setValidationError] = useState("");
@@ -18,7 +28,7 @@ function ActivityForm() {
         const minutes = +minutesValue;
 
         if (hours <= 0 && minutes <= 0) {
-            return "One field must be greater than 0"
+            return languageLibrary[language].errorGreaterThanZero
         }
         return "";
     }
@@ -90,58 +100,59 @@ function ActivityForm() {
 
     return (
         <>
-            <h2>Register Activity</h2>
+            <h2>{languageLibrary[language].form2Header}</h2>
             <form onSubmit={handleSubmit}>
                 <fieldset>
-                    <legend>Activity</legend>
-                    <label htmlFor="category">Category</label>
+                    <legend>{languageLibrary[language].form2Activity}</legend>
+                    <label htmlFor="category">{languageLibrary[language].form2Category}</label>
                     <select name="category" className="category" required defaultValue={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                        <option value="" disabled>Pick a category</option>
+                        <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
                         {
                             categories.map((category) => {
                                 return (<option key={category} value={category}>{category}</option>)
                             })
                         }
                     </select>
-                    <label htmlFor="activityTitle">Title</label>
-                    <input name="activityTitle" type="text" placeholder="Enter a title" required maxLength={50} />
+                    <label htmlFor="activityTitle">{languageLibrary[language].form2Title}</label>
+                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={50} />
                 </fieldset>
                 {
-                    selectedCategory === "Meeting" ? (
+                    selectedCategory === "Meeting" || selectedCategory === 'Möte'? (
                         <fieldset>
-                            <legend>Times</legend>
-                            <label htmlFor="hours">Start</label>
+                            <legend>{languageLibrary[language].times}</legend>
+                            <label htmlFor="hours">{languageLibrary[language].start}</label>
                             <input name="hours" type="time" step={60} required />
-                            <label htmlFor="minutes">End</label>
+                            <label htmlFor="minutes">{languageLibrary[language].end}</label>
                             <input name="minutes" type="time" step={60} required />
                         </fieldset>
                     ) : (
                         <>
                             <fieldset>
-                                <legend>Rank of importance</legend>
-                                <input type="radio" name="activityRating" id="rating1" value="1" required /><label htmlFor="rating1">1</label>
+                                <legend>{languageLibrary[language].form2Rank}</legend>
+                                <input type="radio" name="activityRating" id="rating1" value="1" required /><label htmlFor="rating1">{languageLibrary[language].form2RankLow}</label>
                                 <input type="radio" name="activityRating" id="rating2" value="2" /><label htmlFor="rating2">2</label>
                                 <input type="radio" name="activityRating" id="rating3" value="3" /><label htmlFor="rating3">3</label>
-                                <input type="radio" name="activityRating" id="rating4" value="4" /><label htmlFor="rating4">4</label>
+                                <input type="radio" name="activityRating" id="rating4" value="4" /><label htmlFor="rating4">{languageLibrary[language].form2RankHigh}</label>
                             </fieldset>
+
                             <fieldset>
-                                <legend>Estimated Duration</legend>
-                                <label htmlFor="hours">Hours</label>
+                                <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
+                                <label htmlFor="hours">{languageLibrary[language].hours}</label>
                                 <input name="hours" type="number" defaultValue={0} onBlur={handleBlur} />
-                                <label htmlFor="minutes">Minutes</label>
+                                <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
                                 <input name="minutes" type="number" defaultValue={0} onBlur={handleBlur} />
                             </fieldset>
                             <fieldset>
-                                <legend>Time structure</legend>
-                                <label htmlFor="activeTime">Active</label>
+                                <legend>{languageLibrary[language].form2TimeStructure}</legend>
+                                <label htmlFor="activeTime">{languageLibrary[language].active}</label>
                                 <input type="number" name="activeTime" defaultValue={25} />
-                                <label htmlFor="breakTime">Break</label>
+                                <label htmlFor="breakTime">{languageLibrary[language].break}</label>
                                 <input type="number" name="breakTime" defaultValue={5} />
                             </fieldset>
                         </>
                     )
                 }
-                <button type="submit">Add Activity</button>
+                <button type="submit">{languageLibrary[language].form2Submit}</button>
             </form>
         </>
     )
