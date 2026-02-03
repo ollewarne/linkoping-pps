@@ -1,4 +1,4 @@
-import { ThemeProvider, useTheme } from "./Contexts/ThemeContext";
+import { ThemeProvider, useTheme } from "../../contexts/ThemeContext";
 import './ThemeToggle-module.css';
 
 
