@@ -13,6 +13,9 @@ export const languageLibrary = {
     minutes: 'Minutes',
     active: 'Active',
     break: 'Break',
+    times: 'Times',
+    low: 'Low',
+    high: 'High',
 
     // ----- FORM 1 ----- 
     form1Header: 'Register Workday',
@@ -43,15 +46,20 @@ export const languageLibrary = {
     form2Category: 'Category',
     form2CategoryDefault: 'Pick a category',
     form2Title: 'Title',
-    form2TitleDefatul: 'Enter a title',
+    form2TitleDefault: 'Enter a title',
     // fieldset 2
     form2Rank: 'Rank of importance',
+    form2RankLow: '1: Low',
+    form2RankHigh: '4: High',
     // fieldset 3
     form2EstimatedDuration: 'Estimated Duration',
     // fieldset 4
     form2TimeStructure: 'Time Structure',
     // submit
-    form2Submit: 'Add Activity'
+    form2Submit: 'Add Activity',
+
+    //  ----- FORM 2 - ERRORS ----- 
+    errorGreaterThanZero: 'One field must be greater than 0'
 
 },
 
@@ -69,6 +77,9 @@ sv: {
     minutes: 'Minuter',
     active: 'Aktiv',
     break: 'Paus',
+    times: 'Tider',
+    low: 'Låg',
+    high: 'Hög',
 
     // ----- FORM 1 ----- 
     form1Header: 'Registera Arbetsdag',
@@ -99,15 +110,20 @@ sv: {
     form2Category: 'Kategori',
     form2CategoryDefault: 'Välj en kategori',
     form2Title: 'Titel',
-    form2TitleDefatul: 'Fyll i en titel',
+    form2TitleDefault: 'Fyll i en titel',
     // fieldset 2
     form2Rank: 'Rankning',
+    form2RankLow: '1: Låg prio',
+    form2RankHigh: '4: Hög prio',
     // fieldset 3
     form2EstimatedDuration: 'Uppskattad tidsåtgång',
     // fieldset 4
     form2TimeStructure: 'Tidsstruktur',
     // submit
-    form2Submit: 'Lägg till aktivitet'
+    form2Submit: 'Lägg till aktivitet',
+
+    //  ----- FORM 2 - ERRORS ----- 
+    errorGreaterThanZero: 'Ett fält måste vara större än 0'
 }
 
 }
