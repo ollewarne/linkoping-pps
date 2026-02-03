@@ -1,0 +1,16 @@
+.language-toggle-btn {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border-radius: 20px;
+    width: 206px;
+    height: 29px;
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: transform 0.3s ease;
+}
+
+.language-toggle-btn:hover {
+    background: var(--btn-hover);
+    transform: translateY(-1px);
+}
