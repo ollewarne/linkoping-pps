@@ -4,6 +4,9 @@ import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
 import { languageLibrary } from "../../locales/language";
 
+const event_key ="pauseStatistics/events";
+const last_id_key = "pauseStatistics/lastID";
+
 function PauseStatistics({ onSave, onClose }) {
   const { language } = useTranslator()
   const impacts = userOptions[language].impacts;
@@ -25,13 +28,25 @@ function PauseStatistics({ onSave, onClose }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const dateWithTimeStamp = {
+    const lastId = Number(localStorage.getItem(last_id_key)) || 0;
+    const newId = lastId + 1;
+
+    const newEntry = {
+      id: newId,
       ...formData,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
+    const existingEvents =
+      JSON.parse(localStorage.getItem(event_key)) || [];
+
+    existingEvents.push(newEntry);
+
+    localStorage.setItem(event_key, JSON.stringify(existingEvents));
+    localStorage.setItem(last_id_key,newId);
+
     if (onSave) {
-      onSave(dateWithTimeStamp);
+      onSave(newEntry);
     }
     setFormData({
       efficiency: 3,
