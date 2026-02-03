@@ -1,4 +1,8 @@
 export const languageLibrary = {
+
+
+// -------- ENGELSKA ---------
+
     en: {
     // ----- ÅTERKOMMANDE -----
     start: 'Start',
@@ -22,6 +26,15 @@ export const languageLibrary = {
     // fieldset 3
     workEnvironment: 'Work Environment',
     workEnvironmentDefault: 'Select an environment',
+    // submit
+    submitSuccess: 'Workday settings saved',
+
+    //  ----- FORM 1 - ERRORS ----- 
+    errorNoWorkHours: 'Please enter your working hours',
+    errorStartBeforeEnd: 'Start time must be before end time',
+    errorNoNonWorkHours: 'Please enter your non-working hours',
+    errorHoursBetweenWorkingHours: 'Non-working hours must be within your working hours',
+    errorNoWorkEnvironment: 'Please select your work environment',
 
     // ----- FORM 2 ----- 
     form2Header: 'Register Activity',
@@ -39,7 +52,12 @@ export const languageLibrary = {
     form2TimeStructure: 'Time Structure',
     // submit
     form2Submit: 'Add Activity'
+
 },
+
+
+
+// -------- SVENSKA ---------
 
 sv: {
     // ----- ÅTERKOMMANDE -----
@@ -64,6 +82,15 @@ sv: {
     // fieldset 3
     workEnvironment: 'Arbetsmiljö',
     workEnvironmentDefault: 'Välj en arbetsmiljö',
+    // submit
+    submitSuccess: 'Inställningar för arbetsdag sparade',
+
+    //  ----- FORM 1 - ERRORS ----- 
+    errorNoWorkHours: 'Vänligen ange dina arbetstider',
+    errorStartBeforeEnd: 'Starttiden måste vara före sluttiden',
+    errorNoNonWorkHours: 'Vänligen ange dina icke-arbetstider',
+    errorHoursBetweenWorkingHours: 'Icke-arbetstider måste ligga inom dina arbetstider',
+    errorNoWorkEnvironment: 'Vänligen välj din arbetsmiljö',
 
     // ----- FORM 2 ----- 
     form2Header: 'Registera Aktivitet',
