@@ -6,8 +6,12 @@ import Schedule from './components/Schedule/Schedule';
 import WorkDayForm from './components/WorkDayForm/WorkDayForm';
 import PauseStatistics from './components/PauseStatistics/PauseStatistics';
 
+import { useTranslator } from './contexts/languageContext';
+import { languageLibrary } from './locales/language';
+
 function App() {
   const [showPauseModal, setShowPauseModal] = useState(false);
+  const {language} = useTranslator();
 
   const handlePauseSave = (data) => {
     console.log("Saved:", data);
@@ -22,7 +26,7 @@ function App() {
         <ActivityForm />
 
         <button onClick={() => setShowPauseModal(true)}>
-          Open Pause Statistics
+          {languageLibrary[language].evaluateButton}
         </button>
 
         {showPauseModal && (
