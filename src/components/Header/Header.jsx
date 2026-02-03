@@ -6,9 +6,11 @@ function Header({children}) {
     return (
         <header className={styles.container}>
             <h1>BAE Productivity</h1>
+            <div>
             <ChangeLanguage />
             <ColorMode />
             {children}
+            </div>
         </header>
     )
 }
