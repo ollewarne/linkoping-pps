@@ -6,7 +6,7 @@ function Header({children}) {
     return (
         <header className={styles.container}>
             <h1>BAE Productivity</h1>
-            <div>
+             <div className={styles.buttonGroup}>
             <ChangeLanguage />
             <ColorMode />
             {children}
