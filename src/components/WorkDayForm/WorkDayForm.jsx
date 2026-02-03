@@ -6,7 +6,7 @@ import { languageLibrary } from "../../locales/language.js";
 import { userOptions } from "../../constants/userOptions.js";
 
 
-let language = 'sv' // HÅRDKOD FÖR TEST TA BORT SEN
+let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
 
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
@@ -115,6 +115,9 @@ function WorkDayForm() {
                 : null,
             workEnvironment: { location: environment },
         };
+
+        // SPARA DATA
+        localStorage.setItem('workdayData', JSON.stringify(workdayData))
 
         console.log(workdayData);
 
