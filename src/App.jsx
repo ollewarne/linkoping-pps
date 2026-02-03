@@ -5,6 +5,7 @@ import Header from './components/Header/Header';
 import Schedule from './components/Schedule/Schedule';
 import WorkDayForm from './components/WorkDayForm/WorkDayForm';
 import PauseStatistics from './components/PauseStatistics/PauseStatistics';
+import { ChangeLanguage } from './components/ChangeLanguage/ChangeLanguage';
 
 function App() {
   const [showPauseModal, setShowPauseModal] = useState(false);
@@ -16,7 +17,9 @@ function App() {
 
   return (
     <>
-      <Header />
+    
+
+      <Header>   <ChangeLanguage /> </Header>
       <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
         <WorkDayForm />
         <ActivityForm />

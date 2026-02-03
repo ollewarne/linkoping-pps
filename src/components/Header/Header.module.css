@@ -3,4 +3,8 @@
     border: 5px solid  #E8E8C5;
     border-radius: 1em;
     text-align: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }

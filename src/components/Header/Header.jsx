@@ -1,8 +1,14 @@
 import styles from "./Header.module.css"
 
-function Header() {
+function Header({children}) {
     return (
-        <header className={styles.container}><h1>Header</h1></header>
+        <>
+        <header className={styles.container}>
+            <h1>Header</h1>
+            {children}
+        </header>
+        
+        </>
     )
 }
 
