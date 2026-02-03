@@ -4,9 +4,10 @@ import styles from "./WorkDayForm.module.css"
 
 import { languageLibrary } from "../../locales/language.js";
 import { userOptions } from "../../constants/userOptions.js";
+import { useTranslator } from "../../contexts/languageContext.jsx";
 
 
-let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
+// let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
 
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
@@ -19,6 +20,8 @@ const convertStringTimeToMinutes = (time) => {
 
 
 function WorkDayForm() {
+
+    const {language} =useTranslator();
 
     const workHoursStart = useRef(null);
     const workHoursEnd = useRef(null);
