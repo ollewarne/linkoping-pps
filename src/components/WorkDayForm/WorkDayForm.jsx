@@ -6,7 +6,7 @@ import { languageLibrary } from "../../locales/language.js";
 import { userOptions } from "../../constants/userOptions.js";
 
 
-let language = 'en' // HÅRDKOD FÖR TEST TA BORT SEN
+let language = 'sv' // HÅRDKOD FÖR TEST TA BORT SEN
 
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
@@ -50,10 +50,13 @@ function WorkDayForm() {
 
         /* ------------------ WORK HOURS ------------------ */
         if (!workStart || !workEnd) {
-            workDayFormErrors.workHours = 'Please enter your working hours';
+            workDayFormErrors.workHours = 
+            //'Please enter your working hours';
+            languageLibrary[language].errorNoWorkHours
         } else if (convertStringTimeToMinutes(workStart) >= convertStringTimeToMinutes(workEnd)) {
             workDayFormErrors.workHours =
-                'Working hours start-time must be before end-time';
+                // 'Working hours start-time must be before end-time';
+                languageLibrary[language].errorStartBeforeEnd;
         }
 
         /* ---------------- NON-WORK HOURS ---------------- */
@@ -63,12 +66,15 @@ function WorkDayForm() {
 
             if (!nonWorkStart || !nonWorkEnd) {
                 workDayFormErrors.nonWorkHours =
-                    'Please enter your non-working hours';
+                    // 'Please enter your non-working hours';
+                    languageLibrary[language].errorNoNonWorkHours;
             } else if (
                 convertStringTimeToMinutes(nonWorkStart) >=
                 convertStringTimeToMinutes(nonWorkEnd)
             ) {
-                workDayFormErrors.nonWorkHours = 'Non-working hours start-time must be before end-time';
+                workDayFormErrors.nonWorkHours = 
+                // 'Non-working hours start-time must be before end-time';
+                languageLibrary[language].errorStartBeforeEnd;
             } else {
                 const workStartMin = convertStringTimeToMinutes(workStart);
                 const workEndMin = convertStringTimeToMinutes(workEnd);
@@ -79,7 +85,9 @@ function WorkDayForm() {
                     nonWorkStartMin <= workStartMin ||
                     nonWorkEndMin >= workEndMin
                 ) {
-                    workDayFormErrors.nonWorkHours = 'Non-working hours must be within your working hours';
+                    workDayFormErrors.nonWorkHours = 
+                    // 'Non-working hours must be within your working hours';
+                    languageLibrary[language].errorHoursBetweenWorkingHours;
                 }
             }
         }
@@ -87,7 +95,8 @@ function WorkDayForm() {
         /* ---------------- ENVIRONMENT ---------------- */
         if (environment === 'default') {
             workDayFormErrors.environment =
-                'Please select your work environment';
+                // 'Please select your work environment';
+                languageLibrary[language].errorNoWorkEnvironment;
         }
 
         if (Object.keys(workDayFormErrors).length > 0) {
@@ -206,9 +215,10 @@ function WorkDayForm() {
                 {errors.environment && <p className={styles.error}>{errors.environment}</p>}
             </fieldset>
 
-            <button type="submit">Save</button>
+            <button type="submit">{languageLibrary[language].save}</button>
 
-            {isSubmitted && <p className={styles.submitted}>Workday settings saved</p>}
+            {isSubmitted && <p className={styles.submitted}>
+                {languageLibrary[language].submitSuccess}</p>}
         </form>
         </>
     );
