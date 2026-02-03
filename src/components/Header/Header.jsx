@@ -1,14 +1,11 @@
 import styles from "./Header.module.css"
+import { ChangeLanguage } from '../ChangeLanguage/ChangeLanguage';
 
 function Header({children}) {
     return (
-        <>
         <header className={styles.container}>
-            <h1>Header</h1>
-            {children}
+            <ChangeLanguage />
         </header>
-        
-        </>
     )
 }
 
