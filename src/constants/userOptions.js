@@ -5,7 +5,21 @@ en: {
 
     category: ['Meeting', 'Administrative', 'Creative', 'Technical', 'Analytical', 'Communication', 'Planning', 'Learning','Sales & Marketing', 'Support', 'Operations', 'Other'],
 
-    impacts: ['Tired', 'Hungry', 'Unfocused', 'Restless', 'Distracted by others', 'Distracted by noise','Distracted by notifications', 'Procrastination', 'Poor internet connection', 'Energized', 'Focused', 'Stressed', 'Other']
+    impacts: [ 
+        {value: 'tired', label: 'Tired'},
+        {value: 'hungry', label: 'Hungry'},
+        {value: 'unfocused', label: 'Unfocused'},
+        {value: 'restless', label: 'Restless'},
+        {value: 'others', label: 'Distracted by others'},
+        {value: 'noise', label: 'Distracted by noise'},
+        {value: 'notifications', label :'Distracted by notifications'},
+        {value: 'procrastination', label: 'Procrastination'},
+        {value: 'internet', label: 'Poor internet connection'},
+        {value: 'energized', label: 'Energized'},
+        {value: 'focused', label: 'Focused'},
+        {value: 'stressed', label: 'Stressed'},
+        {value: 'other', label: 'Other'}
+    ]
 },
 
 sv: {
@@ -13,5 +27,20 @@ sv: {
 
     category: ['Möte','Administrativt', 'Kreativt', 'Tekniskt', 'Analytiskt', 'Kommunikation', 'Planering', 'Lärande', 'Försäljning & marknadsföring', 'Support', 'Verksamhet / Drift', 'Annat'],
 
-    impacts: ['Trött', 'Hungrig', 'Ofokuserad', 'Rastlös', 'Störd av andra', 'Störd av ljud', 'Störd av notiser','Prokrastinering', 'Dålig uppkoppling', 'Energifylld', 'Fokuserad', 'Stressad', 'Övrigt']
+    impacts: [
+        { value: 'tired', label: 'Trött' },
+        { value: 'hungry', label: 'Hungrig' },
+        { value: 'unfocused', label: 'Ofokuserad' },
+        { value: 'restless', label: 'Rastlös' },
+        { value: 'others', label: 'Störd av andra' },
+        { value: 'noise', label: 'Störd av ljud' },
+        { value: 'notifications', label: 'Störd av notiser' },
+        { value: 'procrastination', label: 'Prokrastinering' },
+        { value: 'internet', label: 'Dålig uppkoppling' },
+        { value: 'energized', label: 'Energifylld' },
+        { value: 'focused', label: 'Fokuserad' },
+        { value: 'stressed', label: 'Stressad' },
+        { value: 'other', label: 'Övrigt' }
+    ]
+
 }}

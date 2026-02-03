@@ -12,7 +12,7 @@
 }
 
 .content-statistics {
-  background-color: #7ef086;
+  background-color: #000000;
   padding: 20px;
   border-radius: 8px;
   min-width: 300px;
@@ -48,3 +48,12 @@
 .button-group button[type="button"]:hover {
   background-color: #aaa;
 }
+
+.radio-indicator {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85em;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
