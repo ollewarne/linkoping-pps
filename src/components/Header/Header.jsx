@@ -8,7 +8,6 @@ function Header({children}) {
             <h1>BAE Productivity</h1>
             <ChangeLanguage />
             <ColorMode />
-            <h1>Header</h1>
             {children}
         </header>
     )
