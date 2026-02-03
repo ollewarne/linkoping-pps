@@ -2,6 +2,7 @@ import { useState } from "react";
 import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
+import { languageLibrary } from "../../locales/language";
 
 function PauseStatistics({ onSave, onClose }) {
   const { language } = useTranslator()
@@ -44,10 +45,10 @@ function PauseStatistics({ onSave, onClose }) {
     <div className="popup-statistics">
       <div className="content-statistics">
         <form onSubmit={handleSubmit}>
-          <label>Efficency level</label>
+          <label>{languageLibrary[language].evaluateEfficency}</label>
           <div className="radio-indicator">
-            <span>Low</span>
-            <span>High</span>
+            <span>{languageLibrary[language].low}</span>
+            <span>{languageLibrary[language].high}</span>
           </div>
           <div>
             {[1, 2, 3, 4, 5].map(num => (
@@ -66,10 +67,10 @@ function PauseStatistics({ onSave, onClose }) {
             ))}
           </div>
 
-          <label>Energy level</label>
+          <label>{languageLibrary[language].evaluateEnergy}</label>
           <div className="radio-indicator">
-            <span>Low</span>
-            <span>High</span>
+            <span>{languageLibrary[language].low}</span>
+            <span>{languageLibrary[language].high}</span>
           </div>
           <div>
             {[1, 2, 3, 4, 5].map(num => (
@@ -88,14 +89,14 @@ function PauseStatistics({ onSave, onClose }) {
             ))}
           </div>
 
-          <label>Influencing factors</label>
+          <label>{languageLibrary[language].evaluateFactors}</label>
           <select
             name="factor"
             value={formData.factor}
             onChange={handleChange}
           >
             <option value="" disabled>
-              select a factor or leave blank
+              {languageLibrary[language].evaluateFactorsDefault}
             </option>
             {impacts.map(f => (
               <option key={f.value} value={f.value}>
@@ -105,8 +106,8 @@ function PauseStatistics({ onSave, onClose }) {
           </select>
 
           <div className="button-group">
-            <button type="submit">Save</button>
-            <button type="button" onClick={onClose}>Cancel</button>
+            <button type="submit">{languageLibrary[language].save}</button>
+            <button type="button" onClick={onClose}>{languageLibrary[language].cancel}</button>
           </div>
         </form>
       </div>
