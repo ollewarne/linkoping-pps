@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import styles from "./ActivityForm.module.css"
 import { useActivities } from "../../contexts/activityContext";
-import { calculateDuration } from "../../utils/validateTime";
+import { calculateDuration, toTotalMinutes } from "../../utils/validateTime";
 
 const categories = ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
@@ -50,7 +50,7 @@ function ActivityForm() {
         }
 
         e.preventDefault()
-        if (form.category.value === "Meeting") {
+        if (form.category.value === "Meeting" || form.category.value === "Möte") {
             const newActivity = {
                 id: activityId.current,
                 category: form.category.value,
@@ -69,7 +69,7 @@ function ActivityForm() {
                 category: form.category.value,
                 title: form.activityTitle.value,
                 ranking: form.activityRating.value,
-                estimatedDuration: { hours: hoursInput.value, minutes: minutesInput.value },
+                estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
                 activeTime: form.activeTime.value,
                 breakTime: form.breakTime.value,
                 currentlyActive: false,
