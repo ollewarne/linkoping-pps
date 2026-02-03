@@ -1,8 +1,30 @@
-.container {
+/* .container {
     border: 5px solid #E8C5C5;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 4px;
+} */
+.container {
+    border: 5px solid #E8C5C5;
+    height: 60vh;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    padding-top: 4px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    gap: 12px;
+}
+
+.list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    overflow-y: auto;
     padding-top: 4px;
 }

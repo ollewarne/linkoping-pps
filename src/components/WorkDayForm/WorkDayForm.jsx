@@ -6,6 +6,9 @@ import { languageLibrary } from "../../locales/language.js";
 import { userOptions } from "../../constants/userOptions.js";
 
 
+import { saveWorkdayToStorage } from "../../utils/workdayStorage.js";
+
+
 let language = 'en' // HÅRDKOD FÖR TEST TA BORT SEN
 
 
@@ -107,6 +110,8 @@ function WorkDayForm() {
             workEnvironment: { location: environment },
         };
 
+        //savear i  loclstorge
+        saveWorkdayToStorage(workdayData);
         console.log(workdayData);
 
         /* ---------------- RESET ---------------- */
