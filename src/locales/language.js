@@ -16,6 +16,7 @@ export const languageLibrary = {
     times: 'Times',
     low: 'Low',
     high: 'High',
+    cancel: 'Cancel',
 
     // ----- FORM 1 ----- 
     form1Header: 'Register Workday',
@@ -59,7 +60,15 @@ export const languageLibrary = {
     form2Submit: 'Add Activity',
 
     //  ----- FORM 2 - ERRORS ----- 
-    errorGreaterThanZero: 'One field must be greater than 0'
+    errorGreaterThanZero: 'One field must be greater than 0',
+
+
+    // ----- UTVÄRDERING ----- 
+    evaluateButton: 'Open Pause Statistics',
+    evaluateEfficency: 'Efficency level',
+    evaluateEnergy: 'Energy level',
+    evaluateFactors: 'Influencing factors: ',
+    evaluateFactorsDefault: 'Select a factor or leave blank'
 
 },
 
@@ -80,6 +89,7 @@ sv: {
     times: 'Tider',
     low: 'Låg',
     high: 'Hög',
+    cancel: 'Avbryt',
 
     // ----- FORM 1 ----- 
     form1Header: 'Registera Arbetsdag',
@@ -123,7 +133,18 @@ sv: {
     form2Submit: 'Lägg till aktivitet',
 
     //  ----- FORM 2 - ERRORS ----- 
-    errorGreaterThanZero: 'Ett fält måste vara större än 0'
+    errorGreaterThanZero: 'Ett fält måste vara större än 0',
+
+
+    // ----- UTVÄRDERING ----- 
+    evaluateButton: 'Öppna pausstatistik',
+    evaluateEfficency: 'Produktivitetsnivå',
+    evaluateEnergy: 'Energinivå',
+    evaluateFactors: 'Påverkande faktorer: ',
+    evaluateFactorsDefault: 'Välj en faktor eller lämna blank'
+
+
+
 }
 
 }
