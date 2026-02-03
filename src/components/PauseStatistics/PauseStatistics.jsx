@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { userOptions } from "../../constants/userOptions";
+import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
 
 function PauseStatistics({ onSave, onClose }) {
-  const [lang, setLang] = useState('en');
-  const impacts = userOptions[lang].impacts;
+  const { language } = useTranslator()
+  const impacts = userOptions[language].impacts;
 
   const [formData, setFormData] = useState({
     efficiency: 3,
