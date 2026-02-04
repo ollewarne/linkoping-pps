@@ -9,6 +9,23 @@ function activitiesReducer(state, action) {
             return [...state, action.payload];
         case "ADD_MEETING":
             return [...state, action.payload];
+        case "SCHEDULE_ACTIVITY":
+            return state.map(activity => activity.id === action.payload.id ?
+                { ...activity, scheduledTime: action.payload.scheduledTime } : activity);
+        case "EDIT_ACTIVITY":
+            return state.map(activity => activity.id === action.payload.id ?
+                {
+                    ...activity,
+                    title: action.payload.title,
+                    category: action.payload.category,
+                    ranking: action.payload.ranking,
+                    estimatedDuration: action.payload.estimatedDuration
+                } : activity)
+        case "UPDATE_TIME_SPENT":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                totalTimeSpent: action.payload.totalTime
+            } : activity)
         default:
             return state;
     }
