@@ -23,30 +23,3 @@ function ActivityCard({activity = {}}) {
 }
 
 export default ActivityCard;
-
-// beräkna höjden med procentuell del av totala arbetsdagen
-
-   //         const newActivity = {
-   //             id: activityId.current,
-   //             category: form.category.value,
-   //             isMeeting: true,
-   //             title: form.activityTitle.value,
-   //             ranking: MEETING_RANKING,
-   //             meetingTimes: { start: hoursInput.value, end: minutesInput.value },
-   //             estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
-   //             currentlyActive: false,
-   //             totalTimeSpent: 0
-   //         };
-   //         dispatch({type: "ADD_MEETING", payload: {...newActivity}})
-   //     } else {
-   //         const newActivity = {
-   //             id: activityId.current,
-   //             category: form.category.value,
-   //             title: form.activityTitle.value,
-   //             ranking: form.activityRating.value,
-   //             estimatedDuration: { hours: hoursInput.value, minutes: minutesInput.value },
-   //             activeTime: form.activeTime.value,
-   //             breakTime: form.breakTime.value,
-   //             currentlyActive: false,
-   //             totalTimeSpent: 0
-   //         };
