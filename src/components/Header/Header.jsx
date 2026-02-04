@@ -1,8 +1,17 @@
 import styles from "./Header.module.css"
+import { ChangeLanguage } from '../ChangeLanguage/ChangeLanguage';
+import ColorMode from '../ThemeToggle/ThemeToggle';
 
-function Header() {
+function Header({children}) {
     return (
-        <header className={styles.container}><h1>Header</h1></header>
+        <header className={styles.container}>
+            <h1>BAE Productivity</h1>
+             <div className={styles.buttonGroup}>
+            <ChangeLanguage />
+            <ColorMode />
+            {children}
+            </div>
+        </header>
     )
 }
 

@@ -1,4 +1,8 @@
 export const languageLibrary = {
+
+
+// -------- ENGELSKA ---------
+
     en: {
     // ----- ÅTERKOMMANDE -----
     start: 'Start',
@@ -9,6 +13,10 @@ export const languageLibrary = {
     minutes: 'Minutes',
     active: 'Active',
     break: 'Break',
+    times: 'Times',
+    low: 'Low',
+    high: 'High',
+    cancel: 'Cancel',
 
     // ----- FORM 1 ----- 
     form1Header: 'Register Workday',
@@ -22,6 +30,15 @@ export const languageLibrary = {
     // fieldset 3
     workEnvironment: 'Work Environment',
     workEnvironmentDefault: 'Select an environment',
+    // submit
+    submitSuccess: 'Workday settings saved',
+
+    //  ----- FORM 1 - ERRORS ----- 
+    errorNoWorkHours: 'Please enter your working hours',
+    errorStartBeforeEnd: 'Start time must be before end time',
+    errorNoNonWorkHours: 'Please enter your non-working hours',
+    errorHoursBetweenWorkingHours: 'Non-working hours must be within your working hours',
+    errorNoWorkEnvironment: 'Please select your work environment',
 
     // ----- FORM 2 ----- 
     form2Header: 'Register Activity',
@@ -30,16 +47,34 @@ export const languageLibrary = {
     form2Category: 'Category',
     form2CategoryDefault: 'Pick a category',
     form2Title: 'Title',
-    form2TitleDefatul: 'Enter a title',
+    form2TitleDefault: 'Enter a title',
     // fieldset 2
     form2Rank: 'Rank of importance',
+    form2RankLow: '1: Low',
+    form2RankHigh: '4: High',
     // fieldset 3
     form2EstimatedDuration: 'Estimated Duration',
     // fieldset 4
     form2TimeStructure: 'Time Structure',
     // submit
-    form2Submit: 'Add Activity'
+    form2Submit: 'Add Activity',
+
+    //  ----- FORM 2 - ERRORS ----- 
+    errorGreaterThanZero: 'One field must be greater than 0',
+
+
+    // ----- UTVÄRDERING ----- 
+    evaluateButton: 'Open Pause Statistics',
+    evaluateEfficency: 'Efficency level',
+    evaluateEnergy: 'Energy level',
+    evaluateFactors: 'Influencing factors: ',
+    evaluateFactorsDefault: 'Select a factor or leave blank'
+
 },
+
+
+
+// -------- SVENSKA ---------
 
 sv: {
     // ----- ÅTERKOMMANDE -----
@@ -51,6 +86,10 @@ sv: {
     minutes: 'Minuter',
     active: 'Aktiv',
     break: 'Paus',
+    times: 'Tider',
+    low: 'Låg',
+    high: 'Hög',
+    cancel: 'Avbryt',
 
     // ----- FORM 1 ----- 
     form1Header: 'Registera Arbetsdag',
@@ -64,6 +103,15 @@ sv: {
     // fieldset 3
     workEnvironment: 'Arbetsmiljö',
     workEnvironmentDefault: 'Välj en arbetsmiljö',
+    // submit
+    submitSuccess: 'Inställningar för arbetsdag sparade',
+
+    //  ----- FORM 1 - ERRORS ----- 
+    errorNoWorkHours: 'Vänligen ange dina arbetstider',
+    errorStartBeforeEnd: 'Starttiden måste vara före sluttiden',
+    errorNoNonWorkHours: 'Vänligen ange dina icke-arbetstider',
+    errorHoursBetweenWorkingHours: 'Icke-arbetstider måste ligga inom dina arbetstider',
+    errorNoWorkEnvironment: 'Vänligen välj din arbetsmiljö',
 
     // ----- FORM 2 ----- 
     form2Header: 'Registera Aktivitet',
@@ -72,15 +120,31 @@ sv: {
     form2Category: 'Kategori',
     form2CategoryDefault: 'Välj en kategori',
     form2Title: 'Titel',
-    form2TitleDefatul: 'Fyll i en titel',
+    form2TitleDefault: 'Fyll i en titel',
     // fieldset 2
     form2Rank: 'Rankning',
+    form2RankLow: '1: Låg prio',
+    form2RankHigh: '4: Hög prio',
     // fieldset 3
     form2EstimatedDuration: 'Uppskattad tidsåtgång',
     // fieldset 4
     form2TimeStructure: 'Tidsstruktur',
     // submit
-    form2Submit: 'Lägg till aktivitet'
+    form2Submit: 'Lägg till aktivitet',
+
+    //  ----- FORM 2 - ERRORS ----- 
+    errorGreaterThanZero: 'Ett fält måste vara större än 0',
+
+
+    // ----- UTVÄRDERING ----- 
+    evaluateButton: 'Öppna pausstatistik',
+    evaluateEfficency: 'Produktivitetsnivå',
+    evaluateEnergy: 'Energinivå',
+    evaluateFactors: 'Påverkande faktorer: ',
+    evaluateFactorsDefault: 'Välj en faktor eller lämna blank'
+
+
+
 }
 
 }
