@@ -7,6 +7,7 @@ import { userOptions } from "../../constants/userOptions.js";
 
 
 import { saveWorkdayToStorage } from "../../utils/workdayStorage.js";
+//delzar
 
 
 let language = 'en' // HÅRDKOD FÖR TEST TA BORT SEN
@@ -110,7 +111,7 @@ function WorkDayForm() {
             workEnvironment: { location: environment },
         };
 
-        //savear i  loclstorge
+        //sac
         saveWorkdayToStorage(workdayData);
         console.log(workdayData);
 
