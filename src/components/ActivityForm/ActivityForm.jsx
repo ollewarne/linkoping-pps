@@ -8,11 +8,6 @@ import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
 
 
-
-
-
-
-
 function ActivityForm() {
     const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
@@ -65,6 +60,7 @@ function ActivityForm() {
         e.preventDefault()
         if (form.category.value === "Meeting" || form.category.value === "Möte") {
             const newActivity = {
+                scheduledTime: null,
                 id: activityId.current,
                 category: form.category.value,
                 isMeeting: true,
@@ -73,20 +69,24 @@ function ActivityForm() {
                 meetingTimes: { start: hoursInput.value, end: minutesInput.value },
                 estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
                 currentlyActive: false,
-                totalTimeSpent: 0
+                totalTimeSpent: 0,
+                statistics: {}
             };
             dispatch({type: "ADD_MEETING", payload: {...newActivity}})
         } else {
             const newActivity = {
+                scheduledTime: null,
                 id: activityId.current,
                 category: form.category.value,
+                isMeeting: false,
                 title: form.activityTitle.value,
                 ranking: form.activityRating.value,
                 estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
                 activeTime: form.activeTime.value,
                 breakTime: form.breakTime.value,
                 currentlyActive: false,
-                totalTimeSpent: 0
+                totalTimeSpent: 0,
+                statistics: {}
             };
             dispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
         }
