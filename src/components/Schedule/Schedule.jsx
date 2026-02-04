@@ -11,7 +11,7 @@ function Schedule() {
       <ClockTimeline />
       <div className={styles.list}>
         {activities.map((activity) => (
-          <ActivityCard key={activity.id} activity={activity} /*scheduledTime={} släng in tiden som kortet hamnar på i schemat här*/ />
+          <ActivityCard key={activity.id} activity={activity} scheduledTime={null} />
         ))}
       </div>
     </div>
