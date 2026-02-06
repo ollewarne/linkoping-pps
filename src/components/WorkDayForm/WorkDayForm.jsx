@@ -1,24 +1,29 @@
 import { useRef, useState } from "react";
-import { toTotalMinutes } from "../../utils/validateTime.js";
 import styles from "./WorkDayForm.module.css"
 
+import { useTranslator } from "../../contexts/languageContext.jsx";
 import { languageLibrary } from "../../locales/language.js";
+
 import { userOptions } from "../../constants/userOptions.js";
 
- import { saveWorkdayToStorage } from "../../utils/workdayStorage.js";
- import { useTranslator } from "../../contexts/languageContext.jsx";
+
+// import { toTotalMinutes } from "../../utils/validateTime.js";
+import {convertStringTimeToMinutes} from "../../utils/convertTime"
+
+import { saveWorkdayToStorage } from "../../utils/workdayStorage.js";
+
 
 
 // let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
 
 
 // Konvertera string input från formulär till minuter för tids-validerings logik
-const convertStringTimeToMinutes = (time) => {
-    if (!time) return null;
+// const convertStringTimeToMinutes = (time) => {
+//     if (!time) return null;
 
-    const [hours, minutes] = time.split(":").map(Number);
-    return toTotalMinutes(hours, minutes);
-};
+//     const [hours, minutes] = time.split(":").map(Number);
+//     return toTotalMinutes(hours, minutes);
+// };
 
 
 function WorkDayForm() {
