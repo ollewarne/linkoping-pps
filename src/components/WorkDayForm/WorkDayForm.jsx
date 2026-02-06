@@ -1,242 +1,238 @@
+import styles from "./WorkDayForm.module.css";
 import { useRef, useState } from "react";
-import styles from "./WorkDayForm.module.css"
-
-import { useTranslator } from "../../contexts/languageContext.jsx";
-import { languageLibrary } from "../../locales/language.js";
-
-import { userOptions } from "../../constants/userOptions.js";
-
-
-// import { toTotalMinutes } from "../../utils/validateTime.js";
-import {convertStringTimeToMinutes} from "../../utils/convertTime"
-
-import { saveWorkdayToStorage } from "../../utils/workdayStorage.js";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
+import { userOptions } from "../../constants/userOptions";
+import {convertStringTimeToMinutes} from "../../utils/convertTime";
+import { saveWorkdayToStorage } from "../../utils/workdayStorage";
 
 
+export function WorkDayForm() {
+    // for translation
+    const {language} = useTranslator();
 
-// let language = 'sv' // HÅRDKOD FÖR TEST --- TA BORT SEN
-
-
-// Konvertera string input från formulär till minuter för tids-validerings logik
-// const convertStringTimeToMinutes = (time) => {
-//     if (!time) return null;
-
-//     const [hours, minutes] = time.split(":").map(Number);
-//     return toTotalMinutes(hours, minutes);
-// };
-
-
-function WorkDayForm() {
-
-    const {language} =useTranslator();
-
+    // set refs and state
     const workHoursStart = useRef(null);
     const workHoursEnd = useRef(null);
+    const [hasNonWorkHours, setHasNonWorkHours] = useState(false);
     const nonWorkHoursStart = useRef(null);
     const nonWorkHoursEnd = useRef(null);
     const workEnvironment = useRef(null);
 
-    const [errors, setErrors] = useState({});
-    const [hasNonWorkHours, setHasNonWorkHours] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    // set user options for work environment
+    const environmentOptions = userOptions[language].workEnvironment; // 'Work Environment'
 
-    const environmentOptions = userOptions[language].workEnvironment
-    // [ 'Home', 'Private office', 'Shared Office', 'Open-plan Office', 'Public Place', 'Hybrid work'];
-
- 
+    // ------------------ HANDLE SUBMIT ------------------
     function handleSubmit(e) {
-
         e.preventDefault();
 
-        const workDayFormErrors = {};
-
+        /* ------------------ VALIDATE WORK HOURS ------------------ */
         const workStart = workHoursStart.current.value;
         const workEnd = workHoursEnd.current.value;
-        const environment = workEnvironment.current.value;
 
+        if(!workStart){
+            workHoursStart.current.setCustomValidity(
+                languageLibrary[language].errorNoWorkHoursStart // 'Please enter your start time'
+            );
+            workHoursStart.current.reportValidity();
+            return;
+        };
+
+        if(!workEnd){
+            workHoursEnd.current.setCustomValidity(
+                languageLibrary[language].errorNoWorkHoursEnd // 'Please enter your end time'
+            );
+            workHoursEnd.current.reportValidity();
+            return;
+        };
+
+        if(convertStringTimeToMinutes(workStart) >= convertStringTimeToMinutes(workEnd)){
+            workHoursEnd.current.setCustomValidity(
+                languageLibrary[language].errorEndBeforeStart // "End time can't be after start time"
+            );
+            workHoursEnd.current.reportValidity();
+            return;
+        };
+
+        workHoursEnd.current.setCustomValidity('');
+
+        /* ------------------ VALIDATE NON-WORKING HOURS ------------------ */
         let nonWorkStart = null;
         let nonWorkEnd = null;
 
-
-        /* ------------------ WORK HOURS ------------------ */
-        if (!workStart || !workEnd) {
-            workDayFormErrors.workHours = 
-            //'Please enter your working hours';
-            languageLibrary[language].errorNoWorkHours
-        } else if (convertStringTimeToMinutes(workStart) >= convertStringTimeToMinutes(workEnd)) {
-            workDayFormErrors.workHours =
-                // 'Working hours start-time must be before end-time';
-                languageLibrary[language].errorStartBeforeEnd;
-        }
-
-        /* ---------------- NON-WORK HOURS ---------------- */
         if (hasNonWorkHours) {
+            nonWorkHoursStart.current.setCustomValidity('');
+            nonWorkHoursEnd.current.setCustomValidity('');
+
             nonWorkStart = nonWorkHoursStart.current?.value;
             nonWorkEnd = nonWorkHoursEnd.current?.value;
 
-            if (!nonWorkStart || !nonWorkEnd) {
-                workDayFormErrors.nonWorkHours =
-                    // 'Please enter your non-working hours';
-                    languageLibrary[language].errorNoNonWorkHours;
-            } else if (
-                convertStringTimeToMinutes(nonWorkStart) >=
-                convertStringTimeToMinutes(nonWorkEnd)
-            ) {
-                workDayFormErrors.nonWorkHours = 
-                // 'Non-working hours start-time must be before end-time';
-                languageLibrary[language].errorStartBeforeEnd;
-            } else {
-                const workStartMin = convertStringTimeToMinutes(workStart);
-                const workEndMin = convertStringTimeToMinutes(workEnd);
-                const nonWorkStartMin = convertStringTimeToMinutes(nonWorkStart);
-                const nonWorkEndMin = convertStringTimeToMinutes(nonWorkEnd);
+            if (!nonWorkStart){
+                nonWorkHoursStart.current.setCustomValidity(
+                    languageLibrary[language].errorNoWorkHoursStart // 'Please enter your start time'
+                );
+                nonWorkHoursStart.current.reportValidity();
+                return;
+            };
 
-                if (
-                    nonWorkStartMin <= workStartMin ||
-                    nonWorkEndMin >= workEndMin
-                ) {
-                    workDayFormErrors.nonWorkHours = 
-                    // 'Non-working hours must be within your working hours';
-                    languageLibrary[language].errorHoursBetweenWorkingHours;
-                }
-            }
-        }
+            if (!nonWorkEnd){
+                nonWorkHoursEnd.current.setCustomValidity(
+                    languageLibrary[language].errorNoWorkHoursEnd // 'Please enter your end time'
+                );
+                nonWorkHoursEnd.current.reportValidity();
+                return;
+            };
 
-        /* ---------------- ENVIRONMENT ---------------- */
-        if (environment === 'default') {
-            workDayFormErrors.environment =
-                // 'Please select your work environment';
-                languageLibrary[language].errorNoWorkEnvironment;
-        }
+            const nonWorkStartMin = convertStringTimeToMinutes(nonWorkStart);
+            const nonWorkEndMin = convertStringTimeToMinutes(nonWorkEnd);
+            const workStartMin = convertStringTimeToMinutes(workStart);
+            const workEndMin = convertStringTimeToMinutes(workEnd);
+            
+            if (nonWorkStartMin>= nonWorkEndMin){
+                nonWorkHoursEnd.current.setCustomValidity(
+                    languageLibrary[language].errorEndBeforeStart // "End time can't be before start time"
+                );
+                nonWorkHoursEnd.current.reportValidity();
+                return;
+            };
 
-        if (Object.keys(workDayFormErrors).length > 0) {
-            setErrors(workDayFormErrors);
-            setIsSubmitted(false);
-            return;
-        }
+            if(nonWorkStartMin <= workStartMin || nonWorkEndMin >= workEndMin){
+                nonWorkHoursStart.current.setCustomValidity(
+                    languageLibrary[language].errorHoursBetweenWorkingHours // 'Non-working hours must be within your working hours'
+                );
+                nonWorkHoursStart.current.reportValidity();
+                return;
+            };
 
-        setErrors({});
-        setIsSubmitted(true);
+        nonWorkHoursStart.current.setCustomValidity('');
+        nonWorkHoursEnd.current.setCustomValidity('');
 
-        const workdayData = {
-            workHours: { start: workStart, end: workEnd },
-            nonWorkHours: hasNonWorkHours
-                ? { start: nonWorkStart, end: nonWorkEnd }
-                : null,
-            workEnvironment: { location: environment },
         };
 
-        // SPARA DATA
-        // localStorage.setItem('workdayData', JSON.stringify(workdayData))
+        /* ------------------ VALIDATE ENVIRONMENT ------------------ */
+        const environment = workEnvironment.current.value;
 
-        //sac
+        if (!environment) {
+            workEnvironment.current.setCustomValidity(
+                languageLibrary[language].errorNoWorkEnvironment // 'Please select your work environment'
+            );
+            workEnvironment.current.reportValidity();
+            return;
+        };
+
+        workEnvironment.current.setCustomValidity('');
+
+        /* ------------------ SAVING DATA ------------------ */
+        // save user choices according to set data structure
+        const workdayData = {
+            workHours: {start: workStart, end: workEnd},
+            nonWorkHours: hasNonWorkHours ?
+                {start: nonWorkStart, end: nonWorkEnd}
+                : null,
+            workEnvironment: {location: environment} // DENNA SPARAS PÅ SVENSKA om svenska som språk: PROBLEM ???
+        };
+
         saveWorkdayToStorage(workdayData);
         console.log(workdayData);
 
-        /* ---------------- RESET ---------------- */
+        /* ------------------ RESET FORM & CLEAR INPUT ------------------ */
         workHoursStart.current.value = '';
         workHoursEnd.current.value = '';
-        workEnvironment.current.value = 'default';
+        workEnvironment.current.value = '';
 
         if (hasNonWorkHours) {
             nonWorkHoursStart.current.value = '';
             nonWorkHoursEnd.current.value = '';
-        }
+        };
+    };
 
-        setHasNonWorkHours(false);
-    }
-
+    // ------------------ DRAW FORM ------------------
     return (
-        <>
-        <h2>{languageLibrary[language].form1Header}</h2> {/* ---- */}
+    <>
+        <h2>{languageLibrary[language].form1Header /* 'Register Workday' */}</h2>
+    
+        <form onSubmit={handleSubmit} noValidate>
 
-        <form onSubmit={handleSubmit}>
-
-            {/* WORKING HOURS */}
+            {/* ---------- WORKING HOURS ---------- */}
             <fieldset>
-                <legend>{languageLibrary[language].form1WorkH}</legend>
+                <legend>{languageLibrary[language].form1WorkH /* 'Working hours' */}</legend>
+                <p className={styles.explanation}>{languageLibrary[language].form1WorkHExplanation /* 'Explanation' */}</p>
 
-                <p className={styles.explanation}>{languageLibrary[language].form1WorkHExplanation}</p>
+                <label htmlFor="work-hours-start">{languageLibrary[language].start /* 'Start' */}</label>
+                <input 
+                    ref={workHoursStart}
+                    type="time" 
+                    id="work-hours-start" 
+                    onChange={(e) => e.target.setCustomValidity('')}/>
 
-                <label htmlFor="work-hours-start">{languageLibrary[language].start}</label>
-                <input ref={workHoursStart} type="time" id="work-hours-start" required/>
-
-                <label htmlFor="work-hours-end">{languageLibrary[language].end}</label>
-                <input ref={workHoursEnd} type="time" id="work-hours-end" required/>
-
-                {errors.workHours && <p className={styles.error}>{errors.workHours}</p>}
-
-
+                <label htmlFor="work-hours-end">{languageLibrary[language].end /* 'End' */}</label>
+                <input 
+                    ref={workHoursEnd}
+                    type="time" 
+                    id="work-hours-end" 
+                    onChange={(e) => e.target.setCustomValidity('')}/>
             </fieldset>
 
-            {/* NON-WORKING HOURS */}
+            {/* ---------- NON-WORKING HOURS ---------- */}
             <input
                 type="checkbox"
                 id="register-non-work"
                 checked={hasNonWorkHours}
                 onChange={(e) => setHasNonWorkHours(e.target.checked)}
             />
-
             <label htmlFor="register-non-work">
-                {languageLibrary[language].form1Checkbox}
+                {languageLibrary[language].form1Checkbox /* 'I have non-working hours to register' */}
             </label>
 
             {hasNonWorkHours && (
-            
-                <fieldset>
-                    <legend>{languageLibrary[language].nonWorkH}</legend>
-                    <p className={styles.explanation}>{languageLibrary[language].nonWorkHExplanation}</p>
+                    <fieldset>
+                        <legend>{languageLibrary[language].nonWorkH /* 'Non-working hours' */}</legend>
+                        <p className={styles.explanation}>{languageLibrary[language].nonWorkHExplanation}</p>
 
+                        <label htmlFor="non-work-hours-start">{languageLibrary[language].start}</label>
+                        <input
+                            ref={nonWorkHoursStart}
+                            type="time"
+                            id="non-work-hours-start"
+                            onChange={(e) => e.target.setCustomValidity('')}
+                        />
 
-                    <label htmlFor="non-work-hours-start">{languageLibrary[language].start}</label>
-                    <input
-                        ref={nonWorkHoursStart}
-                        type="time"
-                        id="non-work-hours-start"
-                    />
+                        <label htmlFor="non-work-hours-end">{languageLibrary[language].end}</label>
+                        <input
+                            ref={nonWorkHoursEnd}
+                            type="time"
+                            id="non-work-hours-end"
+                            onChange={(e) => e.target.setCustomValidity('')}
+                        />
+                    </fieldset>
+                )
+            }
 
-                    <label htmlFor="non-work-hours-end">{languageLibrary[language].end}</label>
-                    <input
-                        ref={nonWorkHoursEnd}
-                        type="time"
-                        id="non-work-hours-end"
-                    />
-
-                    {errors.nonWorkHours && (
-                        <p className={styles.error}>{errors.nonWorkHours}</p>
-                    )}
-                </fieldset>
-            )}
-            
-            {/* ENVIRONMENT */}
+            {/* ---------- ENVIRONMENT ---------- */}
             <fieldset>
-                <legend>{languageLibrary[language].workEnvironment}</legend>
+                <legend>{languageLibrary[language].workEnvironment /* 'Work Environment' */}</legend>
                 <select
                     ref={workEnvironment}
                     id="working-environment"
-                    defaultValue="default"
-                    required
-                >
-                    <option value="default" disabled>
-                        {languageLibrary[language].workEnvironmentDefault}
+                    defaultValue=""
+                    onChange={(e) => e.target.setCustomValidity("")}>
+
+                    <option value="" disabled>
+                        {languageLibrary[language].workEnvironmentDefault /* 'Select an environment' */}
                     </option>
+
                     {environmentOptions.map((environment) => (
                         <option key={environment} value={environment}>
                             {environment}
                         </option>
                     ))}
                 </select>
-
-                {errors.environment && <p className={styles.error}>{errors.environment}</p>}
             </fieldset>
 
-            <button type="submit">{languageLibrary[language].save}</button>
-
-            {isSubmitted && <p className={styles.submitted}>
-                {languageLibrary[language].submitSuccess}</p>}
+            {/* ---------- SUBMIT ---------- */}
+            <button type="submit">{languageLibrary[language].save /* Save */}</button>
+            
         </form>
-        </>
+    </>
     );
-}
-
-export default WorkDayForm;
+};
