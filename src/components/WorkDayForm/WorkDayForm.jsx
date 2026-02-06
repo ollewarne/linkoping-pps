@@ -7,7 +7,7 @@ import {convertStringTimeToMinutes} from "../../utils/convertTime";
 import { saveWorkdayToStorage } from "../../utils/workdayStorage";
 
 
-export function WorkDayForm() {
+export default function WorkDayForm() {
     // for translation
     const {language} = useTranslator();
 
