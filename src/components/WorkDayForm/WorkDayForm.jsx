@@ -1,5 +1,5 @@
 import styles from "./WorkDayForm.module.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useTranslator } from "../../contexts/languageContext";
 import { languageLibrary } from "../../locales/language";
 import { userOptions } from "../../constants/userOptions";
@@ -11,13 +11,26 @@ export default function WorkDayForm() {
     // for translation
     const {language} = useTranslator();
 
-    // set refs and state
+    // set refs
     const workHoursStart = useRef(null);
     const workHoursEnd = useRef(null);
     const [hasNonWorkHours, setHasNonWorkHours] = useState(false);
     const nonWorkHoursStart = useRef(null);
     const nonWorkHoursEnd = useRef(null);
     const workEnvironment = useRef(null);
+
+    // sucess state & show success feedback
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    useEffect(() => {
+        if (!showSuccess) return;
+
+        const timer = setTimeout(() => {
+        setShowSuccess(false);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [showSuccess]);
 
     // set user options for work environment
     const environmentOptions = userOptions[language].workEnvironment; // 'Work Environment'
@@ -106,7 +119,6 @@ export default function WorkDayForm() {
 
         nonWorkHoursStart.current.setCustomValidity('');
         nonWorkHoursEnd.current.setCustomValidity('');
-
         };
 
         /* ------------------ VALIDATE ENVIRONMENT ------------------ */
@@ -144,6 +156,9 @@ export default function WorkDayForm() {
             nonWorkHoursStart.current.value = '';
             nonWorkHoursEnd.current.value = '';
         };
+
+        /* ------------------ SHOW SUCESSFULL SUBMIT ------------------ */
+        setShowSuccess(true);
     };
 
     // ------------------ DRAW FORM ------------------
@@ -230,7 +245,15 @@ export default function WorkDayForm() {
             </fieldset>
 
             {/* ---------- SUBMIT ---------- */}
-            <button type="submit">{languageLibrary[language].save /* Save */}</button>
+            <div>
+                <button type="submit">{languageLibrary[language].save /* Save */}</button>
+
+                {showSuccess && (
+                    <span className={styles.submitted}>
+                        {languageLibrary[language].submitSuccess}
+                    </span>
+                )}
+            </div>
             
         </form>
     </>
