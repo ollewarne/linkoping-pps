@@ -1,9 +1,36 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 
-const activityContext = createContext(null);
+type Activity = {
+    id: number;
+    scheduledTime: string | null;
+    category: string;
+    isMeeting: boolean;
+    title: string;
+    ranking: string;
+    estimatedDuration: number;
+    isActive: boolean;
+    totalTimeSpent: number;
+    statistics: object;
+    meetingTimes?: {
+        start: string;
+        end: string;
+    };
+    activeTime?: number;
+    breakTime?: number;
+}
+
+type ActivityAction =
+    | { type: "ADD_ACTIVITY"; payload: Activity }
+    | { type: "ADD_MEETING"; payload: Activity }
+    | { type: "SCHEDULE_ACTIVITY"; payload: { id: number; scheduledTime: string } }
+    | { type: "EDIT_ACTIVITY"; payload: { id: number; title: string; category: string; ranking: string; estimatedDuration: number } }
+    | { type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } };
 
 
-function activitiesReducer(state, action) {
+const activityContext = createContext<{activities: Activity[]; dispatch: React.Dispatch<ActivityAction>} | null>(null);
+
+
+function activitiesReducer(state: Activity[], action: ActivityAction): Activity[] {
     switch (action.type) {
         case "ADD_ACTIVITY":
             return [...state, action.payload];
@@ -32,7 +59,7 @@ function activitiesReducer(state, action) {
 
 }
 
-export function ActivityProvider({ children }) {
+export function ActivityProvider({ children }: {children: React.ReactNode}) {
     const [activities, dispatch] = useReducer(activitiesReducer, [],
         () => {
             const item = localStorage.getItem("activities");
@@ -40,12 +67,12 @@ export function ActivityProvider({ children }) {
 
             try {
                 const data = JSON.parse(item);
-                const dataAgeInMs = Date.now() - data.timeStamp;
-                const maxDataAgeInMs = 16 * 60 * 60 * 1000;
+                const dataAgeInMs: number = Date.now() - data.timeStamp;
+                const maxDataAgeInMs: number = 16 * 60 * 60 * 1000;
 
                 // tar bort aktiviteter om ingen uppdatering skett på över 16 timmar
                 if (dataAgeInMs > maxDataAgeInMs) {
-                    localStorage.removeItem(activities);
+                    localStorage.removeItem("activities");
                     return [];
                 }
                 return data.value;
