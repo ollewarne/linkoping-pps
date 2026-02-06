@@ -24,7 +24,7 @@ export const languageLibrary = {
     form1WorkH: 'Working hours',
     form1WorkHExplanation: 'Explanation???',
     // fieldset 2
-    form1Checkbox: 'I have non-working hours to register (example: lunchbreak)',
+    form1Checkbox: 'I have non-working hours to register',
     nonWorkH: 'Non-working hours',
     nonWorkHExplanation: 'Explanation???',
     // fieldset 3
@@ -34,8 +34,10 @@ export const languageLibrary = {
     submitSuccess: 'Workday settings saved',
 
     //  ----- FORM 1 - ERRORS ----- 
-    errorNoWorkHours: 'Please enter your working hours',
-    errorStartBeforeEnd: 'Start time must be before end time',
+    errorNoWorkHoursStart: 'Please enter your start time',
+    errorNoWorkHoursEnd: 'Please enter your end time',
+    errorEndBeforeStart: "End time can't be before start time",
+    
     errorNoNonWorkHours: 'Please enter your non-working hours',
     errorHoursBetweenWorkingHours: 'Non-working hours must be within your working hours',
     errorNoWorkEnvironment: 'Please select your work environment',
@@ -97,7 +99,7 @@ sv: {
     form1WorkH: 'Arbetstid',
     form1WorkHExplanation: 'Förklaring???',
     // fieldset 2
-    form1Checkbox: 'Jag har arbetsfri tid att registrera (exempel: lunch)',
+    form1Checkbox: 'Jag har arbetsfri tid att registrera',
     nonWorkH: 'Arbetsfri Tid',
     nonWorkHExplanation: 'Förklaring???',
     // fieldset 3
@@ -107,8 +109,10 @@ sv: {
     submitSuccess: 'Inställningar för arbetsdag sparade',
 
     //  ----- FORM 1 - ERRORS ----- 
-    errorNoWorkHours: 'Vänligen ange dina arbetstider',
-    errorStartBeforeEnd: 'Starttiden måste vara före sluttiden',
+    errorNoWorkHoursStart: 'Vänligen ange din starttid',
+    errorNoWorkHoursEnd: 'Vänligen ange din sluttid',
+    errorEndBeforeStart: 'Sluttiden kan inte vara innan startiden',
+
     errorNoNonWorkHours: 'Vänligen ange dina icke-arbetstider',
     errorHoursBetweenWorkingHours: 'Icke-arbetstider måste ligga inom dina arbetstider',
     errorNoWorkEnvironment: 'Vänligen välj din arbetsmiljö',
