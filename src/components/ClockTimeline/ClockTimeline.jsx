@@ -1,17 +1,16 @@
 import { useMemo } from "react";
-import DayProgressTimeline from "./DayProgressTimeline.jsx";
-import WorkingHoursTimeline from "./WorkingHoursTimeline.jsx";
-import ActivityHoursTimeline from "./ActivityHoursTimeline.jsx";
-import TimeScale from "./TimeScale.jsx";
-import { useActivities } from "../../contexts/activityContext.jsx";
+import DayProgressTimeline from "./DayProgressTimeline";
+import ActivityHoursTimeline from "./ActivityHoursTimeline";
+import TimeScale from "./TimeScale";
+import { useActivities } from "../../contexts/activityContext";
 
 export default function ClockTimeline() {
   const { activities } = useActivities();
 
   const blocks = useMemo(() => {
     return activities
-      .filter((a) => a?.isMeeting && a?.meetingTimes?.start && a?.meetingTimes?.end)
-      .map((a) => ({
+      .filter(a => a?.isMeeting && a?.meetingTimes?.start && a?.meetingTimes?.end)
+      .map(a => ({
         start: a.meetingTimes.start,
         end: a.meetingTimes.end,
       }));
@@ -20,9 +19,7 @@ export default function ClockTimeline() {
   return (
     <div style={{ width: "120px", height: "100%", position: "relative" }}>
       <TimeScale />
-
       <DayProgressTimeline />
-      <WorkingHoursTimeline />
       <ActivityHoursTimeline blocks={blocks} />
     </div>
   );

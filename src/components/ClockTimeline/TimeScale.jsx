@@ -1,17 +1,30 @@
+import { useMemo } from "react";
+import { minutesToHHMM } from "../../utils/validateTime";
+import { useWorkdayTimelineScale } from "../../utils/useWorkdayTimelineScale";
+
 export default function TimeScale() {
-  const dayStart = 6;
-  const dayEnd = 18;
-  const totalHours = dayEnd - dayStart;
+  const { dayStartMin, dayEndMin, totalMinutes } = useWorkdayTimelineScale();
+
+  const ticks = useMemo(() => {
+    const list = [];
+    list.push(dayStartMin);
+
+    const firstHour = Math.ceil(dayStartMin / 60) * 60;
+    for (let t = firstHour; t < dayEndMin; t += 60) {
+      list.push(t);
+    }
+
+    list.push(dayEndMin);
+    return Array.from(new Set(list));
+  }, [dayStartMin, dayEndMin]);
 
   return (
     <>
-      {Array.from({ length: totalHours + 1 }).map((_, i) => {
-        const hour = dayStart + i;
-        const top = (i / totalHours) * 100;
-
+      {ticks.map((t) => {
+        const top = ((t - dayStartMin) / totalMinutes) * 100;
         return (
           <div
-            key={hour}
+            key={t}
             style={{
               position: "absolute",
               top: `${top}%`,
@@ -21,7 +34,7 @@ export default function TimeScale() {
               color: "#aaa",
             }}
           >
-            {hour.toString().padStart(2, "0")}:00
+            {minutesToHHMM(t)}
           </div>
         );
       })}

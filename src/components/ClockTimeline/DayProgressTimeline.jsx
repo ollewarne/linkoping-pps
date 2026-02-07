@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { toTotalMinutes } from "../../utils/validateTime.js";
+import { toTotalMinutes } from "../../utils/validateTime";
+import { useWorkdayTimelineScale } from "../../utils/useWorkdayTimelineScale";
 
 export default function DayProgressTimeline() {
   const [now, setNow] = useState(new Date());
+  const { dayStartMin, totalMinutes } = useWorkdayTimelineScale();
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 1000);
@@ -11,11 +13,9 @@ export default function DayProgressTimeline() {
 
   const minutesNow = toTotalMinutes(now.getHours(), now.getMinutes());
 
-  const dayStart = 6 * 60;
-  const dayEnd = 18 * 60;
-  const dayTotal = dayEnd - dayStart;
-
-  const percentNow = ((minutesNow - dayStart) / dayTotal) * 100;
+  let percent = ((minutesNow - dayStartMin) / totalMinutes) * 100;
+  if (percent < 0) percent = 0;
+  if (percent > 100) percent = 100;
 
   return (
     <div
@@ -31,7 +31,7 @@ export default function DayProgressTimeline() {
     >
       <div
         style={{
-          height: `${percentNow}%`,
+          height: `${percent}%`,
           backgroundColor: "#cce5ff",
         }}
       />
