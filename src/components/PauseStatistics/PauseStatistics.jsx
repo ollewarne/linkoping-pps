@@ -1,25 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
 import { languageLibrary } from "../../locales/language";
 
-const event_key ="pauseStatistics/events";
+const event_key = "pauseStatistics/events";
 const last_id_key = "pauseStatistics/lastID";
 
 function PauseStatistics({ onSave, onClose, isDndEnabled }) {
-  const { language } = useTranslator()
+  const { language } = useTranslator();
   const impacts = userOptions[language].impacts;
 
   const [formData, setFormData] = useState({
     efficiency: 3,
     energy: 3,
-    factor: '',
+    factor: "",
   });
 
   const saveNull = () => {
     const lastId = Number(localStorage.getItem(last_id_key)) || 0;
-    const newId = lastId +1;
+    const newId = lastId + 1;
 
     const newEntry = {
       id: newId,
@@ -36,18 +36,20 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
 
     if (onSave) onSave(newEntry);
     if (onClose) onClose();
-  }
+  };
 
-  if (isDndEnabled) {
-    saveNull();
-    return null;
-  }
+  useEffect(() => {
+    if (isDndEnabled) {
+      saveNull();
+    }
+  }, [isDndEnabled]);
+  if (isDndEnabled) return null;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -63,13 +65,12 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
       timestamp: new Date().toISOString(),
     };
 
-    const existingEvents =
-      JSON.parse(localStorage.getItem(event_key)) || [];
+    const existingEvents = JSON.parse(localStorage.getItem(event_key)) || [];
 
     existingEvents.push(newEntry);
 
     localStorage.setItem(event_key, JSON.stringify(existingEvents));
-    localStorage.setItem(last_id_key,newId);
+    localStorage.setItem(last_id_key, newId);
 
     if (onSave) {
       onSave(newEntry);
@@ -92,7 +93,7 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
             <span>{languageLibrary[language].high}</span>
           </div>
           <div>
-            {[1, 2, 3, 4, 5].map(num => (
+            {[1, 2, 3, 4, 5].map((num) => (
               <label key={num} style={{ marginRight: "10px" }}>
                 <input
                   type="radio"
@@ -100,7 +101,7 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
                   value={num}
                   checked={formData.efficiency === num}
                   onChange={() =>
-                    setFormData(prev => ({ ...prev, efficiency: num }))
+                    setFormData((prev) => ({ ...prev, efficiency: num }))
                   }
                 />
                 {num}
@@ -114,7 +115,7 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
             <span>{languageLibrary[language].high}</span>
           </div>
           <div>
-            {[1, 2, 3, 4, 5].map(num => (
+            {[1, 2, 3, 4, 5].map((num) => (
               <label key={num} style={{ marginRight: "10px" }}>
                 <input
                   type="radio"
@@ -122,7 +123,7 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
                   value={num}
                   checked={formData.energy === num}
                   onChange={() =>
-                    setFormData(prev => ({ ...prev, energy: num }))
+                    setFormData((prev) => ({ ...prev, energy: num }))
                   }
                 />
                 {num}
@@ -131,15 +132,11 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
           </div>
 
           <label>{languageLibrary[language].evaluateFactors}</label>
-          <select
-            name="factor"
-            value={formData.factor}
-            onChange={handleChange}
-          >
+          <select name="factor" value={formData.factor} onChange={handleChange}>
             <option value="" disabled>
               {languageLibrary[language].evaluateFactorsDefault}
             </option>
-            {impacts.map(f => (
+            {impacts.map((f) => (
               <option key={f.value} value={f.value}>
                 {f.label}
               </option>
@@ -148,7 +145,9 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
 
           <div className="button-group">
             <button type="submit">{languageLibrary[language].save}</button>
-            <button type="button" onClick={saveNull}>{languageLibrary[language].cancel}</button>
+            <button type="button" onClick={saveNull}>
+              {languageLibrary[language].cancel}
+            </button>
           </div>
         </form>
       </div>
