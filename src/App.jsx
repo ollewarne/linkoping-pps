@@ -16,7 +16,7 @@ function App() {
 
   const handlePauseSave = (data) => {
     console.log("Saved:", data);
-    setShowPauseModal(false); // close modal after save
+    setShowPauseModal(false); 
   };
 
   return (
