@@ -5,9 +5,11 @@ import Header from './components/Header/Header';
 import Schedule from './components/Schedule/Schedule';
 import WorkDayForm from './components/WorkDayForm/WorkDayForm';
 import PauseStatistics from './components/PauseStatistics/PauseStatistics';
+import PopupManager from './components/PopupManager/PopupManager';
 
 import { useTranslator } from './contexts/languageContext';
 import { languageLibrary } from './locales/language';
+
 
 function App() {
   const [showPauseModal, setShowPauseModal] = useState(false);
@@ -20,7 +22,14 @@ function App() {
 
   return (
     <>
-      <Header />
+    <PopupManager>
+      {({ isDndEnabled, toggleDnd}) => (
+      <Header 
+      isDndEnabled={isDndEnabled}
+      toggleDnd={toggleDnd}
+      />
+      )}
+      </PopupManager>
       <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
         <WorkDayForm />
         <ActivityForm />
