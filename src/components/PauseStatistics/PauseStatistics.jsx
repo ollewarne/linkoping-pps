@@ -7,7 +7,7 @@ import { languageLibrary } from "../../locales/language";
 const event_key ="pauseStatistics/events";
 const last_id_key = "pauseStatistics/lastID";
 
-function PauseStatistics({ onSave, onClose }) {
+function PauseStatistics({ onSave, onClose, isDndEnabled }) {
   const { language } = useTranslator()
   const impacts = userOptions[language].impacts;
 
@@ -16,6 +16,32 @@ function PauseStatistics({ onSave, onClose }) {
     energy: 3,
     factor: '',
   });
+
+  const saveNull = () => {
+    const lastId = Number(localStorage.getItem(last_id_key)) || 0;
+    const newId = lastId +1;
+
+    const newEntry = {
+      id: newId,
+      efficiency: null,
+      energy: null,
+      factor: null,
+      timestamp: new Date().toISOString(),
+    };
+
+    const existingEvents = JSON.parse(localStorage.getItem(event_key)) || [];
+    existingEvents.push(newEntry);
+    localStorage.setItem(event_key, JSON.stringify(existingEvents));
+    localStorage.setItem(last_id_key, newId);
+
+    if (onSave) onSave(newEntry);
+    if (onClose) onClose();
+  }
+
+  if (isDndEnabled) {
+    saveNull();
+    return null;
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -122,7 +148,7 @@ function PauseStatistics({ onSave, onClose }) {
 
           <div className="button-group">
             <button type="submit">{languageLibrary[language].save}</button>
-            <button type="button" onClick={onClose}>{languageLibrary[language].cancel}</button>
+            <button type="button" onClick={saveNull}>{languageLibrary[language].cancel}</button>
           </div>
         </form>
       </div>
