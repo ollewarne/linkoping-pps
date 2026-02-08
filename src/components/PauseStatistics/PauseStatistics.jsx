@@ -17,15 +17,13 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
     factor: "",
   });
 
-  const saveNull = () => {
+  const saveEvent = (data) => {
     const lastId = Number(localStorage.getItem(last_id_key)) || 0;
-    const newId = lastId + 1;
+    const newId = lastId +1;
 
     const newEntry = {
       id: newId,
-      efficiency: null,
-      energy: null,
-      factor: null,
+      ...data,
       timestamp: new Date().toISOString(),
     };
 
@@ -35,8 +33,10 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
     localStorage.setItem(last_id_key, newId);
 
     if (onSave) onSave(newEntry);
-    if (onClose) onClose();
+    
   };
+
+  const saveNull = () => saveEvent({efficiency: null, energy: null, factor: null});
 
   useEffect(() => {
     if (isDndEnabled) {
@@ -55,32 +55,12 @@ function PauseStatistics({ onSave, onClose, isDndEnabled }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const lastId = Number(localStorage.getItem(last_id_key)) || 0;
-    const newId = lastId + 1;
-
-    const newEntry = {
-      id: newId,
-      ...formData,
-      timestamp: new Date().toISOString(),
-    };
-
-    const existingEvents = JSON.parse(localStorage.getItem(event_key)) || [];
-
-    existingEvents.push(newEntry);
-
-    localStorage.setItem(event_key, JSON.stringify(existingEvents));
-    localStorage.setItem(last_id_key, newId);
-
-    if (onSave) {
-      onSave(newEntry);
-    }
+    saveEvent(formData);
     setFormData({
       efficiency: 3,
       energy: 3,
       factor: impacts[0].value,
     });
-    if (onClose) onClose();
   };
 
   return (
