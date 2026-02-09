@@ -1,11 +1,12 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ActivityForm from "./components/ActivityForm/ActivityForm";
 import Header from "./components/Header/Header";
 import Schedule from "./components/Schedule/Schedule";
 import WorkDayForm from "./components/WorkDayForm/WorkDayForm";
 import PauseStatistics from "./components/PauseStatistics/PauseStatistics";
 import PopupManager from "./components/PopupManager/PopupManager";
+import MobileLayout from "./components/MobileLayout/MobileLayout";
 
 import { useTranslator } from "./contexts/languageContext";
 import { languageLibrary } from "./locales/language";
@@ -14,44 +15,71 @@ import { languageLibrary } from "./locales/language";
 import Statistics from "./components/Statistics/statistics";
 
 function App() {
-  const [showPauseModal, setShowPauseModal] = useState(false);
-  const { language } = useTranslator();
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [showPauseModal, setShowPauseModal] = useState(false);
+    const { language } = useTranslator();
+    const isMobile = windowWidth < 768;
 
-  const handlePauseSave = (data) => {
-    console.log("Saved:", data);
-    setShowPauseModal(false); 
-  };
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
 
-  return (
-    <PopupManager>
-      {({ isDndEnabled, toggleDnd }) => (
-        <>
-          <Header isDndEnabled={isDndEnabled} toggleDnd={toggleDnd} />
-          <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
-            <WorkDayForm />
-            <ActivityForm />
+        window.addEventListener('resize', handleResize);
 
-            <button onClick={() => setShowPauseModal(true)}>
-              {languageLibrary[language].evaluateButton}
-            </button>
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
 
-            {showPauseModal && (
-              <PauseStatistics
-                onSave={handlePauseSave}
-                isDndEnabled={isDndEnabled}
-              />
-            )}
-          </div>
+    }, [])
 
-          <div>
-            <Schedule />
-          </div>
+    const handlePauseSave = (data) => {
+        console.log("Saved:", data);
+        setShowPauseModal(false);
+    };
 
-          <Statistics />
-        </>
-      )}
-    </PopupManager>
-  );
+    return (
+        <PopupManager>
+            {({ isDndEnabled, toggleDnd }) => {
+                const children = (
+                    <>
+                        <Header isDndEnabled={isDndEnabled} toggleDnd={toggleDnd} />
+                        <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
+                            <WorkDayForm />
+                            <ActivityForm />
+                            <button onClick={() => setShowPauseModal(true)}>
+                                {languageLibrary[language].evaluateButton}
+                            </button>
+                            {showPauseModal && (
+                                <PauseStatistics
+                                    onSave={handlePauseSave}
+                                    isDndEnabled={isDndEnabled}
+                                />
+                            )}
+                        </div>
+                        <Schedule />
+                        <Statistics />
+                    </>
+                );
+
+                return isMobile ? (
+                    <MobileLayout
+                        header={<Header isDndEnabled={isDndEnabled} toggleDnd={toggleDnd} />}
+                        activityView={
+                            <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
+                                <WorkDayForm />
+                                <ActivityForm />
+                            </div>
+                        }
+                        scheduleView={<Schedule />}
+                        statisticsView={<Statistics />}
+                    />
+                ) : (
+                    <div className="container">{children}</div>
+                );
+            }}
+        </PopupManager>
+    );
 }
 
 export default App;
