@@ -2,7 +2,7 @@
     background: var(--btn-bg);
     color: var(--btn-text);
     border-radius: 20px;
-    width: 206px;
+    padding: 4px 8px 4px 8px;
     height: 29px;
     border: none;
     cursor: pointer;
