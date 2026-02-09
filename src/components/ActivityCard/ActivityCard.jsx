@@ -1,8 +1,12 @@
 import styles from "./ActivityCard.module.css"
 import { useEffect } from "react";
 import { useActivities } from "../../contexts/activityContext";
+import { calculateDuration } from "../../utils/validateTime";
+import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 
-const workdayMinutes = 300;
+const workday = getWorkdayFromStorage()
+console.log(workday);
+const workdayMinutes = calculateDuration(workday.workHours.start, workday.workHours.end);
 
 const colors = {
     "1": "#FFB3BA",
