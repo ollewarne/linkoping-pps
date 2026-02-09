@@ -11,7 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 
-// Chart.js registration (required)
+// Chart.js registration
 ChartJS.register(
   LineElement,
   PointElement,
@@ -21,29 +21,81 @@ ChartJS.register(
   Tooltip
 );
 
+/* ---------- Helper functions ---------- */
+
+// 1. Best productivity category
+function getBestCategory(activities) {
+  const categoryStats = {};
+
+  activities.forEach(activity => {
+    const values = Object.values(activity.statistics);
+
+    const totalProductivity = values.reduce(
+      (sum, v) => sum + v.productivity,
+      0
+    );
+
+    if (!categoryStats[activity.category]) {
+      categoryStats[activity.category] = { total: 0, count: 0 };
+    }
+
+    categoryStats[activity.category].total += totalProductivity;
+    categoryStats[activity.category].count += values.length;
+  });
+
+  let bestCategory = null;
+  let bestAvg = 0;
+
+  Object.entries(categoryStats).forEach(([category, data]) => {
+    const avg = data.total / data.count;
+    if (avg > bestAvg) {
+      bestAvg = avg;
+      bestCategory = category;
+    }
+  });
+
+  return bestCategory;
+}
+
+// 2. Best energy time (efficiency + productivity)
+function getBestEnergyTime(flattenedStats) {
+  let bestTime = null;
+  let bestScore = 0;
+
+  flattenedStats.forEach(stat => {
+    const score = stat.efficiency + stat.productivity;
+    if (score > bestScore) {
+      bestScore = score;
+      bestTime = stat.time;
+    }
+  });
+
+  return bestTime;
+}
+
+/* ---------- Component ---------- */
+
 export default function Statistics() {
   const keys = Object.keys(mockData);
   const [selectedKey, setSelectedKey] = useState(null);
 
-  // 1: Get activities for selected day
+  // Get activities for selected day
   const activities = selectedKey
     ? mockData[selectedKey].activities
     : [];
 
-  // 2: Flatten all activity statistics into a timeline
+  // Flatten statistics timeline
   const flattenedStats = activities
     .flatMap(activity =>
-      Object.entries(activity.statistics).map(
-        ([time, values]) => ({
-          time,
-          efficiency: values.efficiency,
-          productivity: values.productivity
-        })
-      )
+      Object.entries(activity.statistics).map(([time, values]) => ({
+        time,
+        efficiency: values.efficiency,
+        productivity: values.productivity
+      }))
     )
     .sort((a, b) => a.time.localeCompare(b.time));
 
-  // 3: Build chart data
+  // Chart data
   const chartData = {
     labels: flattenedStats.map(s => s.time),
     datasets: [
@@ -51,7 +103,7 @@ export default function Statistics() {
         label: "Efficiency",
         data: flattenedStats.map(s => s.efficiency),
         borderColor: "purple",
-        tension: 0.3,
+        tension: 0.3
       },
       {
         label: "Productivity",
@@ -62,26 +114,22 @@ export default function Statistics() {
     ]
   };
 
-  // 4: Chart Options
+  // Chart options
   const options = {
     responsive: true,
     plugins: {
       legend: {
-        labels: {
-            color: 'white'
-        },
+        labels: { color: "white" },
         position: "top"
       }
     },
     scales: {
       x: {
-        ticks: {
-            color: 'white'
-        },
+        ticks: { color: "white" },
         title: {
           display: true,
           text: "Time",
-          color: 'white'
+          color: "white"
         }
       },
       y: {
@@ -89,16 +137,25 @@ export default function Statistics() {
         max: 5,
         ticks: {
           stepSize: 1,
-          color: 'white'
+          color: "white"
         },
         title: {
           display: true,
           text: "Score",
-          color: 'white'
+          color: "white"
         }
       }
     }
   };
+
+  // Insights
+  const bestCategory = selectedKey
+    ? getBestCategory(activities)
+    : null;
+
+  const bestEnergyTime = selectedKey
+    ? getBestEnergyTime(flattenedStats)
+    : null;
 
   return (
     <>
@@ -122,6 +179,17 @@ export default function Statistics() {
           <Line data={chartData} options={options} />
         </div>
       )}
+
+      {/* Insights */}
+      <div>
+
+
+{selectedKey && bestEnergyTime && bestCategory && (
+  <p>
+    Idag {selectedKey} när du jobbade mellan {mockData[selectedKey].workdayData.workHours.start} - {mockData[selectedKey].workdayData.workHours.end} i arbetsmiljö: {mockData[selectedKey].workdayData.workEnvironment.location}. Hade du bäst energi {bestEnergyTime} ???? och var som mest produktiv när du arbetade med kategori: { bestCategory}.
+  </p>
+)}
+      </div>
     </>
   );
 }
