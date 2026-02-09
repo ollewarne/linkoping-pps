@@ -1,8 +1,11 @@
 import styles from "./ActivityCard.module.css"
 import { useEffect } from "react";
 import { useActivities } from "../../contexts/activityContext";
+import { calculateDuration } from "../../utils/validateTime";
+import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 
-const workdayMinutes = 300;
+const workday = getWorkdayFromStorage()
+const workdayMinutes = calculateDuration(workday.workHours.start, workday.workHours.end);
 
 const colors = {
     "1": "#FFB3BA",
@@ -46,8 +49,7 @@ function ActivityCard({ activity = {}, scheduledTime }) {
 
     return (
         <div style={{ paddingLeft: "1em", border: "2px solid black", height: `${height}%`, backgroundColor: `${colors[activity.ranking]}`, width: "90%", color: "black", borderRadius: "8px" }}>
-            <p>{activity.category} <strong>| </strong>{activity.title}</p>
-            <p><strong>Estimated duration: </strong>{activity.estimatedDuration} min</p>
+            <p><strong>{activity.title}</strong> | <strong>{activity.category}</strong> | <strong>{activity.estimatedDuration} min</strong></p>
         </div>
     )
 }
