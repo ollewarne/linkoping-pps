@@ -7,13 +7,18 @@ import { userOptions } from "../../constants/userOptions";
 import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
 
-
+function getNextActivityId(activities) {
+  const ids = activities
+    .map((a) => Number(a.id))
+    .filter((n) => Number.isFinite(n));
+  return ids.length ? Math.max(...ids) + 1 : 1;
+}
 function ActivityForm() {
     const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const activityId = useRef(1);
     const { activities, dispatch } = useActivities();
+    const nextId = getNextActivityId(activities);
 
     const categories = userOptions[language].category
     // ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
@@ -61,7 +66,7 @@ function ActivityForm() {
         if (form.category.value === "Meeting" || form.category.value === "Möte") {
             const newActivity = {
                 scheduledTime: null,
-                id: activityId.current,
+                id: nextId,
                 category: form.category.value,
                 isMeeting: true,
                 title: form.activityTitle.value,
@@ -76,7 +81,7 @@ function ActivityForm() {
         } else {
             const newActivity = {
                 scheduledTime: null,
-                id: activityId.current,
+                id: nextId,
                 category: form.category.value,
                 isMeeting: false,
                 title: form.activityTitle.value,
@@ -91,7 +96,7 @@ function ActivityForm() {
             dispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
         }
 
-        activityId.current++
+        // activityId.current++
 
 
         form.reset();
