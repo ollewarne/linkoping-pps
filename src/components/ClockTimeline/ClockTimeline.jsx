@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import DayProgressTimeline from "./DayProgressTimeline";
-import ActivityHoursTimeline from "./ActivityHoursTimeline";
 import TimeScale from "./TimeScale";
 import { useActivities } from "../../contexts/activityContext";
 
@@ -20,7 +19,6 @@ export default function ClockTimeline() {
     <div style={{ width: "120px", height: "100%", position: "relative" }}>
       <TimeScale />
       <DayProgressTimeline />
-      <ActivityHoursTimeline blocks={blocks} />
     </div>
   );
 }
