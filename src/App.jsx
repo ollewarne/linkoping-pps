@@ -10,6 +10,9 @@ import PopupManager from "./components/PopupManager/PopupManager";
 import { useTranslator } from "./contexts/languageContext";
 import { languageLibrary } from "./locales/language";
 
+
+import Statistics from "./components/Statistics/statistics";
+
 function App() {
   const [showPauseModal, setShowPauseModal] = useState(false);
   const { language } = useTranslator();
@@ -43,6 +46,8 @@ function App() {
           <div>
             <Schedule />
           </div>
+
+          <Statistics />
         </>
       )}
     </PopupManager>
