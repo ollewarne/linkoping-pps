@@ -4,7 +4,7 @@ import { useActivities } from "../../contexts/activityContext";
 import { calculateDuration } from "../../utils/validateTime";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 
-git add src/components/ActivityCard/ActivityCard.jsxconst workday = getWorkdayFromStorage();
+const workday = getWorkdayFromStorage();
 
 const workdayMinutes = workday?.workHours?.start && workday?.workHours?.end
   ? calculateDuration(workday.workHours.start, workday.workHours.end)
