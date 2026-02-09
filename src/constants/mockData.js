@@ -1,4 +1,4 @@
-const mockData = {
+export const mockData = {
     "26-02-03": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
