@@ -4,8 +4,11 @@ import { useActivities } from "../../contexts/activityContext";
 import { calculateDuration } from "../../utils/validateTime";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 
-const workday = getWorkdayFromStorage()
-const workdayMinutes = calculateDuration(workday.workHours.start, workday.workHours.end);
+git add src/components/ActivityCard/ActivityCard.jsxconst workday = getWorkdayFromStorage();
+
+const workdayMinutes = workday?.workHours?.start && workday?.workHours?.end
+  ? calculateDuration(workday.workHours.start, workday.workHours.end)
+  : 12 * 60;
 
 const colors = {
     "1": "#FFB3BA",
@@ -14,6 +17,7 @@ const colors = {
     "4": "#BAE1FF",
     "5": "#D3D3D3",
 };
+
 
 function ActivityCard({ activity = {}, scheduledTime }) {
 
