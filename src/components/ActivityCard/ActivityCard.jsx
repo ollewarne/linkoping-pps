@@ -21,12 +21,12 @@ const colors = {
 
 function ActivityCard({ activity = {}, scheduledTime }) {
 
-    const { dispatch } = useActivities();
+    const { activityDispatch } = useActivities();
 
     // kommer användas senare, ignoreras just nu
     const handleEdit = () => {
 
-        dispatch({
+        activityDispatch({
             type: "EDIT_ACTIVITY",
             payload: {
                 id: activity.id,
@@ -40,7 +40,7 @@ function ActivityCard({ activity = {}, scheduledTime }) {
 
     //updaterar tiden den ligger i schemat när den skapas
     useEffect(() => {
-        dispatch({
+        activityDispatch({
             type: "SCHEDULE_ACTIVITY",
             payload: {
                 id: activity.id,
