@@ -8,7 +8,7 @@
     * edits a current activity based on the id of that activity
 - `activityDispatch({ type: "SCHEDULE_ACTIVITY", payload: { id: number, scheduledTime: string }})`
     * adds a scheduled time to an activity
-- `activityDispatch({ type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } })
+- `activityDispatch({ type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } })`
     * updates the time spent on a specific activity
 - `activityDispatch({ type: "ADD_STATISTIC"; payload: { id: number; timestamp: string; stat: object } })`
     * adds a statistic to the specific activity based on the id of the activity 
