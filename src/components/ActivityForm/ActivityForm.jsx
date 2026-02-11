@@ -17,7 +17,7 @@ function ActivityForm() {
     const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const { activities, dispatch } = useActivities();
+    const { activities, activityDispatch } = useActivities();
     const nextId = getNextActivityId(activities);
 
     const categories = userOptions[language].category
@@ -77,7 +77,7 @@ function ActivityForm() {
                 totalTimeSpent: 0,
                 statistics: {}
             };
-            dispatch({type: "ADD_MEETING", payload: {...newActivity}})
+            activityDispatch({type: "ADD_MEETING", payload: {...newActivity}})
         } else {
             const newActivity = {
                 scheduledTime: null,
@@ -93,7 +93,7 @@ function ActivityForm() {
                 totalTimeSpent: 0,
                 statistics: {}
             };
-            dispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
+            activityDispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
         }
 
         // activityId.current++

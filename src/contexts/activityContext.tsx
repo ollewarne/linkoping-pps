@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 
-type Activity = {
+interface Activity {
     id: number;
     scheduledTime: string | null;
     category: string;
@@ -24,10 +24,11 @@ type ActivityAction =
     | { type: "ADD_MEETING"; payload: Activity }
     | { type: "SCHEDULE_ACTIVITY"; payload: { id: number; scheduledTime: string } }
     | { type: "EDIT_ACTIVITY"; payload: { id: number; title: string; category: string; ranking: string; estimatedDuration: number } }
-    | { type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } };
+    | { type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } }
+    | { type: "ADD_STATISTIC"; payload: { id: number; timestamp: string; stat: object } };
 
 
-const activityContext = createContext<{activities: Activity[]; dispatch: React.Dispatch<ActivityAction>} | null>(null);
+const activityContext = createContext<{ activities: Activity[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
 
 
 function activitiesReducer(state: Activity[], action: ActivityAction): Activity[] {
@@ -53,14 +54,22 @@ function activitiesReducer(state: Activity[], action: ActivityAction): Activity[
                 ...activity,
                 totalTimeSpent: action.payload.totalTime
             } : activity)
+        case "ADD_STATISTIC":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                statistics: {
+                    ...activity.statistics,
+                    [action.payload.timestamp]: { ...action.payload.stat }
+                }
+            } : activity)
         default:
             return state;
     }
 
 }
 
-export function ActivityProvider({ children }: {children: React.ReactNode}) {
-    const [activities, dispatch] = useReducer(activitiesReducer, [],
+export function ActivityProvider({ children }: { children: React.ReactNode }) {
+    const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
             const item = localStorage.getItem("activities");
             if (!item) return [];
@@ -93,7 +102,7 @@ export function ActivityProvider({ children }: {children: React.ReactNode}) {
     )
 
     const value = useMemo(() => ({
-        activities, dispatch
+        activities, activityDispatch
     }), [activities])
 
     return (
