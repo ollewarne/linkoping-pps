@@ -1,6 +1,7 @@
 import styles from "./BottomNav.module.css"
+import type { views } from "./MobileLayout"
 
-export default function BottomNav({ handleClick, activeView }: { handleClick: (view: string) => void, activeView: string }) {
+export default function BottomNav({ handleClick, activeView }: { handleClick: (view: views) => void, activeView: string }) {
     return (
         <div className={styles.container}>
             <button

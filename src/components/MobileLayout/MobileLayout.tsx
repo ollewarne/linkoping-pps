@@ -1,7 +1,7 @@
 import { useState } from "react"
 import BottomNav from "./BottomNav"
 
-type views = "activityView" | "scheduleView" | "statisticsView"
+export type views = "activityView" | "scheduleView" | "statisticsView"
 
 export default function MobileLayout({ header, activityView, scheduleView, statisticsView }: {
     header: React.ReactNode,
