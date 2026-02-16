@@ -8,11 +8,12 @@ form {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-width: 500px;
+    max-width: 100%;
+    width: 100%;
 }
 
 fieldset {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
     border-radius: 8px;
     padding: 12px;
     display: flex;
@@ -57,12 +58,32 @@ button[type="submit"] {
 }
 
 fieldset:has(input[type="radio"]) {
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 fieldset:has(input[type="radio"]) legend {
-  width: 100%;
-  margin-bottom: 4px;
+    margin-bottom: 4px;
+}
+
+@media (max-width: 768px) {
+    form {
+        gap: 8px;
+    }
+
+    fieldset {
+        padding: 8px;
+        gap: 6px;
+    }
+
+    .modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    h2 {
+        margin-top: 0;
+        font-size: 0.8em;
+    }
 }
