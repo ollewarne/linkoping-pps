@@ -2,6 +2,7 @@ import { NavLink, Outlet } from "react-router";
 import ColorMode from "../../components/ThemeToggle/ThemeToggle";
 import { ChangeLanguage } from "../../components/ChangeLanguage/ChangeLanguage";
 import styles from "./DesktopLayout.module.css"
+import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
 
 
 function DesktopLayout() {
@@ -23,6 +24,7 @@ function DesktopLayout() {
                 <div className={styles.buttonGroup}>
                     <ChangeLanguage />
                     <ColorMode />
+                    <SettingsMenu />
                 </div>
             </header>
             <main className={styles.appMain}>
