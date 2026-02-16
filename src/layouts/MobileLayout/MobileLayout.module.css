@@ -1,35 +1,37 @@
 .container {
     margin: 0 auto;
     display: grid;
-    grid-template-rows: 5% calc(95% - 1em);
-    height: 100%;
-    gap: 1em;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .siteHeader {
-    border-bottom: 5px solid #E8E8C5;
     text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
     z-index: 100;
-    height: 100%;
+    padding: 2px 4px 2px 4px;
 }
 
 .buttonGroup {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 .appMain {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    justify-self: center;
-    align-self: center;
     width: 90%;
-    overflow: scroll;
+    margin: 0 auto;
+    overflow-y: auto;
 }
+
+.mobileTitle {
+    font-size: 1.2em;
+}
+
 
