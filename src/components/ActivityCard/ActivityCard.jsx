@@ -7,8 +7,8 @@ import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 const workday = getWorkdayFromStorage();
 
 const workdayMinutes = workday?.workHours?.start && workday?.workHours?.end
-  ? calculateDuration(workday.workHours.start, workday.workHours.end)
-  : 12 * 60;
+    ? calculateDuration(workday.workHours.start, workday.workHours.end)
+    : 12 * 60;
 
 const colors = {
     "1": "#FFB3BA",
@@ -52,8 +52,8 @@ function ActivityCard({ activity = {}, scheduledTime }) {
     const height = Math.floor((activity.estimatedDuration / workdayMinutes) * 100)
 
     return (
-        <div style={{ paddingLeft: "1em", border: "2px solid black", height: `${height}%`, backgroundColor: `${colors[activity.ranking]}`, width: "90%", color: "black", borderRadius: "8px" }}>
-            <p><strong>{activity.title}</strong> | <strong>{activity.category}</strong> | <strong>{activity.estimatedDuration} min</strong></p>
+        <div style={{ height: `${height}%`, backgroundColor: `${colors[activity.ranking]}` }} className={styles.card}>
+            <p className={styles.content}><strong>{activity.title}</strong> | <strong>{activity.category}</strong> | <strong>{activity.estimatedDuration} min</strong></p>
         </div>
     )
 }
