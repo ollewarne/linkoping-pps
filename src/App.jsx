@@ -1,24 +1,23 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import ActivityForm from "./components/ActivityForm/ActivityForm";
-import Header from "./components/Header/Header";
-import Schedule from "./components/Schedule/Schedule";
-import WorkDayForm from "./components/WorkDayForm/WorkDayForm";
 import PauseStatistics from "./components/PauseStatistics/PauseStatistics";
 import PopupManager from "./components/PopupManager/PopupManager";
-import MobileLayout from "./components/MobileLayout/MobileLayout";
+import MobileLayout from "./layouts/MobileLayout/MobileLayout";
+import DesktopLayout from "./layouts/DesktopLayout/DesktopLayout";
+import SchedulePage from "./pages/SchedulePage";
+import StatisticsPage from "./pages/StatisticsPage";
+import ActivityPage from "./pages/ActivityPage";
+import { Route, Routes } from "react-router";
 
 import { useTranslator } from "./contexts/languageContext";
 import { languageLibrary } from "./locales/language";
-
-
 import Statistics from "./components/Statistics/statistics";
 
 function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const isMobile = windowWidth < 768;
     const [showPauseModal, setShowPauseModal] = useState(false);
     const { language } = useTranslator();
-    const isMobile = windowWidth < 768;
 
     useEffect(() => {
         const handleResize = () => {
@@ -33,49 +32,25 @@ function App() {
 
     }, [])
 
-    const handlePauseSave = (data) => {
-        console.log("Saved:", data);
-        setShowPauseModal(false);
-    };
-
     return (
         <PopupManager>
             {({ isDndEnabled, toggleDnd }) => {
-                const children = (
-                    <>
-                        <Header isDndEnabled={isDndEnabled} toggleDnd={toggleDnd} />
-                        <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
-                            <WorkDayForm />
-                            <ActivityForm />
-                            <button onClick={() => setShowPauseModal(true)}>
-                                {languageLibrary[language].evaluateButton}
-                            </button>
-                            {showPauseModal && (
-                                <PauseStatistics
-                                    onSave={handlePauseSave}
-                                    isDndEnabled={isDndEnabled}
-                                />
-                            )}
-                        </div>
-                        <Schedule />
-                        <Statistics />
-                    </>
-                );
-
                 return isMobile ? (
-                    <MobileLayout
-                        header={<Header isDndEnabled={isDndEnabled} toggleDnd={toggleDnd} />}
-                        activityView={
-                            <div style={{ display: "flex", flexDirection: "column", gap: "1em" }}>
-                                <WorkDayForm />
-                                <ActivityForm />
-                            </div>
-                        }
-                        scheduleView={<Schedule />}
-                        statisticsView={<Statistics />}
-                    />
+                    <Routes>
+                        <Route path="/" element={<MobileLayout />}>
+                            <Route index element={<ActivityPage />} />
+                            <Route path="Schedule" element={<SchedulePage />} />
+                            <Route path="Statistics" element={<StatisticsPage />} />
+                        </Route>
+                    </Routes>
                 ) : (
-                    <div className="container">{children}</div>
+                    <Routes>
+                        <Route path="/" element={<DesktopLayout />}>
+                            <Route index element={<ActivityPage />} />
+                            <Route path="Schedule" element={<SchedulePage />} />
+                            <Route path="Statistics" element={<StatisticsPage />} />
+                        </Route>
+                    </Routes>
                 );
             }}
         </PopupManager>

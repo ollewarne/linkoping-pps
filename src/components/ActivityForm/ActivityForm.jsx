@@ -13,7 +13,7 @@ function getNextActivityId(activities) {
     .filter((n) => Number.isFinite(n));
   return ids.length ? Math.max(...ids) + 1 : 1;
 }
-function ActivityForm() {
+function ActivityForm({ onClose }) {
     const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -104,10 +104,11 @@ function ActivityForm() {
         hoursInput.setCustomValidity('');
         minutesInput.setCustomValidity('');
         setValidationError('');
+        onClose();
     }
 
     return (
-        <>
+        <div className={styles.container}>
             <h2>{languageLibrary[language].form2Header}</h2>
             <form onSubmit={handleSubmit}>
                 <fieldset>
@@ -162,7 +163,7 @@ function ActivityForm() {
                 }
                 <button type="submit">{languageLibrary[language].form2Submit}</button>
             </form>
-        </>
+        </div>
     )
 }
 
