@@ -107,7 +107,7 @@ function ActivityForm() {
     }
 
     return (
-        <>
+        <div className={styles.container}>
             <h2>{languageLibrary[language].form2Header}</h2>
             <form onSubmit={handleSubmit}>
                 <fieldset>
@@ -162,7 +162,7 @@ function ActivityForm() {
                 }
                 <button type="submit">{languageLibrary[language].form2Submit}</button>
             </form>
-        </>
+        </div>
     )
 }
 
