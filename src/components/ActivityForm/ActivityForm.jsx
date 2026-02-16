@@ -13,7 +13,7 @@ function getNextActivityId(activities) {
     .filter((n) => Number.isFinite(n));
   return ids.length ? Math.max(...ids) + 1 : 1;
 }
-function ActivityForm() {
+function ActivityForm({ onClose }) {
     const {language} =useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -104,6 +104,7 @@ function ActivityForm() {
         hoursInput.setCustomValidity('');
         minutesInput.setCustomValidity('');
         setValidationError('');
+        onClose();
     }
 
     return (
