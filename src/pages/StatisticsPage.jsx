@@ -1,7 +1,15 @@
-import Statistics from "../components/Statistics/statistics";
+
+import ProductivityChart from "../components/Statistics/ProductivityChart";
+import EnergyChart from "../components/Statistics/EnergyChart";
+import { mockData } from "../constants/mockData";
 
 function StatisticsPage() {
-    return <Statistics />
+    return (
+    <>
+        <ProductivityChart mockData={mockData} />
+        <EnergyChart mockData={mockData} />
+    </>
+    )
 }
 
 export default StatisticsPage;
