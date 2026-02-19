@@ -21,10 +21,9 @@ function ThemeToggleButton() {
   );
 }
 
-export default function ColorMode({ children }) {
+export default function ColorMode() {
   return (
     <ThemeProvider>
-      {children}
       <ThemeToggleButton />   
     </ThemeProvider>
   );
