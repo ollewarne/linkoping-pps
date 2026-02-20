@@ -11,7 +11,6 @@ import { Route, Routes } from "react-router";
 
 import { useTranslator } from "./contexts/languageContext";
 import { languageLibrary } from "./locales/language";
-import Statistics from "./components/Statistics/statistics";
 
 function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
