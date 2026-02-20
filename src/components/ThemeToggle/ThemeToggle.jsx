@@ -15,7 +15,10 @@ function ThemeToggleButton() {
       onClick={toggleTheme}
       aria-label={`Change to ${theme === "light" ? "dark" : "light"} theme`}
     >
-      {theme === "light" ?  "🌙" : "🔆"}
+      {/* {theme === "light" ?  "🌙" : "🔆"} */}
+
+      <img 
+        src={theme === 'light' ? './public/moon.svg' : './public/sun.svg'} alt="" />
       
     </button>
   );

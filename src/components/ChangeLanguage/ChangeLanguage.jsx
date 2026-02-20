@@ -8,7 +8,7 @@ export function ChangeLanguage() {
 
     return (
         <button onClick={toggleLanguage} className={styles['language-toggle-btn']}>
-            {language === 'sv' ? 'English' : 'Svenska'}
+            <span>{language === 'sv' ? 'EN' : 'SV'}</span>
         </button>
     )
 }

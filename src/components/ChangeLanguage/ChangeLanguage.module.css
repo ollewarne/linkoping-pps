@@ -14,3 +14,9 @@
     background: var(--btn-hover);
     transform: translateY(-1px);
 }
+
+span {
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0;
+}
