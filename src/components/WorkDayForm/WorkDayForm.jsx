@@ -4,7 +4,8 @@ import { useTranslator } from "../../contexts/languageContext";
 import { languageLibrary } from "../../locales/language";
 import { userOptions } from "../../constants/userOptions";
 import {convertStringTimeToMinutes} from "../../utils/convertTime";
-import { saveWorkdayToStorage } from "../../utils/workdayStorage";
+import { saveWorkdayToStorage, getWorkdayFromStorage } from "../../utils/workdayStorage";
+
 
 
 export default function WorkDayForm() {
@@ -34,6 +35,13 @@ export default function WorkDayForm() {
 
     // set user options for work environment
     const environmentOptions = userOptions[language].workEnvironment; // 'Work Environment'
+
+
+    // get saved workday values from localstorage to default input fields
+    let workformData = getWorkdayFromStorage();
+    let nonWorkFormData = workformData.nonWorkHours;
+    console.log(workformData)
+
 
     // ------------------ HANDLE SUBMIT ------------------
     function handleSubmit(e) {
@@ -145,17 +153,17 @@ export default function WorkDayForm() {
         };
 
         saveWorkdayToStorage(workdayData);
-        console.log(workdayData);
+        // console.log(workdayData);
 
         /* ------------------ RESET FORM & CLEAR INPUT ------------------ */
-        workHoursStart.current.value = '';
-        workHoursEnd.current.value = '';
-        workEnvironment.current.value = '';
+        // workHoursStart.current.value = '';
+        // workHoursEnd.current.value = '';
+        // workEnvironment.current.value = '';
 
-        if (hasNonWorkHours) {
-            nonWorkHoursStart.current.value = '';
-            nonWorkHoursEnd.current.value = '';
-        };
+        // if (hasNonWorkHours) {
+        //     nonWorkHoursStart.current.value = '';
+        //     nonWorkHoursEnd.current.value = '';
+        // };
 
         /* ------------------ SHOW SUCESSFULL SUBMIT ------------------ */
         setShowSuccess(true);
@@ -178,14 +186,18 @@ export default function WorkDayForm() {
                     ref={workHoursStart}
                     type="time" 
                     id="work-hours-start" 
-                    onChange={(e) => e.target.setCustomValidity('')}/>
+                    onChange={(e) => e.target.setCustomValidity('')}
+                    defaultValue={workformData ? workformData.workHours.start : '--:--'}
+                    />
 
                 <label htmlFor="work-hours-end">{languageLibrary[language].end /* 'End' */}</label>
                 <input 
                     ref={workHoursEnd}
                     type="time" 
                     id="work-hours-end" 
-                    onChange={(e) => e.target.setCustomValidity('')}/>
+                    onChange={(e) => e.target.setCustomValidity('')}
+                    defaultValue={workformData ? workformData.workHours.end : '--:--'}
+                    />
             </fieldset>
 
             {/* ---------- NON-WORKING HOURS ---------- */}
@@ -210,6 +222,8 @@ export default function WorkDayForm() {
                             type="time"
                             id="non-work-hours-start"
                             onChange={(e) => e.target.setCustomValidity('')}
+                            defaultValue={nonWorkFormData ? workformData.nonWorkHours.start : '--:--'}
+                            
                         />
 
                         <label htmlFor="non-work-hours-end">{languageLibrary[language].end}</label>
@@ -218,6 +232,7 @@ export default function WorkDayForm() {
                             type="time"
                             id="non-work-hours-end"
                             onChange={(e) => e.target.setCustomValidity('')}
+                            defaultValue={nonWorkFormData ? workformData.nonWorkHours.end : '--:--'}
                         />
                     </fieldset>
                 )
@@ -229,7 +244,7 @@ export default function WorkDayForm() {
                 <select
                     ref={workEnvironment}
                     id="working-environment"
-                    defaultValue=""
+                    defaultValue={workformData ? workformData.workEnvironment.location : ''}
                     onChange={(e) => e.target.setCustomValidity("")}>
 
                     <option value="" disabled>
@@ -249,9 +264,9 @@ export default function WorkDayForm() {
                 <button type="submit">{languageLibrary[language].save /* Save */}</button>
 
                 {showSuccess && (
-                    <span className={styles.submitted}>
+                    <p className={styles.submitted}>
                         {languageLibrary[language].submitSuccess}
-                    </span>
+                    </p>
                 )}
             </div>
             
