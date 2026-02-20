@@ -18,7 +18,7 @@ function ThemeToggleButton() {
       {/* {theme === "light" ?  "🌙" : "🔆"} */}
 
       <img 
-        src={theme === 'light' ? './public/moon.svg' : './public/sun.svg'} alt="" />
+        src={theme === 'light' ? '/moon.svg' : '/sun.svg'} alt="" />
       
     </button>
   );
