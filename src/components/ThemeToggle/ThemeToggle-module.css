@@ -30,9 +30,16 @@ body {
     margin-top: 4px;
     transition: transform 0.3s ease;
     padding: 4px 8px 4px 8px;
+    display: flex;
+    align-items: center;
 }
 
 .theme-toggle-btn:hover {
     background: var(--btn-hover);
     transform: translateY(-1px);
+}
+
+.theme-toggle-btn img {
+    height: 22px;
+    width: 22px;
 }
