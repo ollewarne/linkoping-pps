@@ -201,15 +201,17 @@ export default function WorkDayForm() {
             </fieldset>
 
             {/* ---------- NON-WORKING HOURS ---------- */}
+            <span style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} /* ------------ MOVE TO STYLE ------------ */>
             <input
                 type="checkbox"
                 id="register-non-work"
                 checked={hasNonWorkHours}
                 onChange={(e) => setHasNonWorkHours(e.target.checked)}
             />
-            <label htmlFor="register-non-work">
+            <label htmlFor="register-non-work" style={{margin: '0'}} /* ------------ MOVE TO STYLE ------------ */> 
                 {languageLibrary[language].form1Checkbox /* 'I have non-working hours to register' */}
             </label>
+            </span>
 
             {hasNonWorkHours && (
                     <fieldset>
