@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useActivities } from "../../contexts/activityContext";
 import { calculateDuration } from "../../utils/validateTime";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const workday = getWorkdayFromStorage();
 
@@ -10,18 +11,14 @@ const workdayMinutes = workday?.workHours?.start && workday?.workHours?.end
     ? calculateDuration(workday.workHours.start, workday.workHours.end)
     : 12 * 60;
 
-const colors = {
-    "1": "#FFB3BA",
-    "2": "#FFCBA4",
-    "3": "#FFF5BA",
-    "4": "#BAE1FF",
-    "5": "#D3D3D3",
-};
 
+function ActivityCard({ activity = {}, scheduledTime, index }) {
 
-function ActivityCard({ activity = {}, scheduledTime }) {
+    const CARD_COLORS = ['#4ABFBD', '#6AAEE8', '#C45FD6', '#8B4DB0', '#6B72C8', '#4A4A9D'];
 
     const { activityDispatch } = useActivities();
+
+    const backgroundColor = CARD_COLORS[index % CARD_COLORS.length];
 
     // kommer användas senare, ignoreras just nu
     const handleEdit = () => {
@@ -32,7 +29,6 @@ function ActivityCard({ activity = {}, scheduledTime }) {
                 id: activity.id,
                 title: newTitle,
                 category: activity.category,
-                ranking: activity.ranking,
                 estimatedDuration: activity.estimatedDuration
             }
         });
@@ -50,9 +46,8 @@ function ActivityCard({ activity = {}, scheduledTime }) {
     }, []);
 
     const height = Math.floor((activity.estimatedDuration / workdayMinutes) * 100)
-
     return (
-        <div style={{ height: `${height}%`, backgroundColor: `${colors[activity.ranking]}` }} className={styles.card}>
+        <div style={{ height: `${height}%`, backgroundColor }} className={styles.card}>
             <p className={styles.content}><strong>{activity.title}</strong> | <strong>{activity.category}</strong> | <strong>{activity.estimatedDuration} min</strong></p>
         </div>
     )
