@@ -6,7 +6,6 @@ interface Activity {
     category: string;
     isMeeting: boolean;
     title: string;
-    ranking: string;
     estimatedDuration: number;
     isActive: boolean;
     totalTimeSpent: number;
@@ -23,7 +22,7 @@ type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: Activity }
     | { type: "ADD_MEETING"; payload: Activity }
     | { type: "SCHEDULE_ACTIVITY"; payload: { id: number; scheduledTime: string } }
-    | { type: "EDIT_ACTIVITY"; payload: { id: number; title: string; category: string; ranking: string; estimatedDuration: number } }
+    | { type: "EDIT_ACTIVITY"; payload: { id: number; title: string; category: string; estimatedDuration: number } }
     | { type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } }
     | { type: "ADD_STATISTIC"; payload: { id: number; timestamp: string; stat: object } };
 
@@ -46,7 +45,6 @@ function activitiesReducer(state: Activity[], action: ActivityAction): Activity[
                     ...activity,
                     title: action.payload.title,
                     category: action.payload.category,
-                    ranking: action.payload.ranking,
                     estimatedDuration: action.payload.estimatedDuration
                 } : activity)
         case "UPDATE_TIME_SPENT":
@@ -112,8 +110,6 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
-//kommentaren hjälper tydligen vite så man inte får error
-/* @refresh reset */
 export function useActivities() {
     const context = useContext(activityContext);
     if (!context) throw new Error("useActivities used outside of provider")
