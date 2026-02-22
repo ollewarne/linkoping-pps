@@ -1,6 +1,6 @@
 // DayDetailsPopup.jsx
 import React from 'react';
-import "./DayDetailsPopup.css"; // Reuse existing CSS for popup styling
+import "./DayDetailsPopup.css";
 
 export const DayDetailsPopup = ({
   showPopup,
