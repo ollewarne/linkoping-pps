@@ -1,0 +1,100 @@
+import React, { useEffect, useState, useMemo } from "react";
+import { SessionTimer } from "./CountdownTimer";
+import PauseStatistics from "../PauseStatistics/PauseStatistics";
+import "./CountdownDisplay.css";
+
+interface CountdownDisplayProps {
+  activityName: string;
+  totalMinutes: number;
+  workMinutes: number;
+  breakMinutes: number;
+  isDndEnabled: boolean;
+}
+
+export const CountdownDisplay: React.FC<CountdownDisplayProps> = ({
+  activityName,
+  totalMinutes,
+  workMinutes,
+  breakMinutes,
+  isDndEnabled,
+}) => {
+  const [timeLeft, setTimeLeft] = useState(workMinutes * 60);
+  const [phase, setPhase] = useState<"work" | "break">("work");
+  const [totalRemaining, setTotalRemaining] = useState(totalMinutes * 60);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const timer = useMemo(() => {
+    return new SessionTimer({
+      id: "session-1",
+      totalMinutes,
+      activeMinutes: workMinutes,
+      breakMinutes,
+      onTick: (_id, totalSec, currentPhase, phaseSec) => {
+        setTotalRemaining(totalSec);
+        setPhase(currentPhase);
+        setTimeLeft(phaseSec);
+
+        // ✅ AUTO-CLOSE POPUP WHEN WORK RESUMES
+        if (currentPhase === "work") {
+          setShowPopup(false);
+        }
+      },
+      showPausePopup: () => {
+        setShowPopup(true);
+      },
+      onComplete: () => {
+        setShowPopup(true);
+      },
+    });
+  }, [totalMinutes, workMinutes, breakMinutes]);
+
+  useEffect(() => {
+    timer.start();
+    return () => timer.pause();
+  }, [timer]);
+
+  const handleSaveStats = () => {
+    setShowPopup(false);
+  };
+
+  const formatMMSS = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const formatLongTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  };
+
+  return (
+    <div className="timer-container">
+      <div className="timer-card">
+        <h2 className="activity-name">{activityName}</h2>
+
+        <div className="phase-display">
+          <h3 className={`phase-status ${phase}`}>
+            {phase === "work" ? "Working" : "Pause"}
+          </h3>
+          <p className="label">time left</p>
+          <p className={`time-count ${phase}`}>
+            {formatMMSS(timeLeft)}
+          </p>
+        </div>
+
+        <p className="total-end-time">
+          Time until activity end: {formatLongTime(totalRemaining)}
+        </p>
+      </div>
+
+      {showPopup && (
+        <PauseStatistics
+          isDndEnabled={isDndEnabled}
+          onSave={handleSaveStats}
+        />
+      )}
+    </div>
+  );
+};

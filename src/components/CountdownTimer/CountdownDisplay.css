@@ -1,0 +1,51 @@
+.timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #121212;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+}
+
+.timer-card {
+  border: 2px solid #2ecc71;
+  border-radius: 25px;
+  padding: 40px;
+  width: 450px;
+  text-align: center;
+  color: white;
+}
+
+.activity-name {
+  color: #3498db;
+  font-weight: normal;
+  margin-bottom: 40px;
+}
+
+.phase-status {
+  font-size: 2rem;
+  margin-bottom: 0;
+}
+
+.phase-status.work { color: #2ecc71; }
+.phase-status.break { color: #e74c3c; }
+
+.label {
+  font-size: 0.9rem;
+  margin: 5px 0;
+  opacity: 0.8;
+}
+
+.time-count {
+  font-size: 3.5rem;
+  margin-top: 0;
+}
+
+.time-count.work { color: #2ecc71; }
+.time-count.break { color: #e74c3c; }
+
+.total-end-time {
+  margin-top: 50px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
