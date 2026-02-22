@@ -34,7 +34,6 @@ export const CountdownDisplay: React.FC<CountdownDisplayProps> = ({
         setPhase(currentPhase);
         setTimeLeft(phaseSec);
 
-        // ✅ AUTO-CLOSE POPUP WHEN WORK RESUMES
         if (currentPhase === "work") {
           setShowPopup(false);
         }
