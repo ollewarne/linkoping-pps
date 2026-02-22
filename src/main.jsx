@@ -5,15 +5,21 @@ import './index.css'
 import App from './App.jsx'
 import { ActivityProvider } from "./contexts/activityContext.jsx"
 import { TranslatePage } from './contexts/languageContext.jsx'
+import { NotificationProvider } from './contexts/NotificationContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
         <BrowserRouter>
-            <TranslatePage>
-                <ActivityProvider>
-                    <App />
-                </ActivityProvider>
-            </TranslatePage>
+            <ThemeProvider>
+                <NotificationProvider>
+                    <TranslatePage>
+                        <ActivityProvider>
+                            <App />
+                        </ActivityProvider>
+                    </TranslatePage>
+                </NotificationProvider>
+            </ThemeProvider>
         </BrowserRouter>
     </StrictMode>,
 )

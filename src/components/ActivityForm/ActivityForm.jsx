@@ -6,6 +6,7 @@ import { calculateDuration, toTotalMinutes } from "../../utils/validateTime";
 import { userOptions } from "../../constants/userOptions";
 import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
+import { useNotification } from "../../contexts/NotificationContext";
 
 function getNextActivityId(activities) {
   const ids = activities
@@ -18,13 +19,13 @@ function ActivityForm({ onClose }) {
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const { activities, activityDispatch } = useActivities();
+    const { showNotification } = useNotification();
     const nextId = getNextActivityId(activities);
 
     const categories = userOptions[language].category
     // ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
 
-    const MEETING_RANKING = "5";
 
     function validateInputs(hoursValue, minutesValue) {
         const hours = +hoursValue;
@@ -70,7 +71,6 @@ function ActivityForm({ onClose }) {
                 category: form.category.value,
                 isMeeting: true,
                 title: form.activityTitle.value,
-                ranking: MEETING_RANKING,
                 meetingTimes: { start: hoursInput.value, end: minutesInput.value },
                 estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
                 currentlyActive: false,
@@ -85,7 +85,6 @@ function ActivityForm({ onClose }) {
                 category: form.category.value,
                 isMeeting: false,
                 title: form.activityTitle.value,
-                ranking: form.activityRating.value,
                 estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
                 activeTime: form.activeTime.value,
                 breakTime: form.breakTime.value,
@@ -104,6 +103,7 @@ function ActivityForm({ onClose }) {
         hoursInput.setCustomValidity('');
         minutesInput.setCustomValidity('');
         setValidationError('');
+        showNotification("Activity Saved!");
         onClose();
     }
 
@@ -136,14 +136,6 @@ function ActivityForm({ onClose }) {
                         </fieldset>
                     ) : (
                         <>
-                            <fieldset>
-                                <legend>{languageLibrary[language].form2Rank}</legend>
-                                <input type="radio" name="activityRating" id="rating1" value="1" required /><label htmlFor="rating1">{languageLibrary[language].form2RankLow}</label>
-                                <input type="radio" name="activityRating" id="rating2" value="2" /><label htmlFor="rating2">2</label>
-                                <input type="radio" name="activityRating" id="rating3" value="3" /><label htmlFor="rating3">3</label>
-                                <input type="radio" name="activityRating" id="rating4" value="4" /><label htmlFor="rating4">{languageLibrary[language].form2RankHigh}</label>
-                            </fieldset>
-
                             <fieldset>
                                 <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
                                 <label htmlFor="hours">{languageLibrary[language].hours}</label>

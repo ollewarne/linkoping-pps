@@ -5,10 +5,12 @@ import { languageLibrary } from "../../locales/language";
 import { userOptions } from "../../constants/userOptions";
 import {convertStringTimeToMinutes} from "../../utils/convertTime";
 import { saveWorkdayToStorage, getWorkdayFromStorage } from "../../utils/workdayStorage";
+import { useNotification } from "../../contexts/NotificationContext";
 
 
 
-export default function WorkDayForm() {
+export default function WorkDayForm({onClose}) {
+    const { showNotification } = useNotification();
     // for translation
     const {language} = useTranslator();
 
@@ -19,19 +21,6 @@ export default function WorkDayForm() {
     const nonWorkHoursStart = useRef(null);
     const nonWorkHoursEnd = useRef(null);
     const workEnvironment = useRef(null);
-
-    // sucess state & show success feedback
-    const [showSuccess, setShowSuccess] = useState(false);
-
-    useEffect(() => {
-        if (!showSuccess) return;
-
-        const timer = setTimeout(() => {
-        setShowSuccess(false);
-        }, 3000);
-
-        return () => clearTimeout(timer);
-    }, [showSuccess]);
 
     // set user options for work environment
     const environmentOptions = userOptions[language].workEnvironment; // 'Work Environment'
@@ -166,7 +155,8 @@ export default function WorkDayForm() {
         // };
 
         /* ------------------ SHOW SUCESSFULL SUBMIT ------------------ */
-        setShowSuccess(true);
+        showNotification("Saved!");
+        onClose();
     };
 
     // ------------------ DRAW FORM ------------------
@@ -264,12 +254,6 @@ export default function WorkDayForm() {
             {/* ---------- SUBMIT ---------- */}
             <div>
                 <button type="submit">{languageLibrary[language].save /* Save */}</button>
-
-                {showSuccess && (
-                    <p className={styles.submitted}>
-                        {languageLibrary[language].submitSuccess}
-                    </p>
-                )}
             </div>
             
         </form>
