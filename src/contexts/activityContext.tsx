@@ -1,36 +1,20 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
-
-interface Activity {
-    id: number;
-    scheduledTime: string | null;
-    category: string;
-    isMeeting: boolean;
-    title: string;
-    estimatedDuration: number;
-    isActive: boolean;
-    totalTimeSpent: number;
-    statistics: object;
-    meetingTimes?: {
-        start: string;
-        end: string;
-    };
-    activeTime?: number;
-    breakTime?: number;
-}
+import type { ActivityType } from '../types';
 
 type ActivityAction =
-    | { type: "ADD_ACTIVITY"; payload: Activity }
-    | { type: "ADD_MEETING"; payload: Activity }
-    | { type: "SCHEDULE_ACTIVITY"; payload: { id: number; scheduledTime: string } }
-    | { type: "EDIT_ACTIVITY"; payload: { id: number; title: string; category: string; estimatedDuration: number } }
-    | { type: "UPDATE_TIME_SPENT"; payload: { id: number; totalTime: number } }
-    | { type: "ADD_STATISTIC"; payload: { id: number; timestamp: string; stat: object } };
+    | { type: "ADD_ACTIVITY"; payload: ActivityType }
+    | { type: "ADD_MEETING"; payload: ActivityType }
+    | { type: "SCHEDULE_ACTIVITY"; payload: { id: string; scheduledTime: string } }
+    | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; estimatedDuration: number } }
+    | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
+    | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: object } }
+    | { type: "TOGGLE_ACTIVE"; payload: {id: string}};
 
 
-const activityContext = createContext<{ activities: Activity[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
+const activityContext = createContext<{ activities: ActivityType[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
 
 
-function activitiesReducer(state: Activity[], action: ActivityAction): Activity[] {
+function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
         case "ADD_ACTIVITY":
             return [...state, action.payload];
@@ -60,6 +44,11 @@ function activitiesReducer(state: Activity[], action: ActivityAction): Activity[
                     [action.payload.timestamp]: { ...action.payload.stat }
                 }
             } : activity)
+        case "TOGGLE_ACTIVE":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                isActive: !activity.isActive
+        } : activity)
         default:
             return state;
     }
