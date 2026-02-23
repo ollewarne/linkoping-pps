@@ -67,7 +67,7 @@ export const languageLibrary = {
 
     // ----- UTVÄRDERING ----- 
     evaluateButton: 'Open Pause Statistics',
-    evaluateEfficency: 'Efficency level',
+    evaluateEfficiency: 'Efficiency level',
     evaluateEnergy: 'Energy level',
     evaluateFactors: 'Influencing factors: ',
     evaluateFactorsDefault: 'Select a factor or leave blank'
@@ -142,7 +142,7 @@ sv: {
 
     // ----- UTVÄRDERING ----- 
     evaluateButton: 'Öppna pausstatistik',
-    evaluateEfficency: 'Produktivitetsnivå',
+    evaluateEfficiency: 'Produktivitetsnivå',
     evaluateEnergy: 'Energinivå',
     evaluateFactors: 'Påverkande faktorer: ',
     evaluateFactorsDefault: 'Välj en faktor eller lämna blank'
