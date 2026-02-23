@@ -85,7 +85,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
     <div className="popup-statistics">
       <div className="content-statistics">
         <form onSubmit={handleSubmit}>
-          <label>{languageLibrary[language].evaluateEfficency}</label>
+          <label>{languageLibrary[language].evaluateEfficiency}</label>
 
           <div className="radio-indicator">
             <span>{languageLibrary[language].low}</span>
@@ -93,7 +93,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
           </div>
 
           <div>
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3, 4].map((num) => (
               <label key={num} style={{ marginRight: "10px" }}>
                 <input
                   type="radio"
@@ -117,7 +117,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
           </div>
 
           <div>
-            {[1, 2, 3, 4, 5].map((num) => (
+            {[1, 2, 3, 4].map((num) => (
               <label key={num} style={{ marginRight: "10px" }}>
                 <input
                   type="radio"
