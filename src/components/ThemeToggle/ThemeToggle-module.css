@@ -42,4 +42,5 @@ body {
 .theme-toggle-btn img {
     height: 22px;
     width: 22px;
+    filter: var(--filter-svg);
 }
