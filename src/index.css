@@ -13,6 +13,7 @@
     --btn-text: #27272a;
     --btn-hover: #c7c4c1;
     --modal-bg: #e8e5e3;
+    --filter-svg: brightness(0) invert(0);
 }
 
 [data-theme="dark"] {
@@ -22,6 +23,9 @@
     --btn-text: #e4e4e7;
     --btn-hover: #48484a;
     --modal-bg: #2c2c2e;
+    --filter-svg: brightness(0) invert(1);
+
+
 }
 
 * {

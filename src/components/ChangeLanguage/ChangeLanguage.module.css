@@ -20,4 +20,11 @@
 .language-toggle-btn img {
     height: 24px;
     width: 24px;
+    filter: var(--filter-svg);
 }
+
+
+
+
+
+
