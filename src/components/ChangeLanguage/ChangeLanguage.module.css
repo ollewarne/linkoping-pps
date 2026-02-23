@@ -8,6 +8,8 @@
     cursor: pointer;
     margin-top: 4px;
     transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 .language-toggle-btn:hover {
@@ -15,8 +17,7 @@
     transform: translateY(-1px);
 }
 
-span {
-    font-weight: 600;
-    font-size: 17px;
-    margin: 0;
+.language-toggle-btn img {
+    height: 24px;
+    width: 24px;
 }
