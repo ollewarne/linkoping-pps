@@ -28,8 +28,11 @@ export default function WorkDayForm({onClose}) {
 
     // get saved workday values from localstorage to default input fields
     let workformData = getWorkdayFromStorage();
-    let nonWorkFormData = workformData.nonWorkHours;
-    console.log(workformData)
+    let nonWorkFormData = '';
+    if (workformData) {
+        nonWorkFormData = workformData.nonWorkHours;
+    }
+
 
 
     // ------------------ HANDLE SUBMIT ------------------
