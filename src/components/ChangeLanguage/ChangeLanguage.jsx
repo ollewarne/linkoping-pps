@@ -8,7 +8,8 @@ export function ChangeLanguage() {
 
     return (
         <button onClick={toggleLanguage} className={styles['language-toggle-btn']}>
-            <span>{language === 'sv' ? 'EN' : 'SV'}</span>
+            <img src={language === 'sv' ? '/EN.svg' : '/SV.svg'} alt="Language selector" />
+            {/* <span>{language === 'sv' ? 'EN' : 'SV'}</span> */}
         </button>
     )
 }
