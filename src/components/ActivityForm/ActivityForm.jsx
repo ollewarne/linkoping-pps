@@ -1,31 +1,21 @@
 import { useRef, useState } from "react";
 import styles from "./ActivityForm.module.css"
 import { useActivities } from "../../contexts/activityContext";
-import { calculateDuration, toTotalMinutes } from "../../utils/validateTime";
-
 import { userOptions } from "../../constants/userOptions";
 import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
 import { useNotification } from "../../contexts/NotificationContext";
+import { useActivityForm } from "../../hooks/useActivityForm";
 
-function getNextActivityId(activities) {
-  const ids = activities
-    .map((a) => Number(a.id))
-    .filter((n) => Number.isFinite(n));
-  return ids.length ? Math.max(...ids) + 1 : 1;
-}
 function ActivityForm({ onClose }) {
-    const {language} =useTranslator();
+    const { language } = useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const { activities, activityDispatch } = useActivities();
     const { showNotification } = useNotification();
-    const nextId = getNextActivityId(activities);
 
     const categories = userOptions[language].category
-    // ["Administrative", "Creative", "Technical", "Analytical", "Communication", "Planning", "Learning", "Sales & Marketing", "Support", "Operations", "Meeting"]
 
-
+    const { addActivityToPlanner, addMeetingActivityToPlanner, startActivity, startMeetingActivity } = useActivityForm();
 
     function validateInputs(hoursValue, minutesValue) {
         const hours = +hoursValue;
@@ -49,8 +39,8 @@ function ActivityForm({ onClose }) {
         minutesInput.setCustomValidity(error);
     }
 
-    function handleSubmit(e) {
-        const form = e.target;
+    function handleFormAction(e, action) {
+        const form = e.target.closest("form") ?? e.target;
         const hoursInput = form.hours;
         const minutesInput = form.minutes;
         const error = validateInputs(hoursInput.value, minutesInput.value);
@@ -63,48 +53,30 @@ function ActivityForm({ onClose }) {
             return false;
         }
 
-        e.preventDefault()
-        if (form.category.value === "Meeting" || form.category.value === "Möte") {
-            const newActivity = {
-                scheduledTime: null,
-                id: nextId,
-                category: form.category.value,
-                isMeeting: true,
-                title: form.activityTitle.value,
-                meetingTimes: { start: hoursInput.value, end: minutesInput.value },
-                estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
-                currentlyActive: false,
-                totalTimeSpent: 0,
-                statistics: {}
-            };
-            activityDispatch({type: "ADD_MEETING", payload: {...newActivity}})
-        } else {
-            const newActivity = {
-                scheduledTime: null,
-                id: nextId,
-                category: form.category.value,
-                isMeeting: false,
-                title: form.activityTitle.value,
-                estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
-                activeTime: form.activeTime.value,
-                breakTime: form.breakTime.value,
-                currentlyActive: false,
-                totalTimeSpent: 0,
-                statistics: {}
-            };
-            activityDispatch({type: "ADD_ACTIVITY", payload: {...newActivity}})
-        }
-
-        // activityId.current++
-
+        e.preventDefault();
+        action(form);
 
         form.reset();
-
         hoursInput.setCustomValidity('');
         minutesInput.setCustomValidity('');
         setValidationError('');
         showNotification("Activity Saved!");
         onClose();
+
+    }
+
+    function handleSubmit(e) {
+        handleFormAction(e, (form) => {
+            form.category.value === "Meeting" || form.category.value === "Möte" 
+                ? addMeetingActivityToPlanner(form) : addActivityToPlanner(form);
+        })
+    }
+
+    function handleActivityStart(e) {
+        handleFormAction(e, (form) => {
+            form.category.value === "Meeting" || form.category.value === "Möte" 
+                ? startMeetingActivity(form) : startActivity(form);
+        })
     }
 
     return (
@@ -126,7 +98,7 @@ function ActivityForm({ onClose }) {
                     <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={50} />
                 </fieldset>
                 {
-                    selectedCategory === "Meeting" || selectedCategory === 'Möte'? (
+                    selectedCategory === "Meeting" || selectedCategory === 'Möte' ? (
                         <fieldset>
                             <legend>{languageLibrary[language].times}</legend>
                             <label htmlFor="hours">{languageLibrary[language].start}</label>
@@ -153,7 +125,10 @@ function ActivityForm({ onClose }) {
                         </>
                     )
                 }
-                <button type="submit">{languageLibrary[language].form2Submit}</button>
+                <div style={{ display: "flex" }}>
+                    <button type="button" onClick={handleActivityStart}>Start Activity</button>
+                    <button type="submit">Add To Planner</button>
+                </div>
             </form>
         </div>
     )
