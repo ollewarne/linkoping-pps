@@ -7,7 +7,19 @@ import { useTranslator } from "../../contexts/languageContext";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useActivityForm } from "../../hooks/useActivityForm";
 
+
 function ActivityForm({ onClose }) {
+
+// ----- STATES FÖR ATT STYRA ANVÄNDARFLÖDET I FORMET ----- 
+    const [showForm, setShowForm] = useState(false);
+    const [isScheduled, setIsScheduled] = useState(false);
+    const [scheduleOption, setScheduleOption] = useState(null);
+    const [showScheduleOption, setShowScheduleOption] = useState(false);
+// --------------------------------------------------------- 
+
+
+
+
     const { language } = useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -64,7 +76,7 @@ function ActivityForm({ onClose }) {
         onClose();
 
     }
-
+    // ------------------ HANDLE SUBMIT ------------------
     function handleSubmit(e) {
         handleFormAction(e, (form) => {
             form.category.value === "Meeting" || form.category.value === "Möte" 
@@ -72,6 +84,7 @@ function ActivityForm({ onClose }) {
         })
     }
 
+    // ------------------ HANDLE ACTIVITY START ------------------
     function handleActivityStart(e) {
         handleFormAction(e, (form) => {
             form.category.value === "Meeting" || form.category.value === "Möte" 
@@ -79,56 +92,158 @@ function ActivityForm({ onClose }) {
         })
     }
 
+
+
+
     return (
         <div className={styles.container}>
+
+            {/* ---------- REGISTER ACTIVITY ---------- */}
             <h2>{languageLibrary[language].form2Header}</h2>
             <form onSubmit={handleSubmit}>
-                <fieldset>
-                    <legend>{languageLibrary[language].form2Activity}</legend>
-                    <label htmlFor="category">{languageLibrary[language].form2Category}</label>
-                    <select name="category" className="category" required defaultValue={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                        <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
-                        {
-                            categories.map((category) => {
-                                return (<option key={category} value={category}>{category}</option>)
-                            })
-                        }
-                    </select>
-                    <label htmlFor="activityTitle">{languageLibrary[language].form2Title}</label>
-                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={50} />
-                </fieldset>
-                {
-                    selectedCategory === "Meeting" || selectedCategory === 'Möte' ? (
-                        <fieldset>
-                            <legend>{languageLibrary[language].times}</legend>
-                            <label htmlFor="hours">{languageLibrary[language].start}</label>
-                            <input name="hours" type="time" step={60} required />
-                            <label htmlFor="minutes">{languageLibrary[language].end}</label>
-                            <input name="minutes" type="time" step={60} required />
-                        </fieldset>
-                    ) : (
-                        <>
-                            <fieldset>
-                                <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
-                                <label htmlFor="hours">{languageLibrary[language].hours}</label>
-                                <input name="hours" type="number" defaultValue={0} onBlur={handleBlur} />
-                                <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
-                                <input name="minutes" type="number" defaultValue={0} onBlur={handleBlur} />
-                            </fieldset>
-                            <fieldset>
-                                <legend>{languageLibrary[language].form2TimeStructure}</legend>
-                                <label htmlFor="activeTime">{languageLibrary[language].active}</label>
-                                <input type="number" name="activeTime" defaultValue={25} />
-                                <label htmlFor="breakTime">{languageLibrary[language].break}</label>
-                                <input type="number" name="breakTime" defaultValue={5} />
-                            </fieldset>
-                        </>
-                    )
-                }
-                <div style={{ display: "flex" }}>
-                    <button type="button" onClick={handleActivityStart}>Start Activity</button>
-                    <button type="submit">Add To Planner</button>
+
+
+
+                {/* ---------- PLANNER BUTTONS ---------- */}
+                <div>
+                <button
+                    id='start-activity'
+                    onClick={() => {
+                        setIsScheduled(false)
+                        setShowForm(true)}}>
+                        Start Activity
+                </button>
+                <button
+                    id='schedule-activity'
+                    onClick={() => {
+                        setIsScheduled(true)
+                        setShowForm(true)}}>
+                        Schedule Activity 
+                </button>
                 </div>
+
+
+                {/* ---------- SHOW FORM ---------- */}
+
+
+                {showForm && (
+                    <>
+
+                    {/* CATEGORY & TITLE */}
+                    <fieldset>
+                        <legend>{languageLibrary[language].form2Activity}</legend>
+                        <label htmlFor="category">{languageLibrary[language].form2Category}</label>
+                        <select name="category" className="category" required defaultValue={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                            <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
+                            {
+                                categories.map((category) => {
+                                    return (<option key={category} value={category}>{category}</option>)
+                                })
+                            }
+                        </select>
+                        <label htmlFor="activityTitle">{languageLibrary[language].form2Title}</label>
+                        <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={50} />
+                    </fieldset>
+
+
+                    {/* START ACTIVITY OR SCHEDULE */}
+                    {!isScheduled ? (
+
+                        // IS NOT SCHEDULED: Enter ESTIMATED DURATION
+                        <fieldset>
+                            <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
+                            <label htmlFor="hours">{languageLibrary[language].hours}</label>
+                            <input name="hours" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                            <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
+                            <input name="minutes" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                        </fieldset>
+                        
+                    ) : (
+
+                        // IS SCHEDULED: BUTTONS FOR SCHEDULE TIME OR ESIMATE TIME
+
+                        // ---------- RADIO BUTTONS TO MAKE CHOISE: TIME or ESTIMATE ----------
+                        <>
+                        <fieldset>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    name="scheduleOption"
+                                    value="time"
+                                    checked={scheduleOption === "time"}
+                                    onChange={(e) => {
+                                        setScheduleOption(e.target.value)
+                                        setShowScheduleOption(true)}}/>
+                                Schedule start & end time
+                            </label>
+                            <label>
+                                <input 
+                                    type="radio"
+                                    name="scheduleOption"
+                                    value="duration"
+                                    checked={scheduleOption === "duration"}
+                                    onChange={(e) => {
+                                        setScheduleOption(e.target.value)
+                                        setShowScheduleOption(true)}}/>
+                                Enter activity duration
+                            </label>
+                        </fieldset>
+
+                        {/* SHOW INPUT FIELD DEPENDING ON RADIOBUTTON CHOICE */}
+                        {showScheduleOption && (
+
+                            <>
+                            {/* RADIOBUTTON: TIME */}
+                            {scheduleOption === 'time' && (
+                                <fieldset>
+                                    <legend>{languageLibrary[language].times}</legend>
+                                    <label htmlFor="hours">{languageLibrary[language].start}</label>
+                                    <input name="hours" type="time" step={60} required />
+                                    <label htmlFor="minutes">{languageLibrary[language].end}</label>
+                                    <input name="minutes" type="time" step={60} required />
+                                </fieldset>
+                            )}
+
+                            {/* RADIOBUTTON: DURATION */}
+                            {scheduleOption === 'duration' && (
+                                <fieldset>
+                                    <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
+                                    <label htmlFor="hours">{languageLibrary[language].hours}</label>
+                                    <input name="hours" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                                    <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
+                                    <input name="minutes" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                                </fieldset>   
+                            )}
+                            </>
+                        )}
+                        </>
+                    )}
+
+
+                    {/* TIME STRUCTURE  */}
+                    <fieldset>
+                        <legend>{languageLibrary[language].form2TimeStructure}</legend>
+                        <label htmlFor="activeTime">{languageLibrary[language].active}</label>
+                        <input type="number" name="activeTime" defaultValue={25} />
+                        <label htmlFor="breakTime">{languageLibrary[language].break}</label>
+                        <input type="number" name="breakTime" defaultValue={5} />
+                    </fieldset>
+
+
+
+                <div style={{ display: "flex" }}>
+                    {/* <button type="button" onClick={handleActivityStart}>
+                        Start Activity
+                        
+                    </button> */}
+                    
+                    <button type="submit">
+                        {isScheduled ? 'Add To Planner' : 'Start Activity'}
+                    </button>
+                </div>
+                    </>
+                )
+                }
             </form>
         </div>
     )
