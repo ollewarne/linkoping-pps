@@ -21,11 +21,10 @@ type FormData = {
 };
 
 type PauseStatisticsProps = {
-  isDndEnabled: boolean;
   onSave?: (data: FormData) => void;
 };
 
-function PauseStatistics({ onSave, isDndEnabled }: PauseStatisticsProps) {
+function PauseStatistics({ onSave  }: PauseStatisticsProps) {
   const { language } = useTranslator();
 
   const impacts: ImpactOption[] = userOptions[language].impacts;
@@ -59,14 +58,6 @@ function PauseStatistics({ onSave, isDndEnabled }: PauseStatisticsProps) {
 
   const saveNull = () =>
     saveEvent({ efficiency: null, energy: null, factor: null });
-
-  useEffect(() => {
-    if (isDndEnabled) {
-      saveNull();
-    }
-  }, [isDndEnabled]);
-
-  if (isDndEnabled) return null;
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
