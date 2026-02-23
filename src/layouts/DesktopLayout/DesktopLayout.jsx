@@ -17,8 +17,8 @@ function DesktopLayout() {
                     <NavLink to="/schedule" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
                         Schedule
                     </NavLink>
-                    <NavLink to="/statistics" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                        Statistics
+                    <NavLink to="/history" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
+                        History
                     </NavLink>
                 </nav>
                 <div className={styles.buttonGroup}>

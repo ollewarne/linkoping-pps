@@ -39,7 +39,7 @@ function App() {
                         <Route path="/" element={<MobileLayout />}>
                             <Route index element={<ActivityPage />} />
                             <Route path="Schedule" element={<SchedulePage />} />
-                            <Route path="Statistics" element={<StatisticsPage />} />
+                            <Route path="History" element={<StatisticsPage />} />
                         </Route>
                     </Routes>
                 ) : (
@@ -47,7 +47,7 @@ function App() {
                         <Route path="/" element={<DesktopLayout />}>
                             <Route index element={<ActivityPage />} />
                             <Route path="Schedule" element={<SchedulePage />} />
-                            <Route path="Statistics" element={<StatisticsPage />} />
+                            <Route path="History" element={<StatisticsPage />} />
                         </Route>
                     </Routes>
                 );
