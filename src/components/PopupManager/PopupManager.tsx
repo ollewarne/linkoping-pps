@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useContext } from "react";
+import { createContext, useState, ReactNode, useContext, FC } from "react";
 
 interface DndContextValue {
   isDndEnabled: boolean;
@@ -12,7 +12,7 @@ interface DndProviderProps {
   children: ReactNode;
 }
 
-export const DndProvider = ({ children }: DndProviderProps) => {
+export const DndProvider: FC<DndProviderProps> = ({ children }) => {
   const [isDndEnabled, setIsDndEnabled] = useState<boolean>(() => {
     const stored = localStorage.getItem(DND_FLAG);
     return stored?.toLowerCase() === "true";
@@ -26,17 +26,13 @@ export const DndProvider = ({ children }: DndProviderProps) => {
     });
   };
 
-  return (
-    <DndContext.Provider value={{ isDndEnabled, toggleDnd }}>
-      {children}
-    </DndContext.Provider>
-  );
+  return <DndContext.Provider value={{ isDndEnabled, toggleDnd }}>{children}</DndContext.Provider>;
 };
 
 export const useDnd = (): DndContextValue => {
   const context = useContext(DndContext);
-  if (!context) {
-    throw new Error("useDnd must be used within a DndProvider");
-  }
+  if (!context) throw new Error("useDnd must be used within a DndProvider");
   return context;
 };
+
+export default DndProvider;

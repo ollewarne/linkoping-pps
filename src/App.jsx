@@ -23,35 +23,32 @@ function App() {
             setWindowWidth(window.innerWidth);
         };
 
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener("resize", handleResize);
         };
-
-    }, [])
+    }, []);
 
     return (
         <PopupManager>
-            {({ isDndEnabled, toggleDnd }) => {
-                return isMobile ? (
-                    <Routes>
-                        <Route path="/" element={<MobileLayout />}>
-                            <Route index element={<ActivityPage />} />
-                            <Route path="Schedule" element={<SchedulePage />} />
-                            <Route path="History" element={<StatisticsPage />} />
-                        </Route>
-                    </Routes>
-                ) : (
-                    <Routes>
-                        <Route path="/" element={<DesktopLayout />}>
-                            <Route index element={<ActivityPage />} />
-                            <Route path="Schedule" element={<SchedulePage />} />
-                            <Route path="History" element={<StatisticsPage />} />
-                        </Route>
-                    </Routes>
-                );
-            }}
+            {isMobile ? (
+                <Routes>
+                    <Route path="/" element={<MobileLayout />}>
+                        <Route index element={<ActivityPage />} />
+                        <Route path="Schedule" element={<SchedulePage />} />
+                        <Route path="History" element={<StatisticsPage />} />
+                    </Route>
+                </Routes>
+            ) : (
+                <Routes>
+                    <Route path="/" element={<DesktopLayout />}>
+                        <Route index element={<ActivityPage />} />
+                        <Route path="Schedule" element={<SchedulePage />} />
+                        <Route path="History" element={<StatisticsPage />} />
+                    </Route>
+                </Routes>
+            )}
         </PopupManager>
     );
 }
