@@ -3,6 +3,7 @@ import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
 import { languageLibrary } from "../../locales/language";
+import { useDnd } from "../PopupManager/PopupManager";
 
 const event_key = "pauseStatistics/events";
 const last_id_key = "pauseStatistics/lastID";
