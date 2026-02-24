@@ -36,6 +36,9 @@ export default function TimeSpentChart() {
             ]}
             width={400}
             height={300}
+            sx={{
+                '& .MuiChartsLabel-root': { color: 'var(--text) !important' },
+            }}
         />
     )
 
