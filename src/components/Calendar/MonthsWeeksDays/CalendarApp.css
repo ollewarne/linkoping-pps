@@ -121,7 +121,7 @@
   left: 5%;
   width: 8px;
   height: 8px;
-  background-color: red;
+  background-color: var(--red);
   border-radius: 50%;
 }
 
