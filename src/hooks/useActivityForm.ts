@@ -9,22 +9,22 @@ function generateId(): string {
 export function useActivityForm() {
     const { activityDispatch } = useActivities();
 
-    function findScheduleGap(duration) {
-        let start: string = "";
-        let end: string = "";
+   // function findScheduleGap(duration) {
+   //     let start: string = "";
+   //     let end: string = "";
 
-        return [
-            start,
-            end
-        ]
-    }
+   //     return [
+   //         start,
+   //         end
+   //     ]
+   // }
 
     function addActivityToPlanner(form: HTMLFormElement) {
         let hoursInput = form.hours;
         let minutesInput = form.minutes;
-        if (hoursInput.includes(":")) {
-            [hoursInput, minutesInput] = findScheduleGap(toTotalMinutes(+hoursInput, +minutesInput))
-        }
+//        if (hoursInput.includes(":")) {
+ //           [hoursInput, minutesInput] = findScheduleGap(toTotalMinutes(+hoursInput, +minutesInput))
+  //      }
         const newActivity: ActivityType = {
             scheduledTime: { start: hoursInput.value, end: minutesInput.value },
             id: generateId(),
