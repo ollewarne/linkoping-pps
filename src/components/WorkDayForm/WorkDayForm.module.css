@@ -6,7 +6,6 @@
 }
 
 .explanation {
-    font-weight: bold;
     font-size: small;
 }
 
@@ -14,4 +13,9 @@
     font-weight: bold;
     font-size: small;
     color: green;
+}
+
+fieldset label {
+    text-align: left;
+    font-weight: bold;
 }
