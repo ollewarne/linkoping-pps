@@ -45,41 +45,48 @@ import { getAverageStats } from './getAverageStats';
 // };
 
 
-export default function EnergyChart({mockData}) {
+export default function EnergyChart({ mockData }) {
 
-  const data = useMemo(
-    () => getAverageStats(mockData, 'efficiency'), [mockData]
-  );
+    const data = useMemo(
+        () => getAverageStats(mockData, 'efficiency'), [mockData]
+    );
 
-  const xLables = data.map((d) => d.time);
-  const yValues = data.map((d) => d.average);
+    const xLables = data.map((d) => d.time);
+    const yValues = data.map((d) => d.average);
 
-  return (
-    <LineChart
-      xAxis={[
-        {
-          scaleType: 'point',
-          data: xLables,
-          label: 'Time'
-        }
-      ]}
-      yAxis={[
-        {
-          min: 1,
-          max: 5,
-          tickNumber: 5,
-          label: 'Score'
-        }
-      ]}
-      series = {[
-        {
-          data: yValues,
-          label: 'Average Energy',
-          color: '#f50057'
-        }
-      ]}
-      height={350}
-    />
-  );
+    return (
+        <LineChart
+            sx={{
+                '& .MuiChartsAxis-tickLabel': { fill: 'var(--text) !important' },
+                '& .MuiChartsAxis-label': { fill: 'var(--text) !important' },
+                '& .MuiChartsAxis-line': { stroke: 'var(--text) !important' },
+                '& .MuiChartsAxis-tick': { stroke: 'var(--text) !important' },
+                '& .MuiChartsLabel-root': { fill: 'var(--text) !important' },
+            }}
+            xAxis={[
+                {
+                    scaleType: 'point',
+                    data: xLables,
+                    label: 'Time',
+                }
+            ]}
+            yAxis={[
+                {
+                    min: 1,
+                    max: 5,
+                    tickNumber: 5,
+                    label: 'Score',
+                }
+            ]}
+            series={[
+                {
+                    data: yValues,
+                    label: 'Average Energy',
+                    color: '#f50057'
+                }
+            ]}
+            height={350}
+        />
+    );
 
 }
