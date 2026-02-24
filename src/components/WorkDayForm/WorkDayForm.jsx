@@ -172,7 +172,6 @@ export default function WorkDayForm({onClose}) {
             {/* ---------- WORKING HOURS ---------- */}
             <fieldset>
                 <legend>{languageLibrary[language].form1WorkH /* 'Working hours' */}</legend>
-                <p className={styles.explanation}>{languageLibrary[language].form1WorkHExplanation /* 'Explanation' */}</p>
 
                 <label htmlFor="work-hours-start">{languageLibrary[language].start /* 'Start' */}</label>
                 <input 
