@@ -2,49 +2,6 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 import { getAverageStats } from './getAverageStats';
 
-
-
-// function getAverageEnergy(data) {
-//   const timeSlot = {};
-
-//   Object.values(data).forEach((day) => {
-
-//     day.activities.forEach((activity) => {
-
-//       if (!activity.statistics) return;
-
-//       Object.entries(activity.statistics).forEach(([time, statData]) => {
-//         const roundedTime = roundTime(time);
-
-//         if(!timeSlot[roundedTime]) {
-//           timeSlot[roundedTime] = [];
-//         };
-
-//         timeSlot[roundedTime].push(statData.efficiency);
-
-//       });
-
-//     });
-
-//   });
-
-
-// const averages = Object.entries(timeSlot).map(([time, values]) => {
-//   const averageValue = values.reduce((sum, val) => sum + val, 0) / values.length;
-
-//   return {
-//     time,
-//     average: Number(averageValue.toFixed(2))
-//   };
-// });
-
-// averages.sort((a,b) => a.time.localeCompare(b.time));
-
-// return averages;
-
-// };
-
-
 export default function EnergyChart({ mockData }) {
 
     const data = useMemo(
@@ -61,7 +18,7 @@ export default function EnergyChart({ mockData }) {
                 '& .MuiChartsAxis-label': { fill: 'var(--text) !important' },
                 '& .MuiChartsAxis-line': { stroke: 'var(--text) !important' },
                 '& .MuiChartsAxis-tick': { stroke: 'var(--text) !important' },
-                '& .MuiChartsLabel-root': { fill: 'var(--text) !important' },
+                '& .MuiChartsLabel-root': { color: 'var(--text) !important' },
             }}
             xAxis={[
                 {
@@ -88,5 +45,4 @@ export default function EnergyChart({ mockData }) {
             height={350}
         />
     );
-
 }
