@@ -22,11 +22,10 @@ export const languageLibrary = {
     form1Header: 'Register Workday',
     // fieldset 1
     form1WorkH: 'Working hours',
-    form1WorkHExplanation: 'Explanation???',
     // fieldset 2
     form1Checkbox: 'I have non-working hours to register',
     nonWorkH: 'Non-working hours',
-    nonWorkHExplanation: 'Explanation???',
+    nonWorkHExplanation: "Block the time that you don't want to plan",
     // fieldset 3
     workEnvironment: 'Work Environment',
     workEnvironmentDefault: 'Select an environment',
@@ -97,11 +96,10 @@ sv: {
     form1Header: 'Registera Arbetsdag',
     // fieldset 1
     form1WorkH: 'Arbetstid',
-    form1WorkHExplanation: 'Förklaring???',
     // fieldset 2
     form1Checkbox: 'Jag har arbetsfri tid att registrera',
     nonWorkH: 'Arbetsfri Tid',
-    nonWorkHExplanation: 'Förklaring???',
+    nonWorkHExplanation: 'Blockera den tid du inte vill planera',
     // fieldset 3
     workEnvironment: 'Arbetsmiljö',
     workEnvironmentDefault: 'Välj en arbetsmiljö',
