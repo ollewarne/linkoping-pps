@@ -52,7 +52,7 @@ function ActivityForm({ onClose }) {
     }
 
     function handleFormAction(e, action) {
-        const form = e.target.closest("form") ?? e.target;
+        const form = e.target;
         const hoursInput = form.hours;
         const minutesInput = form.minutes;
         const error = validateInputs(hoursInput.value, minutesInput.value);
@@ -79,21 +79,10 @@ function ActivityForm({ onClose }) {
     // ------------------ HANDLE SUBMIT ------------------
     function handleSubmit(e) {
         handleFormAction(e, (form) => {
-            form.category.value === "Meeting" || form.category.value === "Möte" 
-                ? addMeetingActivityToPlanner(form) : addActivityToPlanner(form);
+                isScheduled
+                ? addActivityToPlanner(form) : startActivity(form);
         })
     }
-
-    // ------------------ HANDLE ACTIVITY START ------------------
-    function handleActivityStart(e) {
-        handleFormAction(e, (form) => {
-            form.category.value === "Meeting" || form.category.value === "Möte" 
-                ? startMeetingActivity(form) : startActivity(form);
-        })
-    }
-
-
-
 
     return (
         <div className={styles.container}>
