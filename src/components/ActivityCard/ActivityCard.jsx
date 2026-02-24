@@ -47,8 +47,9 @@ function ActivityCard({ activity = {}, scheduledTime, index }) {
 
     const height = Math.floor((activity.estimatedDuration / workdayMinutes) * 100)
     return (
-        <div style={{ height: `${height}%`, backgroundColor }} className={styles.card}>
+        <div style={{ height: "15%", backgroundColor }} className={styles.card}>
             <p className={styles.content}><strong>{activity.title}</strong> | <strong>{activity.category}</strong> | <strong>{activity.estimatedDuration} min</strong></p>
+            <p><strong>Planned time</strong> | {activity.scheduledTime.start} - {activity.scheduledTime.end}</p>
         </div>
     )
 }
