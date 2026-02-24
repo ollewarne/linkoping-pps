@@ -14,6 +14,17 @@
     --btn-hover: #c7c4c1;
     --modal-bg: #e8e5e3;
     --filter-svg: brightness(0) invert(0);
+
+    /* MUI CHARTS COLORS  */
+    --pink: #F583B4;
+    --orange: #F37613;
+    --dark-blue: #4254FB;
+    --yellow: #F7B422;
+    --light-blue: #4BBEFF;
+    --green: #44BF75;
+    --red: #F25058;
+    --red-pink: #F10057;
+    --purple: #9C26B0;
 }
 
 [data-theme="dark"] {
