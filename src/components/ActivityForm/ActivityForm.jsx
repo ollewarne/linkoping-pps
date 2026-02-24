@@ -6,7 +6,9 @@ import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useActivityForm } from "../../hooks/useActivityForm";
-
+import { getWorkdayFromStorage } from "../../utils/workdayStorage";
+import Modal from "../Modal/Modal";
+import WorkDayForm from "../WorkDayForm/WorkDayForm";
 
 function ActivityForm({ onClose }) {
 
@@ -15,6 +17,8 @@ function ActivityForm({ onClose }) {
     const [isScheduled, setIsScheduled] = useState(false);
     const [scheduleOption, setScheduleOption] = useState(null);
     const [showScheduleOption, setShowScheduleOption] = useState(false);
+
+    let workformData = getWorkdayFromStorage();
 // --------------------------------------------------------- 
 
 
@@ -99,15 +103,20 @@ function ActivityForm({ onClose }) {
         <div className={styles.container}>
 
             {/* ---------- REGISTER ACTIVITY ---------- */}
+            
+
+            {workformData ? (
+            <>
             <h2>{languageLibrary[language].form2Header}</h2>
             <form onSubmit={handleSubmit}>
 
 
 
                 {/* ---------- PLANNER BUTTONS ---------- */}
-                <div>
+                <div className={styles.plannerButtons}>
                 <button
                     id='start-activity'
+                    className={!showForm ? styles.bigActivityButton : styles.smallActivityButton}
                     onClick={() => {
                         setIsScheduled(false)
                         setShowForm(true)}}>
@@ -115,6 +124,7 @@ function ActivityForm({ onClose }) {
                 </button>
                 <button
                     id='schedule-activity'
+                    className={!showForm ? styles.bigScheduleButton : styles.smallScheduleButton}
                     onClick={() => {
                         setIsScheduled(true)
                         setShowForm(true)}}>
@@ -125,6 +135,9 @@ function ActivityForm({ onClose }) {
 
                 {/* ---------- SHOW FORM ---------- */}
 
+                
+
+              
 
                 {showForm && (
                     <>
@@ -244,7 +257,17 @@ function ActivityForm({ onClose }) {
                     </>
                 )
                 }
-            </form>
+            </form> 
+            </>) : (
+                <>                    
+                    <p>Please enter the specifics for your workday before registering activities</p>
+                    <WorkDayForm/>
+                </>
+
+
+            )}
+
+        
         </div>
     )
 }
