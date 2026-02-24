@@ -4,6 +4,7 @@ import styles from "./MobileLayout.module.css"
 import { ChangeLanguage } from "../../components/ChangeLanguage/ChangeLanguage"
 import ColorMode from "../../components/ThemeToggle/ThemeToggle"
 import SettingsMenu from "../../components/SettingsMenu/SettingsMenu"
+import DndToggle from "../../components/PopupManager/DndToggle"
 
 
 export default function MobileLayout() {
@@ -13,6 +14,7 @@ export default function MobileLayout() {
             <header className={styles.siteHeader}>
                 <h1 className={styles.mobileTitle}>BAE Productivity</h1>
                 <div className={styles.buttonGroup}>
+                    <DndToggle />
                     <ChangeLanguage />
                     <ColorMode />
                     <SettingsMenu />
