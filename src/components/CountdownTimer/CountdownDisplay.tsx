@@ -2,12 +2,39 @@ import PauseStatistics from "../PauseStatistics/PauseStatistics";
 import "./CountdownDisplay.css";
 import { useTimer } from "../../contexts/TimerContext";
 import { useDnd } from "../PopupManager/PopupManager";
+import { useActivityHistory } from "../../contexts/activityHistoryContext";
 
 export const CountdownDisplay = () => {
+    const { historyDispatch } = useActivityHistory();
     const { activeActivity, timeLeft, phase, totalRemaining, showPopup, setShowPopup } = useTimer();
     const { isDndEnabled} = useDnd();
 
-    const handleSaveStats = () => {
+    //skapar en uppdaterad kopia av den aktiva aktiviteten med popupens statistik sparad och skickar den till historiken.
+    const handleSaveStats = (data: {
+        timestamp: string;
+        efficiency: number | null;
+        energy: number | null;
+        factor: string | null;
+    }) => {
+        if (!activeActivity) return;
+
+        const statEntry = {
+            ...activeActivity,
+            statistics: {
+                ...(activeActivity.statistics ?? {}),
+                [data.timestamp]: {
+                    efficiency: data.efficiency,
+                    energy: data.energy,
+                    factor: data.factor
+                }
+            }
+        };
+
+        historyDispatch({
+            type: "ADD_TO_HISTORY",
+            payload: statEntry
+        });
+
         setShowPopup(false);
     };
 
