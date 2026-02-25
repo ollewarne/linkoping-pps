@@ -48,12 +48,16 @@ export default function TimeSpentChart() {
         <PieChart
             series={[
                 {
-                    data: finalChartData,
-                    innerRadius: 45,
-                    valueFormatter: (item) => formatTime(item.value),
-                    arcLabelMinAngle: 25,
-                }
+                data: finalChartData,
+                innerRadius: 45,
+                arcLabelMinAngle: 25,
+                },
             ]}
+            slotProps={{
+                pieArc: {
+                stroke: 'none',
+                },
+            }}
             width={400}
             height={300}
             sx={{
