@@ -4,6 +4,7 @@ import TimeSpentChart from "../components/Statistics/TimeSpentChart";
 import { mockData } from "../constants/mockData";
 import { useActivityHistory } from "../contexts/activityHistoryContext";
 import { useState } from "react";
+import CalendarApp from "../components/Calendar/CalendarApp";
 
 function StatisticsPage() {
     const { historyActivities, historyDispatch } = useActivityHistory();
@@ -142,6 +143,7 @@ function StatisticsPage() {
             <ProductivityChart mockData={mockData} useRealData={useRealData} />
             <EnergyChart mockData={mockData} useRealData={useRealData} />
             <TimeSpentChart mockData={mockData} useRealData={useRealData} />
+            <CalendarApp />
         </>
     );
 }
