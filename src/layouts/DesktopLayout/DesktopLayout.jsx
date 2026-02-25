@@ -3,7 +3,7 @@ import ColorMode from "../../components/ThemeToggle/ThemeToggle";
 import { ChangeLanguage } from "../../components/ChangeLanguage/ChangeLanguage";
 import styles from "./DesktopLayout.module.css"
 import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
-import DndToggle from "../../components/PopupManager/DndToggle";
+import DndToggle from "../../components/PopupManager/DnDToggle";
 
 
 function DesktopLayout() {

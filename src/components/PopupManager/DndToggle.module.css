@@ -49,3 +49,29 @@
   font-size: 0.9rem;
   user-select: none;
 }
+
+
+.language-toggle-btn {
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border-radius: 20px;
+    padding: 4px 8px 4px 8px;
+    height: 29px;
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.language-toggle-btn:hover {
+    background: var(--btn-hover);
+    transform: translateY(-1px);
+}
+
+.language-toggle-btn img {
+    height: 22px;
+    width: 22px;
+    filter: var(--filter-svg);
+}

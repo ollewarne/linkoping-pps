@@ -4,7 +4,7 @@ import styles from "./MobileLayout.module.css"
 import { ChangeLanguage } from "../../components/ChangeLanguage/ChangeLanguage"
 import ColorMode from "../../components/ThemeToggle/ThemeToggle"
 import SettingsMenu from "../../components/SettingsMenu/SettingsMenu"
-import DndToggle from "../../components/PopupManager/DndToggle"
+import DndToggle from "../../components/PopupManager/DnDToggle"
 
 
 export default function MobileLayout() {
