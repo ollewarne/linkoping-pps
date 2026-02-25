@@ -4,6 +4,7 @@ import { useActivities } from "../../contexts/activityContext";
 import { calculateDuration } from "../../utils/validateTime";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import { useTheme } from "../../contexts/ThemeContext";
+import { categoryColors } from "../../constants/categoryColors";
 
 const workday = getWorkdayFromStorage();
 
@@ -14,11 +15,12 @@ const workdayMinutes = workday?.workHours?.start && workday?.workHours?.end
 
 function ActivityCard({ activity = {}, scheduledTime, index }) {
 
-    const CARD_COLORS = ['#4ABFBD', '#6AAEE8', '#C45FD6', '#8B4DB0', '#6B72C8', '#4A4A9D'];
+    // const CARD_COLORS = ['#4ABFBD', '#6AAEE8', '#C45FD6', '#8B4DB0', '#6B72C8', '#4A4A9D'];
 
     const { activityDispatch } = useActivities();
 
-    const backgroundColor = CARD_COLORS[index % CARD_COLORS.length];
+    // const backgroundColor = CARD_COLORS[index % CARD_COLORS.length];
+    const backgroundColor = categoryColors[activity.category];
 
     // kommer användas senare, ignoreras just nu
     const handleEdit = () => {
