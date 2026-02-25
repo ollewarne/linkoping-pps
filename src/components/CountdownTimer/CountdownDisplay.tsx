@@ -1,9 +1,11 @@
 import PauseStatistics from "../PauseStatistics/PauseStatistics";
 import "./CountdownDisplay.css";
 import { useTimer } from "../../contexts/TimerContext";
+import { useDnd } from "../PopupManager/PopupManager";
 
 export const CountdownDisplay = () => {
     const { activeActivity, timeLeft, phase, totalRemaining, showPopup, setShowPopup } = useTimer();
+    const { isDndEnabled} = useDnd();
 
     const handleSaveStats = () => {
         setShowPopup(false);
@@ -41,7 +43,7 @@ export const CountdownDisplay = () => {
                 </p>
             </div>
 
-            {showPopup && (
+            {showPopup && !isDndEnabled && (
                 <PauseStatistics
                     onSave={handleSaveStats}
                 />

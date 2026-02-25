@@ -3,6 +3,7 @@ import ColorMode from "../../components/ThemeToggle/ThemeToggle";
 import { ChangeLanguage } from "../../components/ChangeLanguage/ChangeLanguage";
 import styles from "./DesktopLayout.module.css"
 import SettingsMenu from "../../components/SettingsMenu/SettingsMenu";
+import DndToggle from "../../components/PopupManager/DndToggle";
 
 
 function DesktopLayout() {
@@ -22,6 +23,7 @@ function DesktopLayout() {
                     </NavLink>
                 </nav>
                 <div className={styles.buttonGroup}>
+                    <DndToggle />
                     <ChangeLanguage />
                     <ColorMode />
                     <SettingsMenu />

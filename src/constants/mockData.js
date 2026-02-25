@@ -37,10 +37,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 118,
                 statistics: {
-                    "10:02": { efficiency: 5, productivity: 4, factor: null },
-                    "10:30": { efficiency: 4, productivity: 5, factor: "energized" },
-                    "11:59": { efficiency: 3, productivity: 3, factor: "notifications" },
-                    "11:37": { efficiency: 4, productivity: 4, factor: null }
+                    "10:02": { efficiency: 4, productivity: 4, factor: null },
+                    "10:30": { efficiency: 4, productivity: 4, factor: "energized" },
+                    "11:37": { efficiency: 4, productivity: 4, factor: null },
+                    "11:59": { efficiency: 3, productivity: 3, factor: "notifications" }
                 }
             },
             {
@@ -72,9 +72,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 125,
                 statistics: {
-                    "13:37": { efficiency: 5, productivity: 5, factor: "focused" },
-                    "14:04": { efficiency: 4, productivity: 5, factor: null },
-                    "14:34": { efficiency: 5, productivity: 4, factor: null },
+                    "13:37": { efficiency: 4, productivity: 4, factor: "focused" },
+                    "14:04": { efficiency: 4, productivity: 4, factor: null },
+                    "14:34": { efficiency: 4, productivity: 4, factor: null },
                     "15:00": { efficiency: 4, productivity: 4, factor: "energized" }
                 }
             },
@@ -97,6 +97,7 @@ export const mockData = {
             }
         ]
     },
+
     "26-02-04": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -133,8 +134,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 123,
                 statistics: {
-                    "09:30": { efficiency: 5, productivity: 4, factor: "focused" },
-                    "10:00": { efficiency: 4, productivity: 5, factor: null },
+                    "09:30": { efficiency: 4, productivity: 4, factor: "focused" },
+                    "10:00": { efficiency: 4, productivity: 4, factor: null },
                     "10:30": { efficiency: 3, productivity: 4, factor: "others" },
                     "11:00": { efficiency: 4, productivity: 3, factor: null }
                 }
@@ -152,7 +153,7 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 58,
                 statistics: {
-                    "11:30": { efficiency: 5, productivity: 5, factor: "energized" },
+                    "11:30": { efficiency: 4, productivity: 4, factor: "energized" },
                     "12:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -194,6 +195,7 @@ export const mockData = {
             }
         ]
     },
+
     "26-02-05": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -250,7 +252,7 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 62,
                 statistics: {
-                    "11:30": { efficiency: 5, productivity: 5, factor: "focused" },
+                    "11:30": { efficiency: 4, productivity: 4, factor: "focused" },
                     "12:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -267,8 +269,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 88,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 5, factor: "energized" },
-                    "14:00": { efficiency: 5, productivity: 4, factor: null },
+                    "13:30": { efficiency: 4, productivity: 4, factor: "energized" },
+                    "14:00": { efficiency: 4, productivity: 4, factor: null },
                     "14:30": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -292,6 +294,7 @@ export const mockData = {
             }
         ]
     },
+
     "26-02-06": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -312,10 +315,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 175,
                 statistics: {
-                    "08:30": { efficiency: 5, productivity: 5, factor: "focused" },
-                    "09:00": { efficiency: 5, productivity: 4, factor: null },
-                    "09:30": { efficiency: 4, productivity: 5, factor: "energized" },
-                    "10:00": { efficiency: 5, productivity: 5, factor: null },
+                    "08:30": { efficiency: 4, productivity: 4, factor: "focused" },
+                    "09:00": { efficiency: 4, productivity: 4, factor: null },
+                    "09:30": { efficiency: 4, productivity: 4, factor: "energized" },
+                    "10:00": { efficiency: 4, productivity: 4, factor: null },
                     "10:30": { efficiency: 4, productivity: 4, factor: null },
                     "11:00": { efficiency: 4, productivity: 4, factor: null }
                 }
@@ -351,8 +354,8 @@ export const mockData = {
                 totalTimeSpent: 95,
                 statistics: {
                     "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 4, productivity: 5, factor: "focused" },
-                    "14:30": { efficiency: 5, productivity: 4, factor: null }
+                    "14:00": { efficiency: 4, productivity: 4, factor: "focused" },
+                    "14:30": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -368,13 +371,14 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 92,
                 statistics: {
-                    "15:00": { efficiency: 5, productivity: 5, factor: "energized" },
+                    "15:00": { efficiency: 4, productivity: 4, factor: "energized" },
                     "15:30": { efficiency: 4, productivity: 4, factor: null },
-                    "16:00": { efficiency: 4, productivity: 5, factor: null }
+                    "16:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             }
         ]
     },
+
     "26-02-07": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -430,8 +434,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 90,
                 statistics: {
-                    "11:00": { efficiency: 5, productivity: 5, factor: "focused" },
-                    "11:30": { efficiency: 4, productivity: 5, factor: null },
+                    "11:00": { efficiency: 4, productivity: 4, factor: "focused" },
+                    "11:30": { efficiency: 4, productivity: 4, factor: null },
                     "12:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -449,8 +453,8 @@ export const mockData = {
                 totalTimeSpent: 118,
                 statistics: {
                     "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 5, productivity: 4, factor: "energized" },
-                    "14:30": { efficiency: 4, productivity: 5, factor: null },
+                    "14:00": { efficiency: 4, productivity: 4, factor: "energized" },
+                    "14:30": { efficiency: 4, productivity: 4, factor: null },
                     "15:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -473,6 +477,7 @@ export const mockData = {
             }
         ]
     },
+
     "26-02-08": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -513,7 +518,7 @@ export const mockData = {
                     "09:30": { efficiency: 3, productivity: 4, factor: "others" },
                     "10:00": { efficiency: 4, productivity: 3, factor: null },
                     "10:30": { efficiency: 4, productivity: 4, factor: null },
-                    "11:00": { efficiency: 5, productivity: 4, factor: "focused" }
+                    "11:00": { efficiency: 4, productivity: 4, factor: "focused" }
                 }
             },
             {
@@ -546,8 +551,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 90,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 5, factor: null },
-                    "14:00": { efficiency: 5, productivity: 4, factor: "energized" },
+                    "13:30": { efficiency: 4, productivity: 4, factor: null },
+                    "14:00": { efficiency: 4, productivity: 4, factor: "energized" },
                     "14:30": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -571,6 +576,7 @@ export const mockData = {
             }
         ]
     },
+
     "26-02-09": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
@@ -608,9 +614,9 @@ export const mockData = {
                 totalTimeSpent: 152,
                 statistics: {
                     "09:00": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "09:30": { efficiency: 5, productivity: 4, factor: null },
-                    "10:00": { efficiency: 4, productivity: 5, factor: null },
-                    "10:30": { efficiency: 5, productivity: 5, factor: "energized" },
+                    "09:30": { efficiency: 4, productivity: 4, factor: null },
+                    "10:00": { efficiency: 4, productivity: 4, factor: null },
+                    "10:30": { efficiency: 4, productivity: 4, factor: "energized" },
                     "11:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -627,7 +633,7 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 60,
                 statistics: {
-                    "11:30": { efficiency: 5, productivity: 5, factor: null },
+                    "11:30": { efficiency: 4, productivity: 4, factor: null },
                     "12:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
@@ -645,9 +651,9 @@ export const mockData = {
                 totalTimeSpent: 118,
                 statistics: {
                     "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 5, productivity: 5, factor: "focused" },
+                    "14:00": { efficiency: 4, productivity: 4, factor: "focused" },
                     "14:30": { efficiency: 4, productivity: 4, factor: null },
-                    "15:00": { efficiency: 4, productivity: 5, factor: null }
+                    "15:00": { efficiency: 4, productivity: 4, factor: null }
                 }
             },
             {

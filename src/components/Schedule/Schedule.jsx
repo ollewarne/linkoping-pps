@@ -11,12 +11,9 @@ function Schedule() {
 
     return (
         <div className={styles.container} style={{ height: `${heightPx}px` }}>
-            <ClockTimeline />
-            <div className={styles.list}>
-                {activities.map((a, index) => (
+                {activities.filter(a => a.scheduledTime).map((a, index) => (
                     <ActivityCard key={a.id} activity={a} index={index} />
                 ))}
-            </div>
         </div>
     );
 }

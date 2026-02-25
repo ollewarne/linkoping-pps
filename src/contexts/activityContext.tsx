@@ -3,8 +3,6 @@ import type { ActivityType } from '../types';
 
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
-    | { type: "ADD_MEETING"; payload: ActivityType }
-    | { type: "SCHEDULE_ACTIVITY"; payload: { id: string; scheduledTime: string } }
     | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; estimatedDuration: number } }
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
     | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: object } }
@@ -18,11 +16,6 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
     switch (action.type) {
         case "ADD_ACTIVITY":
             return [...state, action.payload];
-        case "ADD_MEETING":
-            return [...state, action.payload];
-        case "SCHEDULE_ACTIVITY":
-            return state.map(activity => activity.id === action.payload.id ?
-                { ...activity, scheduledTime: action.payload.scheduledTime } : activity);
         case "EDIT_ACTIVITY":
             return state.map(activity => activity.id === action.payload.id ?
                 {
