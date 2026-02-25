@@ -15,16 +15,19 @@
     --modal-bg: #e8e5e3;
     --filter-svg: brightness(0) invert(0);
 
-    /* MUI CHARTS COLORS  */
-    --pink: #F583B4;
-    --orange: #F37613;
-    --dark-blue: #4254FB;
-    --yellow: #F7B422;
-    --light-blue: #4BBEFF;
-    --green: #44BF75;
-    --red: #F25058;
-    --red-pink: #F10057;
-    --purple: #9C26B0;
+    /* CATEGORY COLORS (MUI CHARTS COLORS + Ingrids choice) */
+    --purple-meeting: #9C26B0;
+    --pink-admin: #F583B4;
+    --orange-creative: #F37613;
+    --dark-blue-tech: #4254FB;
+    --light-green-analytical: #44BF75;
+    --gold-communication: #F7B422;
+    --light-blue-planning: #F25058;
+    --fuschsia-learning: #4BBEFF;
+    --red-pink-sales: #F10057;
+    --dark-green-support: #358C4E;
+    --yellow-operations: #C6C013;
+    --red-other: #EF2917;
 }
 
 [data-theme="dark"] {
