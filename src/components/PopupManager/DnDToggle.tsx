@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { type FC } from "react";
 import { useDnd } from "./PopupManager";
 import "./DndToggle.css";
 
