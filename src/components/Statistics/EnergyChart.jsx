@@ -1,22 +1,11 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 import { getAverageStats } from './getAverageStats';
-import { useActivityHistory } from "../../contexts/activityHistoryContext";
 
-export default function EnergyChart({ mockData, useRealData = false }) {
-//ändrade komponenten så att den kan använda riktig data från useActivityHistory 
-// via useRealData-flagga istället för att alltid använda mockData.
-    const { historyActivities } = useActivityHistory();
+export default function EnergyChart({ mockData, historyData, useRealData = false }) {
 
-    const realData = useMemo(() => {
-        return {
-            all: {
-                activities: historyActivities ?? []
-            }
-        };
-    }, [historyActivities]);
+    const source = useRealData ? (historyData ?? {}) : mockData;
 
-    const source = useRealData ? realData : mockData;
     const data = useMemo(
         () => getAverageStats(source, "efficiency"),
         [source]
