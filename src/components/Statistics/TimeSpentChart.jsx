@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { PieChart } from "@mui/x-charts";
-import { mockData } from "../../constants/mockData";
 import { categoryColors } from "../../constants/categoryColors";
-import { useActivityHistory } from "../../contexts/activityHistoryContext";
 
 const formatTime = (minutes) => {
   const h = Math.floor(minutes / 60);
@@ -10,24 +8,20 @@ const formatTime = (minutes) => {
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
 };
 
-export default function TimeSpentChart({ useRealData = false }) {
+export default function TimeSpentChart({ mockData, historyData, useRealData = false }) {
+  const source = useRealData ? (historyData ?? {}) : mockData;
 
-  const { historyActivities } = useActivityHistory();
-
-  const realData = useMemo(() => ({
-    all: { activities: historyActivities ?? [] }
-  }), [historyActivities]);
-
-  const source = useRealData ? realData : mockData;
-
-  const aggregatedData = useMemo(() =>
-    Object.values(source).reduce((acc, day) => {
-      (day.activities ?? []).forEach(activity => {
-        const { category, totalTimeSpent } = activity;
-        acc[category] = (acc[category] || 0) + (totalTimeSpent || 0);
-      });
-      return acc;
-    }, {}), [source]);
+  const aggregatedData = useMemo(
+    () =>
+      Object.values(source).reduce((acc, day) => {
+        (day.activities ?? []).forEach((activity) => {
+          const { category, totalTimeSpent } = activity;
+          acc[category] = (acc[category] || 0) + (totalTimeSpent || 0);
+        });
+        return acc;
+      }, {}),
+    [source]
+  );
 
   const finalChartData = Object.entries(aggregatedData)
     .filter(([, totalTimeSpent]) => totalTimeSpent > 60)
@@ -35,7 +29,7 @@ export default function TimeSpentChart({ useRealData = false }) {
       id: index,
       value: totalTimeSpent,
       label: `${category} (${formatTime(totalTimeSpent)})`,
-      color: categoryColors[category] || "pink"
+      color: categoryColors[category] || "pink",
     }));
 
   return (
