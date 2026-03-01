@@ -3,10 +3,11 @@ import type { ActivityType } from '../types';
 
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
-    | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; estimatedDuration: number } }
+    | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; scheduledTime: { start: string; end: string }; estimatedDuration: number } }
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
     | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: object } }
-    | { type: "TOGGLE_ACTIVE"; payload: {id: string}};
+    | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
+    | { type: "DELETE_ACTIVITY"; payload: { id: string } };
 
 
 const activityContext = createContext<{ activities: ActivityType[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
@@ -22,6 +23,10 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
                     ...activity,
                     title: action.payload.title,
                     category: action.payload.category,
+                    scheduledTime: {
+                        start: action.payload.scheduledTime.start,
+                        end: action.payload.scheduledTime.end
+                    },
                     estimatedDuration: action.payload.estimatedDuration
                 } : activity)
         case "UPDATE_TIME_SPENT":
@@ -41,11 +46,12 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
             return state.map(activity => activity.id === action.payload.id ? {
                 ...activity,
                 isActive: !activity.isActive
-        } : activity)
+            } : activity)
+        case "DELETE_ACTIVITY":
+            return [...state.filter(activity => activity.id !== action.payload.id)]
         default:
             return state;
     }
-
 }
 
 export function ActivityProvider({ children }: { children: React.ReactNode }) {

@@ -22,3 +22,46 @@
 .content strong {
   font-weight: 600;
 }
+
+.cardForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    width: 100%;
+}
+
+.cardForm input,
+.cardForm select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.cardForm button {
+    grid-column: span 2;
+    padding: 4px;
+    font-size: 0.85rem;
+}
+
+.confirmYes {
+    background-color: #1565c0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.confirmNo {
+    background-color: #90caf9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
