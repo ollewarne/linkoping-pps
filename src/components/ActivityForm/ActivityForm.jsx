@@ -239,7 +239,7 @@ function ActivityForm({ onClose }) {
                         
                     </button> */}
                     
-                    <button type="submit">
+                    <button type="submit" className={styles.buttonSubmit}>
                         {isScheduled ? 'Add To Planner' : 'Start Activity'}
                     </button>
                 </div>
