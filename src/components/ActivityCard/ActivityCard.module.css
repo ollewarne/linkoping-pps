@@ -1,10 +1,13 @@
 .card {
+  width: 90%;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-style: solid;
+  border-width: 5px;
+  border-radius: 16px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 
               0 2px 8px rgba(0, 0, 0, 0.05);
-  width: 90%;
-  color: #1f2937;
+
+  color: var(--text);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -14,54 +17,186 @@
               0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.content {
-  font-size: 14px;
-  margin: 0;
+/* --------------- CARD CONTENT --------------- */
+.cardSpecificsTop, .cardSpecificsBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.content strong {
+.scheduled {
+  margin: 0;
   font-weight: 600;
 }
 
-.cardForm {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    width: 100%;
+.title {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0.5% 0 3% 0;
+  border-bottom: 1px solid;
 }
 
-.cardForm input,
-.cardForm select {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 4px 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.85rem;
+.category {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1% 2%;
+  border-radius: 8px;
+  color: white;
 }
 
-.cardForm button {
-    grid-column: span 2;
-    padding: 4px;
-    font-size: 0.85rem;
+.cardSpecificsBottom {
+  padding-top: 3%;
+}
+
+.duration{
+  margin: 0;
+}
+
+/* --------------- UTILITY BUTTONS --------------- */
+.utility-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.utility-buttons button {
+  all: unset;
+  cursor: pointer;
+  margin: 1%;
+}
+
+.utility-buttons button:hover {
+  transform: scale(1.1);
+}
+
+.utility-buttons button img{
+  height: 24px;
+  width: 24px;
+  filter: var(--filter-svg);
+}
+
+/* --------------- DELETE CONFIRM --------------- */
+.confirmContainer {
+  display: flex; 
+  align-items: center; 
+  gap: 8px 
+}
+
+.confirmText {
+  font-size: 13px;
+}
+
+.confirmButton {
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.confirmButton:hover {
+  transform: scale(1.05);
+  font-weight: 900;
 }
 
 .confirmYes {
-    background-color: #1565c0;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
+    background: #358C4E;
 }
 
 .confirmNo {
-    background-color: #90caf9;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 0.8rem;
-    cursor: pointer;
+    background-color: #EF2917;
+}
+
+
+/* --------------- EDIT CONFIRM BUTTONS --------------- */
+.edit-confirm {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-confirm button {
+  width: 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  margin: 0 1%;
+  padding: 4px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.edit-confirm button:hover {
+  transform: scale(1.05);
+  letter-spacing: 0.3px;
+}
+
+.editSubmit {
+  background-color: #358C4E;
+}
+
+.editCancel {
+  background-color: #EF2917;
+}
+
+/* --------------------------------------------- */
+/* --------------- TABLET LAYOUT --------------- */
+/* --------------------------------------------- */
+@media (max-width: 1024px) {
+
+  .card {
+    width: 95%;
+    padding: 12px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .category {
+    font-size: 1rem;
+  }
+
+  .edit-confirm button {
+    width: 45%;
+  }
+
+}
+/* --------------------------------------------- */
+/* --------------- MOBILE LAYOUT --------------- */
+/* --------------------------------------------- */
+@media (max-width: 600px) {
+
+  .card {
+    width: 100%;
+    padding: 10px;
+    border-width: 4px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .category {
+    font-size: 0.95rem;
+  }
+
+  .duration {
+    font-size: 0.9rem;
+  }
+
+  .edit-confirm {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .edit-confirm button {
+    width: 100%;
+  }
 }
