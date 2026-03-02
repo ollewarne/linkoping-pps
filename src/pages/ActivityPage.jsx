@@ -10,7 +10,7 @@ function ActivityPage() {
                 <CountdownDisplay />
                 <p>Next activity "Feed the dog" at: 13:00</p>
                 <Modal trigger={<button>Create Activity</button>}>
-                    {({ onClose }) => <ActivityForm onClose={onClose} />}
+                    <ActivityForm />
                 </Modal>
             </div>
         </>
