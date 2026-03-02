@@ -10,11 +10,11 @@ import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import Modal from "../Modal/Modal";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
 
-function ActivityForm({ onClose }) {
+function ActivityForm({ onClose, defaultMode = null }) {
 
 // ----- STATES FÖR ATT STYRA ANVÄNDARFLÖDET I FORMET ----- 
-    const [showForm, setShowForm] = useState(false);
-    const [isScheduled, setIsScheduled] = useState(false);
+    const [showForm, setShowForm] = useState(defaultMode ? true : false);
+    const [isScheduled, setIsScheduled] = useState(defaultMode === "scheduled");
     const [scheduleOption, setScheduleOption] = useState(null);
     const [showScheduleOption, setShowScheduleOption] = useState(false);
 
@@ -102,6 +102,7 @@ function ActivityForm({ onClose }) {
 
 
                 {/* ---------- PLANNER BUTTONS ---------- */}
+                {!defaultMode && (
                 <div className={styles.plannerButtons}>
                 <button
                     id='start-activity'
@@ -120,6 +121,7 @@ function ActivityForm({ onClose }) {
                         Schedule Activity 
                 </button>
                 </div>
+                )}
 
 
                 {/* ---------- SHOW FORM ---------- */}
