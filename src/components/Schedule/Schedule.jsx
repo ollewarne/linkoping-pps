@@ -22,9 +22,17 @@ function Schedule() {
                     />
                 </Modal>
 
+                {activities.length === 0 
+                ?  <div className={styles.emptyContainer}>
+                    <p className={styles.emptyText}>Add activity to planner<span>⤴</span></p>
+                    <img src="/empty.svg" alt="Empty box" className={styles.emptyImg}/>
+                    <p>A bit empty here...?</p>
+                    </div>
+                :  <>
                 {activities.filter(a => a.scheduledTime).map((a, index) => (
                     <ActivityCard key={a.id} activity={a} index={index} />
-                ))}
+                ))}</>
+                }
             </div>
 
         </>
