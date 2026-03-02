@@ -9,7 +9,7 @@ function SettingsMenu() {
                 <img src="/settings.svg" alt="Cogwheel settings button" />
             </button>
         }>
-            {({ onClose }) => <WorkDayForm onClose={onClose} />}
+            <WorkDayForm />
         </Modal>
     );
 }

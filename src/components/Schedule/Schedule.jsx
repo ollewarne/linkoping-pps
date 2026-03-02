@@ -8,35 +8,25 @@ import Modal from "../Modal/Modal";
 
 function Schedule() {
     const { activities } = useActivities();
-    const [showForm, setShowForm] = useState(false);
 
     return (
         <>
-        <div className={styles.container}>
+            <div className={styles.container}>
                 <Modal trigger={(
-                <button className={styles.addActivityBtn}>+</button>)}
+                    <button className={styles.addActivityBtn}>+</button>)}
                 >
-
-                  {(onClose) => 
                     <ActivityForm
                         defaultMode="scheduled"
-                        onClose={onClose}
-                    />}
-                
-                    
+                    />
                 </Modal>
 
                 {activities.filter(a => a.scheduledTime).map((a, index) => (
                     <ActivityCard key={a.id} activity={a} index={index} />
                 ))}
-        </div>
+            </div>
 
-     
         </>
     );
 }
-
-
-// onClick={() => setShowForm(true)
 
 export default Schedule;
