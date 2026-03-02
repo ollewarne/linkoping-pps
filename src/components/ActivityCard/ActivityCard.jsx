@@ -39,7 +39,7 @@ function ActivityCard({ activity = {} }) {
     }
 
     return (
-        <div style={{ height: "20%", backgroundColor }} className={styles.card}>
+        <div style={{ height: "20%", backgroundColor: backgroundColor }} className={styles.card}>
             {editMode ? (
                 <form className={styles.cardForm} onSubmit={(e) => {
                     submitEdit(e)
