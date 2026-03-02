@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import './Modal.css';
 
 function Modal({ trigger, children }) {
     const [isOpen, setIsOpen] = useState(false);
+    const close = () => setIsOpen(false);
 
     return (
         <>
@@ -12,8 +13,8 @@ function Modal({ trigger, children }) {
             {isOpen && (
                 <div className="modal-overlay" onClick={() => setIsOpen(false)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <button className="modal-close" onClick={() => setIsOpen(false)}>×</button>
-                        {typeof children === 'function' ? children({ onClose: () => setIsOpen(false) }) : children}
+                        <button className="modal-close" onClick={close}>×</button>
+                        {React.Children.map(children, child => React.cloneElement(child, {onClose: close}))}
                     </div>
                 </div>
             )}
