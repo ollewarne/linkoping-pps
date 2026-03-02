@@ -1,22 +1,9 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 import { getAverageStats } from './getAverageStats';
-import { useActivityHistory } from "../../contexts/activityHistoryContext";
 
-export default function ProductivityChart({ mockData, useRealData = false }) {
-    //ändrade komponenten så att den kan använda riktig data från useActivityHistory 
-    // via useRealData-flagga istället för att alltid använda mockData.
-    const { historyActivities } = useActivityHistory();
-
-    const realData = useMemo(() => {
-        return {
-            all: {
-                activities: historyActivities ?? []
-            }
-        };
-    }, [historyActivities]);
-
-    const source = useRealData ? realData : mockData;
+export default function ProductivityChart({ mockData, historyData, useRealData = false }) {
+    const source = useRealData ? (historyData ?? {}) : mockData;
 
     const data = useMemo(
         () => getAverageStats(source, 'productivity'),
