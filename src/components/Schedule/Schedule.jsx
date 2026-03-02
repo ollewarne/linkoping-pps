@@ -13,7 +13,9 @@ function Schedule() {
         <>
             <div className={styles.container}>
                 <Modal trigger={(
-                    <button className={styles.addActivityBtn}>+</button>)}
+                    <button className={styles.addActivityBtn}>
+                        <img src="/add.svg" alt="" />
+                    </button>)}
                 >
                     <ActivityForm
                         defaultMode="scheduled"
