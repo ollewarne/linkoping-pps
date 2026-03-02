@@ -1,11 +1,12 @@
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
-import type { ActivityType } from '../types';
+import type { ActivityType, StatisticEntry } from '../types';
+
 
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
     | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; scheduledTime: { start: string; end: string }; estimatedDuration: number } }
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
-    | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: object } }
+    | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: StatisticEntry} }
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
     | { type: "DELETE_ACTIVITY"; payload: { id: string } };
 
@@ -35,6 +36,7 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
                 totalTimeSpent: action.payload.totalTime
             } : activity)
         case "ADD_STATISTIC":
+            console.log("adding stats", action.payload.stat, action.payload.timestamp);
             return state.map(activity => activity.id === action.payload.id ? {
                 ...activity,
                 statistics: {
