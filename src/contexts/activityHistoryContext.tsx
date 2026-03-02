@@ -22,13 +22,47 @@ function historyReducer(state: HistoryData, action: HistoryAction): HistoryData 
     case "ADD_TO_HISTORY": {
       const { dateKey, activity } = action.payload;
 
+      const toTimeKey = (k: string) => {
+        if (/^\d{2}:\d{2}$/.test(k)) return k;
+
+        const d = new Date(k);
+        if (Number.isNaN(d.getTime())) return null;
+
+        const hh = String(d.getHours()).padStart(2, "0");
+        const mm = String(d.getMinutes()).padStart(2, "0");
+        return `${hh}:${mm}`;
+      };
+
+      const rawStats = activity.statistics ?? {};
+
+      const normalizedStats = Object.entries(rawStats).reduce<Record<string, any>>(
+        (acc, [k, v]) => {
+          const timeKey = toTimeKey(k);
+          if (!timeKey || !v) return acc;
+
+          acc[timeKey] = {
+            efficiency: v.efficiency,
+            productivity: v.productivity,
+            factor: v.factor ?? null,
+          };
+
+          return acc;
+        },
+        {}
+      );
+
+      const normalizedActivity = {
+        ...activity,
+        statistics: normalizedStats,
+      };
+
       const existingDay = state[dateKey] ?? { activities: [] };
 
       return {
         ...state,
         [dateKey]: {
           ...existingDay,
-          activities: [...existingDay.activities, activity],
+          activities: [...existingDay.activities, normalizedActivity],
         },
       };
     }
