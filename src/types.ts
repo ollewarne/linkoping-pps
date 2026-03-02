@@ -9,7 +9,19 @@ export interface ActivityType {
     estimatedDuration: number;
     isActive: boolean;
     totalTimeSpent: number;
-    statistics: object;
+    statistics: {
+        [timestamp: string]: {
+            efficiency: number | null;
+            energy: number | null;
+            factor: string | null;
+        }
+    };
     activeTime: number;
     breakTime: number;
+}
+
+export interface StatisticEntry {
+    efficiency: number | null;
+    energy: number | null;
+    factor: string | null;
 }
