@@ -15,7 +15,6 @@ import { languageLibrary } from "./locales/language";
 function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const isMobile = windowWidth < 768;
-    const [showPauseModal, setShowPauseModal] = useState(false);
     const { language } = useTranslator();
 
     useEffect(() => {
