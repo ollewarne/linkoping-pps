@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
 import { languageLibrary } from "../../locales/language";
-import { useDnd } from "../PopupManager/PopupManager";
 
 const event_key = "pauseStatistics/events";
 const last_id_key = "pauseStatistics/lastID";
@@ -16,9 +15,9 @@ type ImpactOption = {
 type FormData = {
   id?: number;
   efficiency: number | null;
-  energy: number | null;
+  productivity: number | null;
   factor: string | null;
-  timestamp?: string;
+  timestamp: string;
 };
 
 type PauseStatisticsProps = {
@@ -32,7 +31,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
 
   const [formData, setFormData] = useState<FormData>({
     efficiency: 3,
-    energy: 3,
+    productivity: 3,
     factor: "",
   });
 
@@ -40,11 +39,15 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
     const lastIdStr = localStorage.getItem(last_id_key) ?? "0";
     const newId = Number(lastIdStr) + 1;
 
-    const newEntry: FormData = {
-      id: newId,
-      ...data,
-      timestamp: new Date().toISOString(),
-    };
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, "0");
+  const mm = String(now.getMinutes()).padStart(2, "0");
+
+  const newEntry: FormData = {
+    id: newId,
+    ...data,
+    timestamp: `${hh}:${mm}`,
+  };
 
     const existingEvents: FormData[] = JSON.parse(
       localStorage.getItem(event_key) ?? "[]"
@@ -58,7 +61,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
   };
 
   const saveNull = () =>
-    saveEvent({ efficiency: null, energy: null, factor: null });
+    saveEvent({ efficiency: null, productivity: null, factor: null });
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -75,13 +78,12 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
     event.preventDefault();
     saveEvent(formData);
 
-    setFormData({
-      efficiency: 3,
-      energy: 3,
-      factor: impacts[0]?.value ?? "",
-    });
+  setFormData({
+    efficiency: 3,
+    productivity: 3,
+    factor: impacts[0]?.value ?? "",
+  });
   };
-
   return (
     <div className="popup-statistics">
       <div className="content-statistics">
@@ -110,7 +112,7 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
             ))}
           </div>
 
-          <label>{languageLibrary[language].evaluateEnergy}</label>
+          <label>Productivity</label>
 
           <div className="radio-indicator">
             <span>{languageLibrary[language].low}</span>
@@ -122,11 +124,11 @@ function PauseStatistics({ onSave  }: PauseStatisticsProps) {
               <label key={num} style={{ marginRight: "10px" }}>
                 <input
                   type="radio"
-                  name="energy"
+                  name="productivity"
                   value={num}
-                  checked={formData.energy === num}
+                  checked={formData.productivity === num}
                   onChange={() =>
-                    setFormData((prev) => ({ ...prev, energy: num }))
+                    setFormData((prev) => ({ ...prev, productivity: num }))
                   }
                 />
                 {num}

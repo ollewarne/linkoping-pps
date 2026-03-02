@@ -147,6 +147,17 @@ function StatisticsPage() {
             >
                 Clear history
             </button>
+<details style={{ marginTop: 12 }}>
+  <summary>Visa sparad real data</summary>
+
+  <div style={{ marginTop: 8 }}>
+    <div>Nycklar (dagar): {Object.keys(historyData).length}</div>
+
+    <pre style={{ maxHeight: 400, overflow: "auto", padding: 12, background: "#111", color: "#eee" }}>
+      {JSON.stringify(historyData, null, 2)}
+    </pre>
+  </div>
+</details>
             
 
             <ProductivityChart mockData={mockData} historyData={historyData} useRealData={useRealData} />
