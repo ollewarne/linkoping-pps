@@ -9,7 +9,7 @@ export default function BottomNav() {
                     Activity
                 </NavLink>
                 <NavLink to="/schedule" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                    Schedule
+                    Planner
                 </NavLink>
                 <NavLink to="/history" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
                     History
