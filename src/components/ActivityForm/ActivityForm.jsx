@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
 import styles from "./ActivityForm.module.css"
-import { useActivities } from "../../contexts/activityContext";
-import { userOptions } from "../../constants/userOptions";
+import Modal from "../Modal/Modal";
 import { languageLibrary } from "../../locales/language";
 import { useTranslator } from "../../contexts/languageContext";
+import { useState } from "react";
+import { userOptions } from "../../constants/userOptions";
 import { useNotification } from "../../contexts/NotificationContext";
 import { useActivityForm } from "../../hooks/useActivityForm";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
-import Modal from "../Modal/Modal";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
+
 
 function ActivityForm({ onClose, defaultMode = null }) {
 
@@ -21,9 +21,6 @@ function ActivityForm({ onClose, defaultMode = null }) {
     let workformData = getWorkdayFromStorage();
 // --------------------------------------------------------- 
 
-
-
-
     const { language } = useTranslator();
     const [validationError, setValidationError] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
@@ -34,8 +31,8 @@ function ActivityForm({ onClose, defaultMode = null }) {
     const { addActivityToPlanner, addMeetingActivityToPlanner, startActivity, startMeetingActivity } = useActivityForm();
 
     function validateInputs(hoursValue, minutesValue) {
-        const hours = +hoursValue;
-        const minutes = +minutesValue;
+        const hours = parseFloat(hoursValue) || 0; 
+        const minutes = parseFloat(minutesValue) || 0;
 
         if (hours <= 0 && minutes <= 0) {
             return languageLibrary[language].errorGreaterThanZero
@@ -43,43 +40,42 @@ function ActivityForm({ onClose, defaultMode = null }) {
         return "";
     }
 
-    function handleBlur(e) {
-        const form = e.target.form;
-        const hoursInput = form.hours;
-        const minutesInput = form.minutes;
-
-        const error = validateInputs(hoursInput.value, minutesInput.value);
-        setValidationError(error);
-
-        hoursInput.setCustomValidity(error);
-        minutesInput.setCustomValidity(error);
+    function handleInputChange(e) {
+        e.target.setCustomValidity('');
+        setValidationError('');
     }
 
     function handleFormAction(e, action) {
+        e.preventDefault();
+
         const form = e.target;
         const hoursInput = form.hours;
         const minutesInput = form.minutes;
+
         const error = validateInputs(hoursInput.value, minutesInput.value);
 
         if (error) {
-            e.preventDefault()
             setValidationError(error);
             hoursInput.setCustomValidity(error);
+            minutesInput.setCustomValidity(error);
             hoursInput.reportValidity();
             return false;
         }
 
-        e.preventDefault();
+        hoursInput.value = hoursInput.value || 0;
+        minutesInput.value = minutesInput.value || 0;
+
+        hoursInput.setCustomValidity('');
+        minutesInput.setCustomValidity('');
+
         action(form);
 
         form.reset();
-        hoursInput.setCustomValidity('');
-        minutesInput.setCustomValidity('');
         setValidationError('');
         showNotification("Activity Saved!");
         onClose();
-
     }
+
     // ------------------ HANDLE SUBMIT ------------------
     function handleSubmit(e) {
         handleFormAction(e, (form) => {
@@ -93,15 +89,13 @@ function ActivityForm({ onClose, defaultMode = null }) {
 
             {/* ---------- REGISTER ACTIVITY ---------- */}
             
-
             {workformData ? (
             <>
-            <h2>{languageLibrary[language].form2Header}</h2>
+            <h2>{languageLibrary[language].form2Header /* Register activity*/}</h2>  
             <form onSubmit={handleSubmit}>
 
 
-
-                {/* ---------- PLANNER BUTTONS ---------- */}
+                {/* ---------- PLANNER BUTTONS (Start Activity / Schedule Activity) ---------- */}
                 {!defaultMode && (
                 <div className={styles.plannerButtons}>
                 <button
@@ -126,14 +120,10 @@ function ActivityForm({ onClose, defaultMode = null }) {
 
                 {/* ---------- SHOW FORM ---------- */}
 
-                
-
-              
-
                 {showForm && (
                     <>
 
-                    {/* CATEGORY & TITLE */}
+                    {/* ---------- CATEGORY & TITLE ---------- */}
                     <fieldset>
                         <legend>{languageLibrary[language].form2Activity}</legend>
                         <label htmlFor="category">{languageLibrary[language].form2Category}</label>
@@ -150,16 +140,16 @@ function ActivityForm({ onClose, defaultMode = null }) {
                     </fieldset>
 
 
-                    {/* START ACTIVITY OR SCHEDULE */}
+                    {/* ---------- START ACTIVITY OR SCHEDULE ---------- */}
                     {!isScheduled ? (
 
                         // IS NOT SCHEDULED: Enter ESTIMATED DURATION
                         <fieldset>
                             <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
                             <label htmlFor="hours">{languageLibrary[language].hours}</label>
-                            <input name="hours" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                            <input name="hours" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange}/>
                             <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
-                            <input name="minutes" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                            <input name="minutes" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange}/>
                         </fieldset>
                         
                     ) : (
@@ -213,9 +203,9 @@ function ActivityForm({ onClose, defaultMode = null }) {
                                 <fieldset>
                                     <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
                                     <label htmlFor="hours">{languageLibrary[language].hours}</label>
-                                    <input name="hours" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                                    <input name="hours" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange}/>
                                     <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
-                                    <input name="minutes" type="number" defaultValue={0}/> {/* onBlur={handleBlur}*/}
+                                    <input name="minutes" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange}/>
                                 </fieldset>   
                             )}
                             </>
@@ -228,37 +218,26 @@ function ActivityForm({ onClose, defaultMode = null }) {
                     <fieldset>
                         <legend>{languageLibrary[language].form2TimeStructure}</legend>
                         <label htmlFor="activeTime">{languageLibrary[language].active}</label>
-                        <input type="number" name="activeTime" defaultValue={25} />
+                        <input type="number" name="activeTime" defaultValue={25} min="0"/>
                         <label htmlFor="breakTime">{languageLibrary[language].break}</label>
-                        <input type="number" name="breakTime" defaultValue={5} />
+                        <input type="number" name="breakTime" defaultValue={5} min="0"/>
                     </fieldset>
 
-
-
                 <div style={{ display: "flex" }}>
-                    {/* <button type="button" onClick={handleActivityStart}>
-                        Start Activity
-                        
-                    </button> */}
                     
                     <button type="submit" className={styles.buttonSubmit}>
                         {isScheduled ? 'Add To Planner' : 'Start Activity'}
                     </button>
                 </div>
                     </>
-                )
-                }
+                )}
             </form> 
             </>) : (
                 <>                    
                     <p>Please enter the specifics for your workday before registering activities</p>
                     <WorkDayForm/>
                 </>
-
-
             )}
-
-        
         </div>
     )
 }
