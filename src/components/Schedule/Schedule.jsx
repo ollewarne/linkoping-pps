@@ -3,11 +3,15 @@ import { useActivities } from "../../contexts/activityContext";
 import ActivityCard from "../ActivityCard/ActivityCard";
 import ClockTimeline from "../ClockTimeline/ClockTimeline";
 import ActivityForm from "../ActivityForm/ActivityForm";
-import { useState } from "react";
+
 import Modal from "../Modal/Modal";
+import { getWorkdayFromStorage } from "../../utils/workdayStorage";
+import WorkDayForm from "../WorkDayForm/WorkDayForm";
 
 function Schedule() {
     const { activities } = useActivities();
+
+    let workformData = getWorkdayFromStorage();
 
     return (
         <>
@@ -17,9 +21,17 @@ function Schedule() {
                         <img src="/add.svg" alt="" />
                     </button>)}
                 >
-                    <ActivityForm
-                        defaultMode="scheduled"
-                    />
+
+                    {workformData ? (
+                        <ActivityForm
+                            defaultMode="scheduled"
+                        />
+                    ) : (
+                        <>                    
+                        <p>Please enter the specifics for your workday before registering activities</p>
+                        <WorkDayForm/>
+                        </>
+                    )}
                 </Modal>
 
                 {activities.length === 0 
