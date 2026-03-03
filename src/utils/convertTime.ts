@@ -29,17 +29,27 @@ export function convertStringTimeToMinutes(time: string): number | null {
     return toTotalMinutes(hours, minutes);
 }
 
-
 /**
- * Calculates total duration in minutes from hours and minutes strings.
+ * Calculates duration in minutes.
  * 
- * @param hours - hours as string (e.g. '2')
- * @param minutes - minutes as string (e.g. '30')
- * @returns - total duration in minutes
+ * @param hours - can be either hours or a start time .
+ * @param minutes - can be either minutes or a end time.
+ * 
+ * @returns -
+ * If params are time strings: returns difference in minutes
+ * If params are hours & minutes: returns total minutes
  */
 export function calculateDuration(hours: string, minutes: string): number {
-    const hoursNum = +hours;
-    const minutesNum = +minutes;
 
-    return (hoursNum * 60) + minutesNum;
+    if (hours.includes(":") && minutes.includes(":")) {
+        const [startHours, startMinutes] = hours.split(":").map(Number);
+        const [endHours, endMinutes] = minutes.split(":").map(Number);
+
+        const startTotal = startHours * 60 + startMinutes;
+        const endTotal = endHours * 60 + endMinutes;
+
+        return endTotal - startTotal;
+    }
+
+    return (+hours * 60) + +minutes;
 }
