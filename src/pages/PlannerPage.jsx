@@ -1,7 +1,7 @@
-import Schedule from "../components/Schedule/Schedule";
+import Planner from "../components/Planner/Planner";
 
-function SchedulePage() {
-    return <Schedule />
+function PlannerPage() {
+    return <Planner />
 }
 
-export default SchedulePage;
+export default PlannerPage;

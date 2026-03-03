@@ -4,7 +4,7 @@ import PauseStatistics from "./components/PauseStatistics/PauseStatistics";
 import PopupManager from "./components/PopupManager/PopupManager";
 import MobileLayout from "./layouts/MobileLayout/MobileLayout";
 import DesktopLayout from "./layouts/DesktopLayout/DesktopLayout";
-import SchedulePage from "./pages/SchedulePage";
+import PlannerPage from "./pages/PlannerPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import ActivityPage from "./pages/ActivityPage";
 import { Route, Routes } from "react-router";
@@ -35,7 +35,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<MobileLayout />}>
                         <Route index element={<ActivityPage />} />
-                        <Route path="planner" element={<SchedulePage />} />
+                        <Route path="planner" element={<PlannerPage />} />
                         <Route path="history" element={<StatisticsPage />} />
                     </Route>
                 </Routes>
@@ -43,7 +43,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<DesktopLayout />}>
                         <Route index element={<ActivityPage />} />
-                        <Route path="planner" element={<SchedulePage />} />
+                        <Route path="planner" element={<PlannerPage />} />
                         <Route path="history" element={<StatisticsPage />} />
                     </Route>
                 </Routes>

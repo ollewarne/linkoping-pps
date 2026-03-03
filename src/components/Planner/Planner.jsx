@@ -1,4 +1,4 @@
-import styles from "./Schedule.module.css";
+import styles from "./Planner.module.css";
 import { useActivities } from "../../contexts/activityContext";
 import ActivityCard from "../ActivityCard/ActivityCard";
 import ClockTimeline from "../ClockTimeline/ClockTimeline";
@@ -8,7 +8,7 @@ import Modal from "../Modal/Modal";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
 
-function Schedule() {
+function Planner() {
     const { activities } = useActivities();
 
     let workformData = getWorkdayFromStorage();
@@ -51,4 +51,4 @@ function Schedule() {
     );
 }
 
-export default Schedule;
+export default Planner;
