@@ -1,6 +1,7 @@
 import type { ActivityType } from "../types";
 import { useActivities } from "../contexts/activityContext";
-import { calculateDuration, toTotalMinutes } from "../utils/validateTime";
+import { calculateDuration } from "../utils/convertTime";
+// import { calculateDuration, toTotalMinutes } from "../utils/validateTime";
 
 function generateId(): string {
     return Math.random().toString(36).substring(2, 6);
@@ -48,7 +49,8 @@ export function useActivityForm() {
             id: generateId(),
             category: form.category.value,
             title: form.activityTitle.value,
-            estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
+            // estimatedDuration: toTotalMinutes(+hoursInput.value, +minutesInput.value),
+            estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
             activeTime: form.activeTime.value,
             breakTime: form.breakTime.value,
             isActive: true,
