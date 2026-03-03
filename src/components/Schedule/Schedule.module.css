@@ -5,12 +5,7 @@
   align-items: center;
   padding-top: 25px;
   gap: 1em;
-  background-color: var(--notepad-bg);
   position: relative;
-  border: 1px solid var(--text);
-  border-radius: 30px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1), 
-              0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .emptyContainer {
@@ -28,6 +23,7 @@
 .emptyImg {
   width: 35%;
   filter: var(--filter-svg);
+  padding-top: 20%;
 }
 
 .addActivityBtn {
@@ -87,9 +83,12 @@
     z-index: 1;
   }
 
-
   .emptyText {
     bottom: 15px;
     right: 11px;
+  }
+
+  .emptyImg {
+    padding-top: 40%;
   }
 }
