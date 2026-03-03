@@ -74,7 +74,7 @@ function ActivityCard({ activity = {} }) {
                             
                 <div className={styles.cardSpecificsBottom}>
                     
-                    <p className={styles.duration}>Estimated duration: {activity.estimatedDuration} min</p>
+                    <p className={styles.duration}>Estimated duration: <span>{activity.estimatedDuration} min</span></p>
                     
                     {confirmDelete ? (
                         <div className={styles.confirmContainer}>
