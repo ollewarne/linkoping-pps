@@ -28,3 +28,18 @@ export function convertStringTimeToMinutes(time: string): number | null {
 
     return toTotalMinutes(hours, minutes);
 }
+
+
+/**
+ * Calculates total duration in minutes from hours and minutes strings.
+ * 
+ * @param hours - hours as string (e.g. '2')
+ * @param minutes - minutes as string (e.g. '30')
+ * @returns - total duration in minutes
+ */
+export function calculateDuration(hours: string, minutes: string): number {
+    const hoursNum = +hours;
+    const minutesNum = +minutes;
+
+    return (hoursNum * 60) + minutesNum;
+}
