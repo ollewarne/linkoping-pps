@@ -53,6 +53,10 @@
   margin: 0;
 }
 
+.duration span {
+  font-weight: 700;
+}
+
 /* --------------- UTILITY BUTTONS --------------- */
 .utility-buttons {
   display: flex;
