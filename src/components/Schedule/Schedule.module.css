@@ -53,17 +53,21 @@
   cursor: pointer;
 }
 
-.emptyText {
+.emptyAdd {
   position: absolute;
-  top: 35px;
-  right: 11px;
+  top: 40px;
+  right: 13px;
   display: flex;
   align-items: flex-end;
   gap: 3px;
 }
 
-.emptyText span {
-  font-size: 35px;
+.emptyAdd span {
+  font-size: 30px;
+}
+
+.emptyText {
+  font-size: 20px;
 }
 
 /* --------------------------------------------- */
@@ -83,9 +87,9 @@
     z-index: 1;
   }
 
-  .emptyText {
+  .emptyAdd {
     bottom: 15px;
-    right: 11px;
+    right: 13px;
   }
 
   .emptyImg {
