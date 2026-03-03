@@ -103,6 +103,6 @@
 
     margin-left: -0.5rem;
     z-index: 100;
-    transform: translateY(1px);
+    margin-bottom: -1px;
 
 }
