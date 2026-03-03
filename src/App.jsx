@@ -35,16 +35,16 @@ function App() {
                 <Routes>
                     <Route path="/" element={<MobileLayout />}>
                         <Route index element={<ActivityPage />} />
-                        <Route path="Schedule" element={<SchedulePage />} />
-                        <Route path="History" element={<StatisticsPage />} />
+                        <Route path="planner" element={<SchedulePage />} />
+                        <Route path="history" element={<StatisticsPage />} />
                     </Route>
                 </Routes>
             ) : (
                 <Routes>
                     <Route path="/" element={<DesktopLayout />}>
                         <Route index element={<ActivityPage />} />
-                        <Route path="Schedule" element={<SchedulePage />} />
-                        <Route path="History" element={<StatisticsPage />} />
+                        <Route path="planner" element={<SchedulePage />} />
+                        <Route path="history" element={<StatisticsPage />} />
                     </Route>
                 </Routes>
             )}
