@@ -34,7 +34,7 @@ function Planner() {
                     )}
                 </Modal>
 
-                {activities.length === 0 
+                {activities.filter(a => a.scheduledTime).length === 0 
                 ?  <div className={styles.emptyContainer}>
                     <p className={styles.emptyAdd}>Add activity to planner<span>⤴</span></p>
                     <img src="/empty.svg" alt="Empty box" className={styles.emptyImg}/>
