@@ -22,4 +22,5 @@ export const categoryColors = {
     'Verksamhet / Drift': 'var(--yellow-operations)',
     'Other': 'var(--red-other)',
     'Annat': 'var(--red-other)',
+    'NonWork': 'var(--grey-nonWork)'
 }
