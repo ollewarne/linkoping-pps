@@ -1,18 +1,28 @@
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
+import { getWorkdayFromStorage } from '../utils/workdayStorage';
+import { calculateDuration } from '../utils/convertTime';
 
+type PlannedActivity = {
+    id: string;
+    category: string;
+    title: string;
+    scheduledTimeStart: string | null;
+    scheduledTimeStop: string | null;
+    isDone: boolean;
+    isActive: boolean;
+    totalDuration: number;
+}
 
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
     | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; scheduledTime: { start: string; end: string }; estimatedDuration: number } }
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
-    | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: StatisticEntry} }
+    | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: StatisticEntry } }
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
     | { type: "DELETE_ACTIVITY"; payload: { id: string } };
 
-
 const activityContext = createContext<{ activities: ActivityType[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
-
 
 function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
@@ -36,7 +46,6 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
                 totalTimeSpent: action.payload.totalTime
             } : activity)
         case "ADD_STATISTIC":
-            console.log("adding stats", action.payload.stat, action.payload.timestamp);
             return state.map(activity => activity.id === action.payload.id ? {
                 ...activity,
                 statistics: {
@@ -56,7 +65,21 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
     }
 }
 
+function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
+    array.sort((a, b) => {
+        if (a.scheduledTimeStart === null) return 1;
+        if (b.scheduledTimeStart === null) return -1;
+        return a.scheduledTimeStart.localeCompare(b.scheduledTimeStart);
+    })
+
+    return array;
+}
+
+
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
+    const workday = getWorkdayFromStorage();
+    const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
+
     const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
             const item = localStorage.getItem("activities");
@@ -85,13 +108,46 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 value: activities,
                 timeStamp: Date.now()
             }
-            localStorage.setItem("activities", JSON.stringify(data))
+            localStorage.setItem("activities", JSON.stringify(data));
+
+            const basePlannedActivity: PlannedActivity[] = [];
+
+            if (workday.nonWorkHours) {
+                const totalDuration = calculateDuration(workday.nonWorkHours.start, workday.nonWorkHours.end)
+                const nonWorkPlan: PlannedActivity = {
+                    id: "nonWork",
+                    title: "Non work time",
+                    category: "NonWork",
+                    scheduledTimeStart: workday.nonWorkHours.start,
+                    scheduledTimeStop: workday.nonWorkHours.end,
+                    isActive: false,
+                    isDone: false,
+                    totalDuration: totalDuration
+                };
+
+                basePlannedActivity.push(nonWorkPlan);
+            }
+
+            const newActivities = activities.filter(a => a.scheduledTime).map((a) => ({
+                id: a.id,
+                title: a.title,
+                category: a.category,
+                scheduledTimeStart: a.scheduledTime!.start,
+                scheduledTimeStop: a.scheduledTime!.end,
+                totalDuration: a.estimatedDuration,
+                isDone: false,
+                isActive: a.isActive
+            }))
+
+            const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
+            setPlannedActivities(sorted);
+
         }, [activities]
     )
 
     const value = useMemo(() => ({
-        activities, activityDispatch
-    }), [activities])
+        activities, activityDispatch, plannedActivities, setPlannedActivities
+    }), [activities, plannedActivities])
 
     return (
         <activityContext.Provider value={value}>

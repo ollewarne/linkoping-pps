@@ -55,8 +55,8 @@ function ActivityCard({ activity = {} }) {
                             })
                         }
                     </select>
-                    <input name="timeStart" type="time" defaultValue={activity.scheduledTime.start} />
-                    <input name="timeEnd" type="time" defaultValue={activity.scheduledTime.end} />
+                    <input name="timeStart" type="time" defaultValue={activity.scheduledTimeStart} />
+                    <input name="timeEnd" type="time" defaultValue={activity.scheduledTimeStop} />
 
                     <div className={styles['edit-confirm']}>
                         <button type="submit" className={styles.editSubmit}>Save Activity</button>
@@ -66,7 +66,7 @@ function ActivityCard({ activity = {} }) {
             ) : (
                 <>
                 <div className={styles.cardSpecificsTop}>
-                    <p className={styles.scheduled}>{activity.scheduledTime.start} - {activity.scheduledTime.end}</p>
+                    <p className={styles.scheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
                     <p className={styles.category} style={{backgroundColor: backgroundColor}}>{activity.category}</p>
                 </div>
 
@@ -74,7 +74,7 @@ function ActivityCard({ activity = {} }) {
                             
                 <div className={styles.cardSpecificsBottom}>
                     
-                    <p className={styles.duration}>Estimated duration: <span>{activity.estimatedDuration} min</span></p>
+                    <p className={styles.duration}>Estimated duration: <span>{activity.totalDuration} min</span></p>
                     
                     {confirmDelete ? (
                         <div className={styles.confirmContainer}>
