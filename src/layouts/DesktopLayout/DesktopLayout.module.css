@@ -25,9 +25,11 @@
 }
 
 .buttonGroup {
+    height: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: 1em;
+    padding-bottom: 1%;
 }
 
 .navigation {
@@ -63,6 +65,8 @@
     
     transition: background-color 0.2s ease,
                 transform 0.2s ease;
+
+    z-index: 1;
                
 }
 
@@ -70,20 +74,20 @@
     color: var(--text);
 }
 
-.navLink:nth-child(1) {
+/* .navLink:nth-child(1) {
     z-index: 3;
-}
+}*/
 
 .navLink:nth-child(2) {
     z-index: 2;
 }
-
+/*
 .navLink:nth-child(3) {
     z-index: 1;
-}
+} */
 
 .navLink:hover {
-    z-index: 5;
+    z-index: 2;
     background-color: var(--bg);
 }
 
@@ -102,7 +106,7 @@
     color: var(--text);
 
     margin-left: -0.5rem;
-    z-index: 100;
+    z-index: 3;
     transform: translateY(1px);
 
 }
