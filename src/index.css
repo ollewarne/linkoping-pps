@@ -33,7 +33,28 @@
     --yellow-operations: #C6C013;
     --red-other: #EF2917;
     --grey-nonWork: 'grey';
+
+    /* HEADER BUTTONS STYLING */
+    .header-btn {
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        padding: 0;
+    }
+
+    .header-btn img {
+        height: 24px;
+        width: 24px;
+        filter: var(--filter-svg);
+    }
+
+    .header-btn:hover {
+        transform: translateY(-1px);
+    }
 }
+
+
 
 [data-theme="dark"] {
     --bg: #1c1c1e;

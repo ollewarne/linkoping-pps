@@ -66,28 +66,18 @@
     transition: background-color 0.2s ease,
                 transform 0.2s ease;
 
-    z-index: 1;
-               
+    z-index: 1;          
 }
 
 .navLink span {
     color: var(--text);
 }
 
-/* .navLink:nth-child(1) {
-    z-index: 3;
-}*/
-
 .navLink:nth-child(2) {
     z-index: 2;
 }
-/*
-.navLink:nth-child(3) {
-    z-index: 1;
-} */
 
 .navLink:hover {
-    z-index: 2;
     background-color: var(--bg);
 }
 
@@ -109,5 +99,4 @@
 
     z-index: 5;
     margin-bottom: -1px;
-
 }
