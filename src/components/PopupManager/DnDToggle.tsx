@@ -1,6 +1,5 @@
 import { type FC } from "react";
 import { useDnd } from "../../contexts/DndContext";
-// import "./DndToggle.css";
 import styles from "./DndToggle.module.css"
 
 const DndToggle: FC = () => {
@@ -8,7 +7,7 @@ const DndToggle: FC = () => {
 
   return (
 
-    <button onClick={toggleDnd} className={styles['language-toggle-btn']}>
+    <button onClick={toggleDnd} className={isDndEnabled ? `header-btn ${styles.dndBtn}` : `header-btn ${styles.dndBtn} ${styles.dndBtnActive}`}>
       <img src={isDndEnabled ? '/notification-on.svg' : '/notification-off.svg'} alt="Notification selector" />
     </button>
 
