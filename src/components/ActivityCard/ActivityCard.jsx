@@ -76,21 +76,33 @@ function ActivityCard({ activity = {} }) {
                     
                     <p className={styles.duration}>Estimated duration: <span>{activity.totalDuration} min</span></p>
                     
-                    {confirmDelete ? (
-                        <div className={styles.confirmContainer}>
-                            <p className={styles.confirmText}>Are you sure?</p>
-                            <button className={`${styles.confirmButton} ${styles.confirmYes}`} onClick={handleDelete}>Yes</button>
-                            <button className={`${styles.confirmButton} ${styles.confirmNo}`} onClick={() => setConfirmDelete(false)}>No</button>
-                        </div>
-                    ) : (
-                        <div className={styles['utility-buttons']}>
-                            <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
-                                <img src="/settings.svg" alt="Edit icon" />
-                            </button>
-                            <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
-                                <img src="/delete.svg" alt="Delete icon" />
-                            </button>
-                        </div>
+                    {activity.category !== "NonWork" && (
+                        confirmDelete ? (
+                            <div className={styles.confirmContainer}>
+                                <p className={styles.confirmText}>Are you sure?</p>
+                                <button
+                                    className={`${styles.confirmButton} ${styles.confirmYes}`}
+                                    onClick={handleDelete}
+                                >
+                                    Yes
+                                </button>
+                                <button
+                                    className={`${styles.confirmButton} ${styles.confirmNo}`}
+                                    onClick={() => setConfirmDelete(false)}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        ) : (
+                            <div className={styles['utility-buttons']}>
+                                <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
+                                    <img src="/settings.svg" alt="Edit icon" />
+                                </button>
+                                <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
+                                    <img src="/delete.svg" alt="Delete icon" />
+                                </button>
+                            </div>
+                        )
                     )}
                 </div>
                 </>
