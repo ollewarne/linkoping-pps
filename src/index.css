@@ -32,7 +32,7 @@
     --dark-green-support: #358C4E;
     --yellow-operations: #C6C013;
     --red-other: #EF2917;
-    --grey-nonWork: 'grey';
+    --grey-nonWork: grey;
 
     /* HEADER BUTTONS STYLING */
     .header-btn {
