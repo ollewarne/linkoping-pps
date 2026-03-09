@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
 import { getWorkdayFromStorage } from '../utils/workdayStorage';
-import { calculateDuration } from '../utils/convertTime';
+import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
 
 type PlannedActivity = {
     id: string;
@@ -79,6 +79,9 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
+    const [timeBlocks, setTimeBlocks] = useState([]);
+
+
 
     useEffect(() => {
         function handleWorkdayUpdate() {
@@ -86,13 +89,18 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             setWorkday(updatedWorkday);
         }
 
+        // TILL SORTERINGSLOGIK
+        const start = convertStringTimeToMinutes(workday.workHours.start);
+        const end = convertStringTimeToMinutes(workday.workHours.end);
+        setTimeBlocks([start, end]);
+        // --------------------
+
         window.addEventListener("workdayDataUpdated", handleWorkdayUpdate);
 
         return () => {
             window.removeEventListener("workdayDataUpdated", handleWorkdayUpdate);
         };
-    }, []);
-
+    }, [workday]); 
 
     const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
@@ -160,8 +168,8 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
     )
 
     const value = useMemo(() => ({
-        activities, activityDispatch, plannedActivities, setPlannedActivities
-    }), [activities, plannedActivities])
+        activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks
+    }), [activities, plannedActivities, timeBlocks])
 
     return (
         <activityContext.Provider value={value}>
