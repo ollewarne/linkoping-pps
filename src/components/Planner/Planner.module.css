@@ -6,6 +6,7 @@
   padding-top: 25px;
   gap: 1em;
   position: relative;
+  width: 50%;
 }
 
 .emptyContainer {
