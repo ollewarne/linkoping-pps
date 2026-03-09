@@ -23,7 +23,7 @@ function getTimestamp(): string {
 
 function PauseStatistics() {
     const { activityDispatch } = useActivities();
-    const { activeActivity } = useTimer();
+    const { activeActivity, setShowPopup } = useTimer();
     const { language } = useTranslator();
 
 
@@ -36,7 +36,6 @@ function PauseStatistics() {
     });
 
     const saveEvent = (data: StatisticEntry) => {
-        console.log("are we actually getting here?");
         if (!activeActivity) return;
 
         const timestamp = getTimestamp();
@@ -54,6 +53,7 @@ function PauseStatistics() {
                 }
             }
         });
+        setShowPopup(false);
     };
 
     const saveNull = () => {
