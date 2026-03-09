@@ -17,14 +17,11 @@ export function toTotalMinutes(hours: number, minutes: number): number {
  * @param time - time as string ('12:00')
  * @returns - total time, or null if input is invalid
  */
-export function convertStringTimeToMinutes(time: string): number | null {
+export function convertStringTimeToMinutes(time: string): number {
 
     const [hours, minutes] = time.split(':').map(Number);
 
-    // EVENTUELLT KAN DETTA BUGGA ???
-    if( typeof hours !== 'number' || typeof minutes !== 'number'){
-         return null;
-    }
+    if( isNaN(hours) || isNaN(minutes)) throw new Error("invalid format, must be numbers")
 
     return toTotalMinutes(hours, minutes);
 }

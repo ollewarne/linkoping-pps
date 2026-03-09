@@ -14,6 +14,10 @@ type PlannedActivity = {
     totalDuration: number;
 }
 
+export type TimeSlot = {
+    start: number, end: number, isWorkdayLimit: boolean
+}
+
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
     | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; scheduledTime: { start: string; end: string }; estimatedDuration: number } }
@@ -22,7 +26,14 @@ type ActivityAction =
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
     | { type: "DELETE_ACTIVITY"; payload: { id: string } };
 
-const activityContext = createContext<{ activities: ActivityType[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
+const activityContext = createContext<{
+    activities: ActivityType[];
+    activityDispatch: React.Dispatch<ActivityAction>;
+    plannedActivities: PlannedActivity[];
+    setPlannedActivities: React.Dispatch<React.SetStateAction<PlannedActivity[]>>;
+    timeBlocks: TimeSlot[];
+    setTimeBlocks: React.Dispatch<React.SetStateAction<TimeSlot[]>>
+} | null>(null);
 
 function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
@@ -79,9 +90,7 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
-    const [timeBlocks, setTimeBlocks] = useState([]);
-
-
+    const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
 
     useEffect(() => {
         function handleWorkdayUpdate() {
@@ -89,18 +98,12 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             setWorkday(updatedWorkday);
         }
 
-        // TILL SORTERINGSLOGIK
-        const start = convertStringTimeToMinutes(workday.workHours.start);
-        const end = convertStringTimeToMinutes(workday.workHours.end);
-        setTimeBlocks([start, end]);
-        // --------------------
-
         window.addEventListener("workdayDataUpdated", handleWorkdayUpdate);
 
         return () => {
             window.removeEventListener("workdayDataUpdated", handleWorkdayUpdate);
         };
-    }, [workday]); 
+    }, [workday]);
 
     const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
@@ -164,8 +167,29 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
             setPlannedActivities(sorted);
 
+            const start = convertStringTimeToMinutes(workday.workHours.start);
+            const end = convertStringTimeToMinutes(workday.workHours.end);
+
+            const timeBlocksStart = { start: start, end: start, isWorkdayLimit: true };
+            const timeBlocksEnd = { start: end, end: end, isWorkdayLimit: true };
+            const plannedBlocks: TimeSlot[] = [];
+
+            for (let activity of sorted) {
+                if (!activity.scheduledTimeStart || !activity.scheduledTimeStop) continue;
+                const start = convertStringTimeToMinutes(activity.scheduledTimeStart);
+                const end = convertStringTimeToMinutes(activity.scheduledTimeStop);
+
+                if (!start || !end) continue;
+
+                plannedBlocks.push({ start: start, end: end, isWorkdayLimit: false });
+            }
+
+            setTimeBlocks([timeBlocksStart, ...plannedBlocks, timeBlocksEnd]);
+
         }, [activities, workday]
     )
+
+    console.log(timeBlocks);
 
     const value = useMemo(() => ({
         activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks
