@@ -77,8 +77,22 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 
 
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
-    const workday = getWorkdayFromStorage();
+    const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
+
+    useEffect(() => {
+        function handleWorkdayUpdate() {
+            const updatedWorkday = getWorkdayFromStorage();
+            setWorkday(updatedWorkday);
+        }
+
+        window.addEventListener("workdayDataUpdated", handleWorkdayUpdate);
+
+        return () => {
+            window.removeEventListener("workdayDataUpdated", handleWorkdayUpdate);
+        };
+    }, []);
+
 
     const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
@@ -142,7 +156,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
             setPlannedActivities(sorted);
 
-        }, [activities]
+        }, [activities, workday]
     )
 
     const value = useMemo(() => ({
