@@ -9,8 +9,8 @@ function generateId(): string {
 
 function checkIfGapExists(timeSlots: TimeSlot[], timesToCheck: {start: number, end: number}): boolean {
     if (timeSlots.length < 2 || !timeSlots) return false
-    const lowerTimeLimit = timeSlots[0]!.start;
-    const upperTimeLimit = timeSlots[timeSlots.length - 1]!.end;
+    const lowerTimeLimit = timeSlots[0].start;
+    const upperTimeLimit = timeSlots[timeSlots.length - 1].end;
 
     const timeGaps: {gapStart: number, gapEnd: number}[] = [];
     let prevEnd = lowerTimeLimit;
