@@ -15,7 +15,7 @@ type PlannedActivity = {
 }
 
 export type TimeSlot = {
-    start: number, end: number, isWorkdayLimit: boolean
+    start: number, end: number
 }
 
 type ActivityAction =
@@ -170,8 +170,8 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             const start = convertStringTimeToMinutes(workday.workHours.start);
             const end = convertStringTimeToMinutes(workday.workHours.end);
 
-            const timeBlocksStart = { start: start, end: start, isWorkdayLimit: true };
-            const timeBlocksEnd = { start: end, end: end, isWorkdayLimit: true };
+            const timeBlocksStart = { start: start, end: start };
+            const timeBlocksEnd = { start: end, end: end };
             const plannedBlocks: TimeSlot[] = [];
 
             for (let activity of sorted) {
@@ -179,17 +179,13 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 const start = convertStringTimeToMinutes(activity.scheduledTimeStart);
                 const end = convertStringTimeToMinutes(activity.scheduledTimeStop);
 
-                if (!start || !end) continue;
-
-                plannedBlocks.push({ start: start, end: end, isWorkdayLimit: false });
+                plannedBlocks.push({ start: start, end: end });
             }
 
             setTimeBlocks([timeBlocksStart, ...plannedBlocks, timeBlocksEnd]);
 
         }, [activities, workday]
     )
-
-    console.log(timeBlocks);
 
     const value = useMemo(() => ({
         activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks
