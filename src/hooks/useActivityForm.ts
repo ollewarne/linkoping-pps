@@ -1,31 +1,38 @@
 import type { ActivityType } from "../types";
 import { useActivities } from "../contexts/activityContext";
 import type { TimeSlot } from "../contexts/activityContext";
-import { calculateDuration, convertStringTimeToMinutes } from "../utils/convertTime";
+import { calculateDuration, convertStringTimeToMinutes, minutesToHHMM } from "../utils/convertTime";
 
 function generateId(): string {
     return Math.random().toString(36).substring(2, 6);
 }
 
-function checkIfGapExists(timeSlots: TimeSlot[], timesToCheck: {start: number, end: number}): boolean {
-    if (timeSlots.length < 2 || !timeSlots) return false
+function createTimegapsArray(timeSlots: TimeSlot[]) {
     const lowerTimeLimit = timeSlots[0].start;
     const upperTimeLimit = timeSlots[timeSlots.length - 1].end;
 
-    const timeGaps: {gapStart: number, gapEnd: number}[] = [];
+    const timeGaps: {start: number, end: number}[] = [];
     let prevEnd = lowerTimeLimit;
 
     for (let i = 1; i < timeSlots.length - 1; i++) {
         const slot = timeSlots[i];
-        if (!slot) continue;
-        timeGaps.push({gapStart: prevEnd, gapEnd: slot.start});
+        timeGaps.push({start: prevEnd, end: slot.start});
         prevEnd = slot.end;
     }
 
-    timeGaps.push({gapStart: prevEnd, gapEnd: upperTimeLimit});
+    timeGaps.push({start: prevEnd, end: upperTimeLimit});
 
-    return timeGaps.some(gap => gap.gapStart <= timesToCheck.start && gap.gapEnd >= timesToCheck.end)
+    return timeGaps
 
+}
+
+function getTimeSlot(timeSlots: TimeSlot[], durationHours: number, durationMinutes: number): {start: number, end: number}{
+    const totalDuration = (durationHours * 60) + durationMinutes;
+
+    const gap = timeSlots.find((gap) => gap.start + totalDuration <= gap.end)
+    if (gap) return {start: gap.start, end: gap.start + totalDuration};
+
+    throw new Error(`There is no slot in the schedule to fit ${totalDuration} minutes. Have you tried not being stupid?`);
 }
 
 export function useActivityForm() {
@@ -35,24 +42,26 @@ export function useActivityForm() {
         let startInput = form.hours.value;
         let endInput = form.minutes.value;
 
-        if (!startInput || !endInput) return;
+        const timeGaps = createTimegapsArray(timeBlocks);
 
         if (startInput.includes(':')) {
             const start = convertStringTimeToMinutes(startInput);
             const end = convertStringTimeToMinutes(endInput);
 
-            if (!start || !end) throw new Error("Start time or end time must not be null");
-
             const lowerTimeLimit = timeBlocks[0].start;
             const upperTimeLimit = timeBlocks[timeBlocks.length - 1].end;
-
-            if (!lowerTimeLimit || !upperTimeLimit) throw new Error("for some reason timeblocks is broken");
 
             if (start < lowerTimeLimit || end > upperTimeLimit) {
                 throw new Error("You can't plan an acitivty outside of your registered working day hours")
             } else if (timeBlocks.length > 2) {
-                if(!checkIfGapExists(timeBlocks, {start: start, end: end})) throw new Error(`no timeslot exists for the time ${startInput} - ${endInput}`);
+                if(!timeGaps.some(gap => gap.start <= start && gap.end >= end))
+                   throw new Error(`No timeslot exists for the time ${startInput} - ${endInput}`)
             }
+        } else {
+            const timeSlotFound = getTimeSlot(timeGaps, +startInput, +endInput);
+
+            startInput = minutesToHHMM(timeSlotFound.start);
+            endInput = minutesToHHMM(timeSlotFound.end);
         }
 
         const newActivity: ActivityType = {
