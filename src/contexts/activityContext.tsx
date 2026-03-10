@@ -90,13 +90,13 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
 
     // HÅRDKOD TILLS BUG FIXAD
-    if(!getWorkdayFromStorage()){
-        saveWorkdayToStorage({
-            workHours: {start: '07:00', end: '17:00'},
-            nonWorkHours: {start: '11:00', end: '12:00'},
-            workEnvironment: {location: 'Home'}
-        })
-    }
+    // if(!getWorkdayFromStorage()){
+    //     saveWorkdayToStorage({
+    //         workHours: {start: '07:00', end: '17:00'},
+    //         nonWorkHours: {start: '11:00', end: '12:00'},
+    //         workEnvironment: {location: 'Home'}
+    //     })
+    // }
     // -----------------------
 
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
@@ -145,6 +145,8 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 timeStamp: Date.now()
             }
             localStorage.setItem("activities", JSON.stringify(data));
+
+            if(!workday) return;
 
             const basePlannedActivity: PlannedActivity[] = [];
 
