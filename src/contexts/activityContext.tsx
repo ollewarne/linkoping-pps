@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
-import { getWorkdayFromStorage } from '../utils/workdayStorage';
+import { getWorkdayFromStorage, saveWorkdayToStorage } from '../utils/workdayStorage';
 import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
 
 type PlannedActivity = {
@@ -88,6 +88,17 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 
 
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
+
+    // HÅRDKOD TILLS BUG FIXAD
+    if(!getWorkdayFromStorage()){
+        saveWorkdayToStorage({
+            workHours: {start: '07:00', end: '17:00'},
+            nonWorkHours: {start: '11:00', end: '12:00'},
+            workEnvironment: {location: 'Home'}
+        })
+    }
+    // -----------------------
+
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
     const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
