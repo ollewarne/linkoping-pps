@@ -1,0 +1,21 @@
+.container {
+    height: 50%;
+    text-align: center;
+    border: 5px solid #C5D9E8;
+    border-radius: 1em;
+}
+
+.explanation {
+    font-size: small;
+}
+
+.submitted {
+    font-weight: bold;
+    font-size: small;
+    color: green;
+}
+
+fieldset label {
+    text-align: left;
+    font-weight: bold;
+}

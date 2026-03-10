@@ -1,0 +1,8 @@
+.dndBtn img {
+  height: 23px !important;
+  width: 23px !important;
+}
+
+.dndBtnActive img {
+  filter: invert(16%) sepia(96%) saturate(7482%) hue-rotate(356deg) brightness(95%) contrast(119%) !important;
+} 

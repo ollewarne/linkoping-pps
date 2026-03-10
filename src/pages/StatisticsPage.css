@@ -1,0 +1,42 @@
+.statistics-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    gap: 2rem;
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem 4rem;
+    box-sizing: border-box;
+    align-items: stretch;
+   
+}
+
+.statistics-wrapper > * {
+    height: 100%;
+}
+.statistics-wrapper > .CalendarApp {
+    margin-right: 375px;
+}
+.statistics-wrapper > .TimeSpentChart {
+    margin-right: 225px;
+}
+
+@media (max-width: 1024px) {
+    .statistics-wrapper{
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+}
+@media (max-width: 768) {
+    .statistics-wrapper{
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+}
+@media (max-width: 480) {
+    .statistics-wrapper{
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem;
+    }
+}

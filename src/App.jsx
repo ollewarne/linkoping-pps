@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useEffect, useState } from "react";
+import PauseStatistics from "./components/PauseStatistics/PauseStatistics";
+import PopupManager from "./components/PopupManager/PopupManager";
+import MobileLayout from "./layouts/MobileLayout/MobileLayout";
+import DesktopLayout from "./layouts/DesktopLayout/DesktopLayout";
+import PlannerPage from "./pages/PlannerPage";
+import StatisticsPage from "./pages/StatisticsPage";
+import ActivityPage from "./pages/ActivityPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import { Route, Routes } from "react-router";
+
+import { useTranslator } from "./contexts/languageContext";
+import { languageLibrary } from "./locales/language";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const isMobile = windowWidth < 768;
+    const { language } = useTranslator();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    return (
+        <PopupManager>
+            {isMobile ? (
+                <Routes>
+                    <Route path="/" end element={<MobileLayout />}>
+                        <Route index element={<ActivityPage />} />
+                        <Route path="planner" element={<PlannerPage />} />
+                        <Route path="history" element={<StatisticsPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Route>
+                </Routes>
+            ) : (
+                <Routes>
+                    <Route path="/" end element={<DesktopLayout />}>
+                        <Route index element={<ActivityPage />} />
+                        <Route path="planner" element={<PlannerPage />} />
+                        <Route path="history" element={<StatisticsPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                    </Route>
+                </Routes>
+            )}
+        </PopupManager>
+    );
 }
 
-export default App
+export default App;

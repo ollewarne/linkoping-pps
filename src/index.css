@@ -1,68 +1,84 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-synthesis: none;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    --bg: #f5f5f4;
+    --notepad-bg: #FAF8EA;
+    --navlink-bg: #E0E0E0;
+    --navlink-bg-reversed: grey;
+
+    --text: #3f3f46;
+    --btn-bg: #d6d3d1;
+    --btn-text: #27272a;
+    --btn-hover: #c7c4c1;
+    --modal-bg: #e8e5e3;
+    --filter-svg: brightness(0) invert(0);
+
+    /* CATEGORY COLORS (MUI CHARTS COLORS + Ingrids choice) */
+    --purple-meeting: #9C26B0;
+    --pink-admin: #F583B4;
+    --orange-creative: #F37613;
+    --dark-blue-tech: #4254FB;
+    --light-green-analytical: #44BF75;
+    --gold-communication: #F7B422;
+    --light-blue-planning: #F25058;
+    --fuschsia-learning: #4BBEFF;
+    --red-pink-sales: #F10057;
+    --dark-green-support: #358C4E;
+    --yellow-operations: #C6C013;
+    --red-other: #EF2917;
+    --grey-nonWork: grey;
+
+    /* HEADER BUTTONS STYLING */
+    .header-btn {
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        padding: 0;
+    }
+
+    .header-btn img {
+        height: 24px;
+        width: 24px;
+        filter: var(--filter-svg);
+    }
+
+    .header-btn:hover {
+        transform: translateY(-1px);
+    }
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+
+
+[data-theme="dark"] {
+    --bg: #1c1c1e;
+    --notepad-bg: #1C1C1A;
+
+    --navlink-bg: #3a3a3c;
+    --navlink-bg-reversed: #FAF8EA;
+
+    --text: #d4d4d8;
+    --btn-bg: #3a3a3c;
+    --btn-text: #e4e4e7;
+    --btn-hover: #48484a;
+    --modal-bg: #2c2c2e;
+    --filter-svg: brightness(0) invert(1);
+
 }
 
+* {
+    box-sizing: border-box;
+}
+
+html,
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+    margin: 0;
+    height: 100%;
+    padding: 0;
 }
