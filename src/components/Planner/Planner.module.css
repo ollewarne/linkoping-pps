@@ -45,13 +45,14 @@
 .start {
   border-bottom: 1px solid grey;
   padding-bottom: 5px;
-  margin-bottom: auto;
+  margin-bottom: 1.2%;
 }
 
 .end {
   border-top: 1px solid grey;
   padding-top: 5px;
-  margin-top: auto;
+  margin-top: 1.2%;
+  margin-bottom: 5%;
 }
 
 .addActivityBtn {
