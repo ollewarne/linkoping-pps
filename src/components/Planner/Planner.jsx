@@ -16,7 +16,10 @@ function Planner() {
     return (
         <>
             <div className={styles.container}>
-                <p className={`${styles.workTime} ${styles.start}`}><span>Start</span> {workformData.workHours.start}</p>
+
+                {workformData && 
+                    <p className={`${styles.workTime} ${styles.start}`}><span>Start</span> {workformData.workHours.start}</p>
+                }
                 <Modal trigger={(
                     <button className={styles.addActivityBtn}>
                         <img src="/add.svg" alt="" />
@@ -47,7 +50,9 @@ function Planner() {
                 ))}</>
                 }
 
-                <p className={`${styles.workTime} ${styles.end}`}><span>End</span> {workformData.workHours.end}</p>
+                {workformData && 
+                    <p className={`${styles.workTime} ${styles.end}`}><span>End</span> {workformData.workHours.end}</p>
+                }
             </div>
 
         </>
