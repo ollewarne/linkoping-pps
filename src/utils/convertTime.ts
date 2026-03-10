@@ -50,3 +50,16 @@ export function calculateDuration(hours: string, minutes: string): number {
 
     return (+hours * 60) + +minutes;
 }
+
+/**
+ * Converts minutes to HH:mm string time.
+ * 
+ * @param minutes - number of minutes.
+ * 
+ * @returns - string in the format HH:mm
+ */
+export function minutesToHHMM(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+}
