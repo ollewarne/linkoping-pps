@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
 import { getWorkdayFromStorage } from '../utils/workdayStorage';
-import { calculateDuration } from '../utils/convertTime';
+import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
 
 type PlannedActivity = {
     id: string;
@@ -14,6 +14,10 @@ type PlannedActivity = {
     totalDuration: number;
 }
 
+export type TimeSlot = {
+    start: number, end: number
+}
+
 type ActivityAction =
     | { type: "ADD_ACTIVITY"; payload: ActivityType }
     | { type: "EDIT_ACTIVITY"; payload: { id: string; title: string; category: string; scheduledTime: { start: string; end: string }; estimatedDuration: number } }
@@ -22,7 +26,14 @@ type ActivityAction =
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
     | { type: "DELETE_ACTIVITY"; payload: { id: string } };
 
-const activityContext = createContext<{ activities: ActivityType[]; activityDispatch: React.Dispatch<ActivityAction> } | null>(null);
+const activityContext = createContext<{
+    activities: ActivityType[];
+    activityDispatch: React.Dispatch<ActivityAction>;
+    plannedActivities: PlannedActivity[];
+    setPlannedActivities: React.Dispatch<React.SetStateAction<PlannedActivity[]>>;
+    timeBlocks: TimeSlot[];
+    setTimeBlocks: React.Dispatch<React.SetStateAction<TimeSlot[]>>
+} | null>(null);
 
 function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
@@ -79,6 +90,7 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
+    const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
 
     useEffect(() => {
         function handleWorkdayUpdate() {
@@ -91,8 +103,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         return () => {
             window.removeEventListener("workdayDataUpdated", handleWorkdayUpdate);
         };
-    }, []);
-
+    }, [workday]);
 
     const [activities, activityDispatch] = useReducer(activitiesReducer, [],
         () => {
@@ -156,12 +167,29 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
             setPlannedActivities(sorted);
 
+            const start = convertStringTimeToMinutes(workday.workHours.start);
+            const end = convertStringTimeToMinutes(workday.workHours.end);
+
+            const timeBlocksStart = { start: start, end: start };
+            const timeBlocksEnd = { start: end, end: end };
+            const plannedBlocks: TimeSlot[] = [];
+
+            for (let activity of sorted) {
+                if (!activity.scheduledTimeStart || !activity.scheduledTimeStop) continue;
+                const start = convertStringTimeToMinutes(activity.scheduledTimeStart);
+                const end = convertStringTimeToMinutes(activity.scheduledTimeStop);
+
+                plannedBlocks.push({ start: start, end: end });
+            }
+
+            setTimeBlocks([timeBlocksStart, ...plannedBlocks, timeBlocksEnd]);
+
         }, [activities, workday]
     )
 
     const value = useMemo(() => ({
-        activities, activityDispatch, plannedActivities, setPlannedActivities
-    }), [activities, plannedActivities])
+        activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks
+    }), [activities, plannedActivities, timeBlocks])
 
     return (
         <activityContext.Provider value={value}>

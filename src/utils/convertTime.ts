@@ -17,14 +17,11 @@ export function toTotalMinutes(hours: number, minutes: number): number {
  * @param time - time as string ('12:00')
  * @returns - total time, or null if input is invalid
  */
-export function convertStringTimeToMinutes(time: string): number | null {
+export function convertStringTimeToMinutes(time: string): number {
 
     const [hours, minutes] = time.split(':').map(Number);
 
-    // EVENTUELLT KAN DETTA BUGGA ???
-    if( typeof hours !== 'number' || typeof minutes !== 'number'){
-         return null;
-    }
+    if( isNaN(hours) || isNaN(minutes)) throw new Error("invalid format, must be numbers")
 
     return toTotalMinutes(hours, minutes);
 }
@@ -52,4 +49,17 @@ export function calculateDuration(hours: string, minutes: string): number {
     }
 
     return (+hours * 60) + +minutes;
+}
+
+/**
+ * Converts minutes to HH:mm string time.
+ * 
+ * @param minutes - number of minutes.
+ * 
+ * @returns - string in the format HH:mm
+ */
+export function minutesToHHMM(minutes: number): string {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
