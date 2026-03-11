@@ -14,6 +14,9 @@
     * adds a statistic to the specific activity based on the id of the activity 
 - `activityDispatch({type: "TOGGLE_ACTIVE", payload: {id: string}})`
     * Toggles isActive on an activity
+- `activityDispatch({type: "MARK_COMPLETED", payload: {id: string}})`
+    * Marks an activity as completed
+
 ## how to import the context
 
 `import { useActivities } from "./contexts/activityContext"`
