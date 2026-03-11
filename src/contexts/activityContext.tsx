@@ -24,7 +24,8 @@ type ActivityAction =
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
     | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: StatisticEntry } }
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
-    | { type: "DELETE_ACTIVITY"; payload: { id: string } };
+    | { type: "DELETE_ACTIVITY"; payload: { id: string } }
+    | { type: "MARK_COMPLETED"; payload: { id: string } };
 
 const activityContext = createContext<{
     activities: ActivityType[];
@@ -71,6 +72,11 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
             } : activity)
         case "DELETE_ACTIVITY":
             return [...state.filter(activity => activity.id !== action.payload.id)]
+        case "MARK_COMPLETED":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                isCompleted: true
+            } : activity)
         default:
             return state;
     }
@@ -146,7 +152,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             }
             localStorage.setItem("activities", JSON.stringify(data));
 
-            if(!workday) return;
+            if (!workday) return;
 
             const basePlannedActivity: PlannedActivity[] = [];
 
