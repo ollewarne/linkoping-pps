@@ -73,6 +73,7 @@ export function useActivityForm() {
             activeTime: form.activeTime.value,
             breakTime: form.breakTime.value,
             isActive: false,
+            isCompleted: false,
             totalTimeSpent: 0,
             statistics: {}
         };
@@ -91,6 +92,7 @@ export function useActivityForm() {
             activeTime: form.activeTime.value,
             breakTime: form.breakTime.value,
             isActive: true,
+            isCompleted: false,
             totalTimeSpent: 0,
             statistics: {}
         };
