@@ -7,7 +7,7 @@ function generateId(): string {
     return Math.random().toString(36).substring(2, 6);
 }
 
-function createTimegapsArray(timeSlots: TimeSlot[]) {
+export function createTimegapsArray(timeSlots: TimeSlot[]) {
     const lowerTimeLimit = timeSlots[0].start;
     const upperTimeLimit = timeSlots[timeSlots.length - 1].end;
 
@@ -23,7 +23,6 @@ function createTimegapsArray(timeSlots: TimeSlot[]) {
     timeGaps.push({start: prevEnd, end: upperTimeLimit});
 
     return timeGaps
-
 }
 
 function getTimeSlot(timeSlots: TimeSlot[], durationHours: number, durationMinutes: number): {start: number, end: number}{
