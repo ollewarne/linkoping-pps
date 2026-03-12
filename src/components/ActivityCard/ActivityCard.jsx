@@ -14,7 +14,7 @@ function ActivityCard({ activity = {} }) {
     const categories = userOptions[language].category
     const { activityDispatch } = useActivities();
 
-    const backgroundColor = categoryColors[activity.category];
+    const categoryColor = categoryColors[activity.category];
 
     const submitEdit = (e) => {
         e.preventDefault()
@@ -39,7 +39,7 @@ function ActivityCard({ activity = {} }) {
     }
 
     return (
-        <div style={{borderColor: backgroundColor }} className={styles.card}>
+        <div style={{borderColor: categoryColor }} className={styles.card}>
             {editMode ? 
             (
                 <form className={styles.cardForm} onSubmit={(e) => {
@@ -67,10 +67,10 @@ function ActivityCard({ activity = {} }) {
                 <>
                 <div className={styles.cardSpecificsTop}>
                     <p className={styles.scheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
-                    <p className={styles.category} style={{backgroundColor: backgroundColor}}>{activity.category}</p>
+                    <p className={styles.category} style={{backgroundColor: categoryColor}}>{activity.category}</p>
                 </div>
 
-                <p className={styles.title} style={{borderBottomColor: backgroundColor}}>{activity.title}</p>
+                <p className={styles.title} style={{borderBottomColor: categoryColor}}>{activity.title}</p>
                             
                 <div className={styles.cardSpecificsBottom}>
                     
