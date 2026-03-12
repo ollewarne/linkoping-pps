@@ -9,7 +9,7 @@ type PlannedActivity = {
     title: string;
     scheduledTimeStart: string | null;
     scheduledTimeStop: string | null;
-    isDone: boolean;
+    isCompleted: boolean;
     isActive: boolean;
     totalDuration: number;
 }
@@ -165,7 +165,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                     scheduledTimeStart: workday.nonWorkHours.start,
                     scheduledTimeStop: workday.nonWorkHours.end,
                     isActive: false,
-                    isDone: false,
+                    isCompleted: false, // UPPSIKT IFALL DETTA ORSAKAR PROBLEM I PLANNER??
                     totalDuration: totalDuration
                 };
 
@@ -179,7 +179,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 scheduledTimeStart: a.scheduledTime!.start,
                 scheduledTimeStop: a.scheduledTime!.end,
                 totalDuration: a.estimatedDuration,
-                isDone: false,
+                isCompleted: a.isCompleted,
                 isActive: a.isActive
             }))
 
