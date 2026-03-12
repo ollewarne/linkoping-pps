@@ -1,0 +1,39 @@
+.historyCard {
+    margin: 5% 0;
+    border: 3px solid;
+    border-radius: 10px;
+    background-color: var(--notepad-bg);
+    box-shadow: 
+        /* 0 1px 4px rgba(0, 0, 0, 0.2),  */
+        0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.timeContainer {
+    margin: 5px; 
+    display: flex;
+    align-items: center;
+}
+
+.time {
+    margin: 0;
+    text-decoration: line-through;
+    font-size: small;
+}
+
+.title {
+    margin: 5px 0 5px 5px;
+
+}
+
+.historyCard img {
+    width: 14px;
+    margin: 0 0 0 5px;
+}
+
+.done {
+  filter: invert(42%) sepia(55%) saturate(420%) hue-rotate(96deg) brightness(92%) contrast(90%);
+}
+
+.missed {
+  filter: invert(24%) sepia(93%) saturate(6027%) hue-rotate(3deg) brightness(96%) contrast(108%);
+}
