@@ -2,7 +2,7 @@ import { mockData } from "../../constants/mockData";
 import { DayDetailsPopup } from "./DayDetails/DayDetails";
 import { useCalendarMonthsWeeksDays } from "./MonthsWeeksDays/CalendarMonthsWeeksDays";
 import "./MonthsWeeksDays/CalendarApp.css";
-import Modal from "../Modal/Modal";
+import ModalToCalendarDaysPopup from "./DayDetails/ModalToCalendarDaysPopup/ModalToCalendarDaysPopup";
 
 
 const CalenderApp = () => {
@@ -66,7 +66,7 @@ const CalenderApp = () => {
               }
 
               return (
-                <Modal
+                <ModalToCalendarDaysPopup
                   key={index}
                   trigger={
                     <span
@@ -82,7 +82,7 @@ const CalenderApp = () => {
                     selectedDate={dateStr}
                     dayData={normalizedMock[dateStr]}
                   />
-                </Modal>
+                </ModalToCalendarDaysPopup>
               );
             })}
           </div>

@@ -75,7 +75,7 @@ export const DayDetailsPopup = ({
       )}
 
       <div className="popup-button">
-        <button type="button" onClick={onClose}>
+        <button className="button-close" type="button" onClick={onClose}>
           Close
         </button>
       </div>
