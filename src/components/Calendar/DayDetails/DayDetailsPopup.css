@@ -98,23 +98,29 @@
 font-weight: bold;
 }
 
-.popup-button {
-  display: flex;
-  gap: 8px;
-  
+.button-close {
+    padding: 4px 10px;
+    background-color: #6366f1;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-bottom: 8px;
 }
 
-.popup-button i {
+.button-close i {
   background-color: var(--btn-bg);
   color: var(--btn-text);
   cursor: pointer;
   font-size: 12px;
   padding: 4px;
   border-radius: 50%;
-  
+
 }
 
-.popup-button i:hover {
+.button-close i:hover {
   background: var(--btn-hover);
   cursor: pointer;
 }
@@ -148,7 +154,7 @@ font-weight: bold;
     font-size: 0.8rem;
   }
 
-  .popup-button i {
+  .button-close i {
     font-size: 11px;
     padding: 4px;
   }
@@ -183,7 +189,7 @@ font-weight: bold;
     font-size: 0.75rem;
   }
 
-  .popup-button {
+  .button-close {
     justify-content: space-between;
   }
 }
