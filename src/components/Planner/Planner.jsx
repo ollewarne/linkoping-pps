@@ -37,8 +37,8 @@ function Planner() {
         if(!a.scheduledTimeStart) return;
 
         const start = +convertStringTimeToMinutes(a.scheduledTimeStart) + 15;
-       
-        if(start < currentTime) {
+
+        if(start <= currentTime) {
             historyActivities.push(a);
         } else {
             agendaActivities.push(a);
