@@ -8,7 +8,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     --bg: #f5f5f4;
-    --notepad-bg: #FAF8EA;
+    --notepad-bg: #E5D9D9;
     --navlink-bg: #E0E0E0;
     --navlink-bg-reversed: grey;
 
@@ -58,7 +58,7 @@
 
 [data-theme="dark"] {
     --bg: #1c1c1e;
-    --notepad-bg: #1C1C1A;
+    --notepad-bg: #32323A;
 
     --navlink-bg: #3a3a3c;
     --navlink-bg-reversed: #FAF8EA;
