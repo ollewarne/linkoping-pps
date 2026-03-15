@@ -19,6 +19,8 @@ export interface ActivityType {
     };
     activeTime: number;
     breakTime: number;
+    currentPhaseTimeSpent: number;
+    currentPhase: "work" | "break";
 }
 
 export interface StatisticEntry {
