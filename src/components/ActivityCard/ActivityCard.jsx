@@ -66,75 +66,118 @@ function ActivityCard({ activity = {} }) {
     }
 
     return (
-        <div style={{ borderColor: categoryColor }} className={styles.card}>
+        <div className={styles.cardContainer}>
             {editMode ?
                 (
                     <form className={styles.cardForm} onSubmit={(e) => {
                         handleSubmit(e)
                     }}>
-                        <input name="title" type="text" defaultValue={activity.title} />
-                        <select name="category" className="category" required defaultValue={activity.category}>
-                            <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
-                            {
-                                categories.map((category) => {
-                                    return (<option key={category} value={category}>{category}</option>)
-                                })
-                            }
-                        </select>
-                        <input name="timeStart" type="time" defaultValue={activity.scheduledTimeStart} onChange={(e) => {
-                            e.target.setCustomValidity("");
-                            setValidationError("");
-                        }} />
-                        <input name="timeEnd" type="time" defaultValue={activity.scheduledTimeStop} />
+                        {/* --------------- CARD EDIT FORM --------------- */}
 
+                        <div className={styles.cardFormHeader} style={{backgroundColor: categoryColor}}>
+                            <div className={styles.cardFormHeaderTime}>
+                                <input name="timeStart" type="time" defaultValue={activity.scheduledTimeStart} onChange={(e) => {
+                                    e.target.setCustomValidity("");
+                                    setValidationError("");
+                                }}/>
+                                <input name="timeEnd" type="time" defaultValue={activity.scheduledTimeStop} />
+                            </div>
+
+                            <select name="category" className={`category ${styles.category}` } required defaultValue={activity.category}>
+                                <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
+                                {
+                                    categories.map((category) => {
+                                        return (<option key={category} value={category}>{category}</option>)
+                                    })
+                                }
+                            </select>
+                        </div>
+
+                        <input name="title" type="text" defaultValue={activity.title} style={{borderColor:categoryColor}}/>
+
+                        {/* --------------- EDIT CONFIRM BUTTONS --------------- */}
                         <div className={styles['edit-confirm']}>
-                            <button type="submit" className={styles.editSubmit}>Save Activity</button>
+                            <button type="submit" className={styles.editSubmit}>Save</button>
                             <button onClick={() => setEditMode(false)} className={styles.editCancel}>Cancel</button>
                         </div>
+
                     </form>
                 ) : (
-                    <>
-                        <div className={styles.cardSpecificsTop}>
-                            <p className={styles.scheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
-                            <p className={styles.category} style={{ backgroundColor: categoryColor }}>{activity.category}</p>
+                    <div className={styles.card}>
+
+                        {/* ------------------------------------------------------- */}
+                        {/* --------------- KOLLA SÅ ACTIVE FUNKAR? --------------- */}
+                        {/* ------------------------------------------------------- */}
+
+
+                        {/* --------------- CARD HEADER --------------- */}
+                        <div className={styles.cardHeader} style={{backgroundColor: categoryColor}}>
+                            <div className={styles.cardHeaderContainer}>
+                                <p className={styles.cardHeaderScheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
+
+                                <div>
+                                {!activity.isActive 
+                                    ? <></>
+                                    : <p>Active</p>}
+                                {!activity.isActive 
+                                ? <></>
+                                : <img src="/throbber.svg" alt="" className={styles.activityThrobber}/>
+                                }
+                                </div>
+
+                                <p className={styles.cardHeaderCategory}>{activity.category}</p>
+
+                            </div>
+
+                        {/* ------------------------------------------------------- */}
+                        {/* ------------------------------------------------------- */}
+                        {/* ------------------------------------------------------- */}
+
                         </div>
 
-                        <p className={styles.title} style={{ borderBottomColor: categoryColor }}>{activity.title}</p>
+                        {/* --------------- CARD MAIN --------------- */}
+                        <div className={styles.cardMain}>
 
-                        <div className={styles.cardSpecificsBottom}>
+                            <p className={styles.cardMainTitle} style={{ borderBottomColor: categoryColor }}>{activity.title}</p>
 
-                            <p className={styles.duration}>Estimated duration: <span>{activity.totalDuration} min</span></p>
+                            {/* --------------- CARD FOOTER --------------- */}
+                            <div className={styles.cardFooter}>
 
-                            {activity.category !== "NonWork" && (
-                                confirmDelete ? (
-                                    <div className={styles.confirmContainer}>
-                                        <p className={styles.confirmText}>Are you sure?</p>
-                                        <button
-                                            className={`${styles.confirmButton} ${styles.confirmYes}`}
-                                            onClick={handleDelete}
-                                        >
-                                            Yes
-                                        </button>
-                                        <button
-                                            className={`${styles.confirmButton} ${styles.confirmNo}`}
-                                            onClick={() => setConfirmDelete(false)}
-                                        >
-                                            No
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className={styles['utility-buttons']}>
-                                        <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
-                                            <img src="/settings.svg" alt="Edit icon" />
-                                        </button>
-                                        <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
-                                            <img src="/delete.svg" alt="Delete icon" />
-                                        </button>
-                                    </div>
-                                )
-                            )}
+                                <p className={styles.cardFooterDuration}>Estimated duration: <span>{activity.totalDuration} min</span></p>
+
+                                {/* --------------- DELETE CONFIRM --------------- */}
+                                {activity.category !== "NonWork" && (
+                                    confirmDelete ? (
+                                        <div className={styles.confirmContainer}>
+                                            <p className={styles.confirmText}>Are you sure?</p>
+                                            <button
+                                                className={`${styles.confirmButton} ${styles.confirmYes}`}
+                                                onClick={handleDelete}
+                                            >
+                                                Yes
+                                            </button>
+                                            <button
+                                                className={`${styles.confirmButton} ${styles.confirmNo}`}
+                                                onClick={() => setConfirmDelete(false)}
+                                            >
+                                                No
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        // --------------- CARD FOOTER: UTILITY BUTTONS ---------------
+                                        <div className={styles['utility-buttons']}>
+                                            <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
+                                                <img src="/settings.svg" alt="Edit icon" />
+                                            </button>
+                                            <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
+                                                <img src="/delete.svg" alt="Delete icon" />
+                                            </button>
+                                        </div>
+                                    )
+                                )}
+                            </div>
                         </div>
-                    </>
+                    </div>
                 )}
         </div>
     )
