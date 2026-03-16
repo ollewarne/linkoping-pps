@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,48 +12,128 @@
 }
 
 .content-statistics {
-  background-color: #000000;
-  padding: 20px;
-  border-radius: 8px;
-  min-width: 300px;
+  background-color: var(--modal-bg);
+  color: var(--text);
+  padding: 28px 32px;
+  border-radius: 12px;
+  min-width: 380px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-.button-group {
-  margin-top: 15px;        
-  display: flex;            
-  gap: 10px;                
+.content-statistics form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.button-group button {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
+.content-statistics form > label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.content-statistics select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  background-color: var(--btn-bg);
+  color: var(--text);
+  font-size: 0.9rem;
   cursor: pointer;
+  font-family: inherit;
 }
 
-.button-group button[type="submit"] {
-  background-color: #4a90e2;
-  color: white;
+.content-statistics select:focus {
+  outline: 2px solid #F10057;
+  outline-offset: 1px;
 }
 
-.button-group button[type="submit"]:hover {
-  background-color: #357ab8;
-}
-
-.button-group button[type="button"] {
-  background-color: #ccc;
-  color: black;
-}
-
-.button-group button[type="button"]:hover {
-  background-color: #aaa;
+.radio-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .radio-indicator {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.85em;
-  color: #aaa;
-  margin-bottom: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 0.8rem;
+  color: var(--navlink-bg-reversed);
+  opacity: 0.5;
 }
 
+.radio-indicator span:first-child {
+  text-align: left;
+}
+
+.radio-indicator span:last-child {
+  text-align: right;
+  grid-column: 4;
+}
+
+.radio-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.radio-group label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.95rem;
+  color: var(--text);
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease;
+}
+
+.radio-group label:hover {
+  background-color: var(--btn-hover);
+}
+
+.radio-group input[type="radio"] {
+  accent-color: #F10057;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.button-group {
+  margin-top: 4px;
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: inherit;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.button-group button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.button-group button[type="submit"] {
+  background-color: #F10057;
+  color: #fff;
+}
+
+.button-group button[type="button"] {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+}

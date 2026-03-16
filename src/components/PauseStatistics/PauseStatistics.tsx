@@ -26,7 +26,6 @@ function PauseStatistics() {
     const { activeActivity, setShowPopup } = useTimer();
     const { language } = useTranslator();
 
-
     const impacts: ImpactOption[] = userOptions[language].impacts;
 
     const [formData, setFormData] = useState<StatisticEntry>({
@@ -57,13 +56,11 @@ function PauseStatistics() {
     };
 
     const saveNull = () => {
-        saveEvent(
-            {
-                efficiency: null,
-                energy: null,
-                factor: null
-            }
-        );
+        saveEvent({
+            efficiency: null,
+            energy: null,
+            factor: null
+        });
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
@@ -74,13 +71,9 @@ function PauseStatistics() {
         }));
     };
 
-    const handleSubmit = (
-        event: React.FormEvent<HTMLFormElement>
-    ) => {
-        console.log("are we actually getting here?");
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         saveEvent(formData);
-
         setFormData({
             efficiency: 3,
             energy: 3,
@@ -94,50 +87,52 @@ function PauseStatistics() {
                 <form onSubmit={handleSubmit}>
                     <label>{languageLibrary[language].evaluateEfficiency}</label>
 
-                    <div className="radio-indicator">
-                        <span>{languageLibrary[language].low}</span>
-                        <span>{languageLibrary[language].high}</span>
-                    </div>
-
-                    <div>
-                        {[1, 2, 3, 4].map((num: number) => (
-                            <label key={num} style={{ marginRight: "10px" }}>
-                                <input
-                                    type="radio"
-                                    name="efficiency"
-                                    value={num}
-                                    checked={formData.efficiency === num}
-                                    onChange={() =>
-                                        setFormData((prev) => ({ ...prev, efficiency: num }))
-                                    }
-                                />
-                                {num}
-                            </label>
-                        ))}
+                    <div className="radio-wrapper">
+                        <div className="radio-indicator">
+                            <span>{languageLibrary[language].low}</span>
+                            <span>{languageLibrary[language].high}</span>
+                        </div>
+                        <div className="radio-group">
+                            {[1, 2, 3, 4].map((num: number) => (
+                                <label key={num}>
+                                    <input
+                                        type="radio"
+                                        name="efficiency"
+                                        value={num}
+                                        checked={formData.efficiency === num}
+                                        onChange={() =>
+                                            setFormData((prev) => ({ ...prev, efficiency: num }))
+                                        }
+                                    />
+                                    {num}
+                                </label>
+                            ))}
+                        </div>
                     </div>
 
                     <label>{languageLibrary[language].evaluateEnergy}</label>
 
-                    <div className="radio-indicator">
-                        <span>{languageLibrary[language].low}</span>
-                        <span>{languageLibrary[language].high}</span>
-                    </div>
-
-                    <div>
-                        {[1, 2, 3, 4].map((num) => (
-                            <label key={num} style={{ marginRight: "10px" }}>
-                                <input
-                                    type="radio"
-                                    name="energy"
-                                    value={num}
-                                    checked={formData.energy === num}
-                                    onChange={() =>
-                                        setFormData((prev) => ({ ...prev, energy: num }))
-                                    }
-                                />
-                                {num}
-                            </label>
-                        ))}
+                    <div className="radio-wrapper">
+                        <div className="radio-indicator">
+                            <span>{languageLibrary[language].low}</span>
+                            <span>{languageLibrary[language].high}</span>
+                        </div>
+                        <div className="radio-group">
+                            {[1, 2, 3, 4].map((num) => (
+                                <label key={num}>
+                                    <input
+                                        type="radio"
+                                        name="energy"
+                                        value={num}
+                                        checked={formData.energy === num}
+                                        onChange={() =>
+                                            setFormData((prev) => ({ ...prev, energy: num }))
+                                        }
+                                    />
+                                    {num}
+                                </label>
+                            ))}
+                        </div>
                     </div>
 
                     <label>{languageLibrary[language].evaluateFactors}</label>
@@ -150,7 +145,6 @@ function PauseStatistics() {
                         <option value="" disabled>
                             {languageLibrary[language].evaluateFactorsDefault}
                         </option>
-
                         {impacts.map((f) => (
                             <option key={f.value} value={f.value}>
                                 {f.label}
@@ -162,7 +156,6 @@ function PauseStatistics() {
                         <button type="submit">
                             {languageLibrary[language].save}
                         </button>
-
                         <button type="button" onClick={saveNull}>
                             {languageLibrary[language].cancel}
                         </button>
