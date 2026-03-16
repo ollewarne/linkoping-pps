@@ -62,89 +62,103 @@ function Planner() {
 
     let workformData = getWorkdayFromStorage();
 
+    const date = new Date().toLocaleDateString();
+
     return (
-        <div className={styles.plannerGrid}>
-            <div className={styles.historyContainer}>
+        <div className={styles.plannerContainer}>
 
-                <div className={styles.historyCard}>
+            <h2 className={styles.date}>{date}</h2>
 
-                    <p className={`${styles.historyTitle} ${styles.plannerTitles}`}>HISTORY</p>
-                    {
+            {workformData &&
+                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesTop}`}>
+                    <p className={`${styles.historyTitle} ${styles.plannerTitles}`}>History</p>
+                    <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
+                </div>
+            }
 
-                        historyActivities.map((a, index) => (
-                            <HistoryCard key={a.id} activity={a} index={index} />
-                        ))
+
+            <div className={styles.plannerGrid}>
+
+                {/* --------------- HISTORY --------------- */}
+                <div className={styles.historyContainer}>
+
+                        {
+                            historyActivities.map((a, index) => (
+                                <HistoryCard key={a.id} activity={a} index={index} />
+                            ))
+                        }
+
+                </div>
+
+                {/* --------------- AGENDA --------------- */}
+                <div className={styles.agendaContainer}>
+
+                    
+                    {/* --------------- EMPTY PAGE --------------- */}
+                    {agendaActivities.length === 0
+                        ? <div className={styles.emptyContainer}>
+                            <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
+                            <p className={styles.emptyText}>A bit empty here...?</p>
+                        </div>
+                        
+                    // --------------- ACTIVITY CARDS PAGE ---------------
+                        : <>
+                            {
+                                agendaActivities.map((a, index) => (
+                                    <ActivityCard key={a.id} activity={a} index={index} />
+                                ))
+                            }
+                        </>
                     }
+
+                    
+                </div>
+
+                {/* --------------- BUTTONS --------------- */}
+                <div className={styles.buttonsContainer}>
+
+
+                    {/* --------------- ADD BTN --------------- */}
+                    <Modal trigger={(
+                        <button className={styles.addActivityBtn}>
+                            <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
+                            <img src="/add-large.svg" alt="" />
+                            <p>Lägg till</p>
+                        </button>)}
+                    >
+
+                        {workformData ? (
+                            <ActivityForm
+                                defaultMode="scheduled"
+                            />
+                        ) : (
+                            <>
+                                <p>Please enter the specifics for your workday before registering activities</p>
+                                <WorkDayForm />
+                            </>
+                        )}
+                    </Modal>
+
+                    {/* --------------- START / STOP BTN --------------- */}
+                    {agendaActivities.length === 0 
+                        ? <></>
+                        : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
+                            <div className={styles.colorBlock} style={{backgroundColor: plannerMode ? '#EF2917' : '#358C4E'}}></div>
+                            <img src={ plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
+                            <p>{plannerMode ? "Stop planner" : "Start planner"}</p>
+                        </button>
+                    }
+
                 </div>
 
             </div>
-            <div className={styles.agendaContainer}>
 
-                {workformData &&
-                    <>
-                        <div className={styles.agendaTitelContainer}>
-                            <p className={styles.agendaTime}>{workformData.workHours.start} <span>Start</span></p>
-                            <p className={`${styles.agendaTitle} ${styles.plannerTitles}`}>Planner</p>
-                            <p className={styles.agendaDate}><span>Date</span> 2025-07-08 </p>
-                        </div>
 
-                    </>
-                }
-                <Modal trigger={(
-                    <button className={styles.addActivityBtn}>
-                        <img src="/add.svg" alt="" />
-                    </button>)}
-                >
-
-                    {workformData ? (
-                        <ActivityForm
-                            defaultMode="scheduled"
-                        />
-                    ) : (
-                        <>
-                            <p>Please enter the specifics for your workday before registering activities</p>
-                            <WorkDayForm />
-                        </>
-                    )}
-                </Modal>
-
-                {agendaActivities.length === 0
-                    ? <div className={styles.emptyContainer}>
-                        <p className={styles.emptyAdd}>Add activity to planner<span>⤴</span></p>
-                        <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
-                        <p className={styles.emptyText}>A bit empty here...?</p>
-                    </div>
-                    : <>
-                        {/* {
-                    plannedActivities.map((a, index) => (
-                        <ActivityCard key={a.id} activity={a} index={index} />
-                    ))
-                    } */}
-                        {
-                            agendaActivities.map((a, index) => (
-                                <ActivityCard key={a.id} activity={a} index={index} />
-                            ))
-                        }
-                    </>
-                }
-
-                {workformData &&
-                    <p className={`${styles.workTime} ${styles.end}`}><span>End</span> {workformData.workHours.end}</p>
-                }
-            </div>
-
-            <div className={styles.activeContainer}>
-                {
-                    activeActivities.map((a, index) => (
-                        <ActivityCard key={a.id} activity={a} index={index} />
-                    ))
-                }
-                <p>ACTIVE</p>
-                <button onClick={() => setPlannerMode(!plannerMode)}>
-                {plannerMode ? "Stop planner" : "Start planner"}
-                </button>
-
-            </div>
+            {workformData &&
+                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesBottom}`}>
+                    <p className={`${styles.agendaTime} ${styles.endTime}`}><span>End</span> {workformData.workHours.end}</p>
+                </div>
+            }
 
         </div>
     );
