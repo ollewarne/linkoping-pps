@@ -1,83 +1,130 @@
-.plannerGrid {
-  display: grid;
-  grid-template-columns: 1fr 3.5fr 1fr;
+.plannerContainer {
   width: 95%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 }
 
+.plannerGridTitles,
+.plannerGrid {
+  width: 95%;
+  display: grid;
+  grid-template-columns: 1fr 2.7fr 1fr;
+  gap: 4%;
+  margin-bottom: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+.plannerGrid {
+  margin-top: 1.5%;
+  min-height: 50vh;
+}
+
+.plannerGridTitlesTop {
+  border-bottom: 1px solid var(--text);
+}
+
+.plannerGridTitlesBottom {
+  margin-top: 1%;
+  border-top: 1px solid var(--text);
+}
+
+.date {
+  margin: 1% 0 0 0;
+  font-weight: 300;
+  font-size: 1.1rem;
+  letter-spacing: 8%;
+}
+
+.historyTitle, 
+.agendaTime {
+  margin: 0 0 0 1%;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 5%;
+  font-weight: 600;
+}
+
+.endTime {
+  grid-column: 2;
+  margin-top: 1%;
+}
+
+/* --------------- HISTORY --------------- */
 .historyContainer {
   grid-column: 1;
-
-  min-height: 50vh;
-  padding-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
+
+/* --------------- AGENDA --------------- */
 
 
 .agendaContainer {
   grid-column: 2;
   display: flex;
-  min-height: 50vh;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  padding-top: 25px;
-  position: relative;
-
-  /* border: 1px solid red; */
+  gap: 1.2rem;
 }
 
-.plannerTitles {
-  font-size: larger;
-  text-transform: uppercase;
-  font-weight: 600;
+/* --------------- BUTTONS --------------- */
+.buttonsContainer {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 3%;
 }
 
-.historyTitle {
-  border-bottom: 1px solid grey;
-  padding-bottom: 5%;
-  margin: 10% 0 10% 0;
-}
 
-.agendaTitelContainer {
-  width: 90%;
+.addActivityBtn, .startActivityBtn {
+  all: unset;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid grey;
-  margin-bottom: 2%;
+  grid-template: 1fr / repeat(5, 1fr);
+  border-radius: 16px 16px 0px 16px;
+  background-color: var(--notepad-bg);
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease; 
 }
 
-.agendaTime {
-  grid-column: 1;
-  margin: 10% 0 5% 5%;
-  font-weight: 600;
+.colorBlock {
+  aspect-ratio: 1;
+  grid-area: 1 / 1 / 2 / 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: var(--confirm); */
+  border-radius: 16px 0 0 16px;
 }
 
-.agendaTitle {
-  grid-column: 2;
-  text-align: center;
-  /* font-size: larger;
-  text-transform: uppercase; */
-  margin: 10% 0 5% 0;
+.addActivityBtn img, .startActivityBtn img {
+  grid-area: 1 / 1 / 2 / 2;
+  width: 50%;
+  filter: brightness(0) invert(1);
+  margin: auto;
+  z-index: 1;
 }
 
-.agendaDate {
-  grid-column: 3;
-  text-align: end;
-  margin: 10% 5% 5% 0;
-  font-weight: 600;
-}
-
-.agendaTime span, .agendaDate span {
+.addActivityBtn p, .startActivityBtn p {
+  grid-area: 1 / 2 / 2 / 6;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: start;
   text-transform: uppercase;
-  font-size: small;
-  font-weight: 300;
+  margin: auto 0 auto 10%;
+}
+
+.addActivityBtn:hover, .startActivityBtn:hover {
+  transform: scale(1.02);
+  cursor: pointer;
 }
 
 
-
-.activeContainer {
-  grid-column: 3;
-  text-align: center;
-}
+/* --------------- EMPTY PAGE --------------- */
 
 .emptyContainer {
   display: flex;
@@ -87,116 +134,8 @@
   padding-top: 5%;
 }
 
-.emptyContainer p {
-  margin: 0;
-}
-
 .emptyImg {
   width: 35%;
   filter: var(--filter-svg);
   padding-top: 20%;
-}
-
-.workTime {
-  width: 89%;
-  margin: 0;
-  text-align: center;
-  font-size: large;
-  font-weight: 600;
-  color: grey;
-}
-
-.workTime span {
-  font-size: small;
-  text-transform: uppercase;
-  font-weight: 400;
-  padding-right: 5px;
-}
-
-.start {
-  border-bottom: 1px solid grey;
-  padding-bottom: 5px;
-  margin-bottom: 1.2%;
-}
-
-
-
-
-.end {
-  border-top: 1px solid grey;
-  padding-top: 5px;
-  margin-top: 1.2%;
-  margin-bottom: 5%;
-}
-
-.addActivityBtn {
-  all: unset;
-  background-color: #358C4E;
-  width: 30px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 20px;
-  transition: transform 0.2s ease;
-  position: absolute;
-  top: 15px;
-  right: 10px;
-}
-
-.addActivityBtn img {
-  width: 80%;
-  filter: brightness(0) invert(1);
-}
-
-.addActivityBtn:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-.emptyAdd {
-  position: absolute;
-  top: 85px;
-  right: 13px;
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-}
-
-.emptyAdd span {
-  font-size: 30px;
-}
-
-.emptyText {
-  font-size: 20px;
-  padding-bottom: 15%;
-}
-
-/* --------------------------------------------- */
-/* --------------- MOBILE LAYOUT --------------- */
-/* --------------------------------------------- */
-@media (max-width: 768px) {
-
-  .container {
-    padding-bottom: 45px;
-    min-height: 80vh;
-  }
-  
-  .addActivityBtn {
-    top: auto;
-    bottom: 55px;
-    right: 10px;
-    z-index: 1;
-  }
-
-  .emptyAdd {
-    bottom: 15px;
-    right: 13px;
-  }
-
-  .emptyImg {
-    padding-top: 40%;
-  }
 }

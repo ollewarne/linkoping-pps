@@ -11,22 +11,26 @@ function HistoryCard({activity = {}}) {
     const categoryColor = categoryColors[activity.category];
 
     return (
-        <div style={{borderColor: categoryColor}} className={styles.historyCard}>
-            <div className={styles.timeContainer}>
-                <p className={styles.time}>
+        <div className={styles.historyCard}>
+            <div className={styles.timeContainer} style={{borderColor: categoryColor}}>
+                <p className={styles.time} >
                     {activity.scheduledTimeStart} - {activity.scheduledTimeStop}
                 </p>
-                <img 
-                    src={ activity.isCompleted || activity.category === 'NonWork' ? "/activity-done.svg" : "/activity-missed.svg"} 
-                    alt="Done or missed check icon" 
-                    className={activity.isCompleted ? styles.done : styles.missed}
-                />
+                
             </div>
 
             <p className={styles.title}>
                 {activity.title}
             </p>
             
+            <div className={styles.categoryColorBlock} style={{backgroundColor: categoryColor}}>
+                <img 
+                    src={ activity.isCompleted || activity.category === 'NonWork' ? "/activity-done.svg" : "/activity-missed.svg"} 
+                    alt="Done or missed check icon" 
+                    
+                />
+            </div>
+
         </div>
     )
 }
