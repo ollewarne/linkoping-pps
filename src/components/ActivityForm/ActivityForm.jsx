@@ -116,7 +116,7 @@ function ActivityForm({ onClose, defaultMode = null }) {
                                         setIsScheduled(false)
                                         setShowForm(true)
                                     }}>
-                                    Start Activity
+                                    START
                                 </button>
                                 <button
                                     id='schedule-activity'
@@ -125,7 +125,7 @@ function ActivityForm({ onClose, defaultMode = null }) {
                                         setIsScheduled(true)
                                         setShowForm(true)
                                     }}>
-                                    Schedule Activity
+                                    SCHEDULE
                                 </button>
                             </div>
                         )}
