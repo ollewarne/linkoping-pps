@@ -2,9 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--form-bg);
+    background: var(--modal-bg);
     border-radius: 8px;
     padding: 1em;
+    color: var(--text);
 }
 
 form {
@@ -16,23 +17,30 @@ form {
 }
 
 fieldset {
-    border: 1px solid black;
+    border: none;
     border-radius: 8px;
-    padding: 12px;
+    padding: 8px 0;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    background: transparent;
 }
 
 legend {
-    font-weight: 600;
-    padding: 0 8px;
-    font-size: 13px;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    opacity: 0.5;
+    padding: 0;
+    margin-bottom: 4px;
 }
 
 label {
     font-size: 13px;
     font-weight: 500;
+    color: var(--text);
     margin-bottom: 2px;
 }
 
@@ -40,79 +48,99 @@ input[type="text"],
 input[type="number"],
 input[type="time"],
 select {
-    padding: 6px 10px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    font-size: 14px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* button[type="submit"], */
-.buttonSubmit {
-    padding: 8px 20px;
-    background-color: #6366f1;
-    border: none;
+    padding: 8px 10px;
+    border: 1px solid var(--btn-bg);
     border-radius: 8px;
     font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--purple-meeting);
+}
+
+.buttonSubmit {
+    padding: 10px 24px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    align-self: flex-start;
     margin-top: 4px;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--btn-hover);
 }
 
 fieldset:has(input[type="radio"]) {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-}
-
-fieldset:has(input[type="radio"]) legend {
-    margin-bottom: 4px;
+    gap: 12px;
 }
 
 .plannerButtons {
     width: 100%;
     display: flex;
-    justify-content: center;   /* centrerar horisontellt */
-    align-items: center;       /* centrerar vertikalt */               /* mellanrum mellan knapparna */
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
     gap: 3%;
 }
 
-
-
-
-.bigActivityButton, .bigScheduleButton  {
-    width: 50%;
-    padding: 25px 30px;
-    border-radius: 20px;
+.bigActivityButton,
+.bigScheduleButton {
+    width: 46%;
+    padding: 18px 0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
     border: none;
-    transition: all 0.5s;
-    font-size: 1.1rem;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.smallActivityButton, .smallScheduleButton  {
+.smallActivityButton,
+.smallScheduleButton {
     width: 40%;
-    border-radius: 10px;
+    padding: 10px 0;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
     border: none;
-    transition: all 0.5s;
-    padding: 3%;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
 }
 
-.smallActivityButton, .bigActivityButton  {
-    background-color: #6AAEE8;
+.smallActivityButton,
+.bigActivityButton {
+    background-color: var(--light-green-analytical);
+    letter-spacing: 1px;
 }
 
-.smallScheduleButton, .bigScheduleButton {
-    background-color: #8B4DB0;
+.smallScheduleButton,
+.bigScheduleButton {
+    background-color: var(--fuschsia-learning);
+    letter-spacing: 1px;
 }
 
 .plannerButtons button:hover {
-    transform: scale(1.05);
+    opacity: 0.85;
+    transform: scale(1.03);
 }
 
 .plannerButtons button:active {
-    background-color: aqua;
+    opacity: 0.7;
+    transform: scale(0.98);
 }
 
 @media (max-width: 768px) {
@@ -121,13 +149,8 @@ fieldset:has(input[type="radio"]) legend {
     }
 
     fieldset {
-        padding: 8px;
+        padding: 6px 0;
         gap: 6px;
-    }
-
-    .modal-close {
-        top: 0.5rem;
-        right: 0.5rem;
     }
 
     h2 {
