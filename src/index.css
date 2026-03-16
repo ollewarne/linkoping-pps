@@ -63,10 +63,10 @@
 
 
 [data-theme="dark"] {
-    --bg: #372426;
-    --notepad-bg: #4D393C;
+    --bg: #231f28;
+    --notepad-bg: #302b38;
 
-    --navlink-bg: #4D393C;
+    --navlink-bg: #433c4e;
     --navlink-bg-reversed: #FAF8EA;
 
     --text: #E5D9D9;
