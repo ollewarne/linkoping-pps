@@ -172,7 +172,6 @@
 }
 
 .cardFormHeaderTime {
-  margin-left: 2%;
   display: flex;
   gap: 10px;
 }
@@ -186,7 +185,6 @@
 }
 
 .cardFormHeader .category {
-  margin: 1%;
   padding: 1% 2%;
   font-size: 1.1rem;
   font-weight: 700;
