@@ -24,11 +24,13 @@ function HistoryCard({activity = {}}) {
             </p>
             
             <div className={styles.categoryColorBlock} style={{backgroundColor: categoryColor}}>
-                <img 
-                    src={ activity.isCompleted || activity.category === 'NonWork' ? "/activity-done.svg" : "/activity-missed.svg"} 
-                    alt="Done or missed check icon" 
-                    
-                />
+                <div className={styles.imgBackground}>
+                    <img 
+                        src={ activity.isCompleted || activity.category === 'NonWork' ? "/activity-done.svg" : "/activity-missed.svg"} 
+                        alt="Done or missed check icon" 
+                        className={activity.isCompleted ? `${styles.done}` : `${styles.missed}`}
+                    />
+                </div>
             </div>
 
         </div>
