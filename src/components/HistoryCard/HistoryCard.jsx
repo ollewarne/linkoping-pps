@@ -28,7 +28,7 @@ function HistoryCard({activity = {}}) {
                     <img 
                         src={ activity.isCompleted || activity.category === 'NonWork' ? "/activity-done.svg" : "/activity-missed.svg"} 
                         alt="Done or missed check icon" 
-                        className={activity.isCompleted ? `${styles.done}` : `${styles.missed}`}
+                        className={activity.isCompleted || activity.category === 'NonWork' ? `${styles.done}` : `${styles.missed}`}
                     />
                 </div>
             </div>
