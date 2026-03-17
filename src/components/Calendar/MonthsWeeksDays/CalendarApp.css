@@ -1,3 +1,4 @@
+
 .Calendar-app {
   font-family:
     system-ui,
@@ -125,28 +126,32 @@
   border-radius: 50%;
 }
 
-/* Större skärmar – inget ändras */
+
 @media (max-width: 1024px) {
   .Calendar-app {
     flex-direction: column;
     align-items: center;
   }
+  .Days span.has-event::after {
+    width: 5px;
+    height: 5px;
+  }
 
-  /* Kalendern behåller nästan samma storlek */
+ 
   .calender {
-    max-width: 350px; /* samma som på större skärmar */
+    max-width: 350px; 
   }
 }
 
-/* Mellanstora skärmar (≤768px) */
+
 @media (max-width: 768px) {
   .calender {
-    max-width: 100%; /* tar full bredd på mindre skärmar */
+    max-width: 100%; 
     padding: 10px;
   }
 
   .Days {
-    grid-template-columns: repeat(7, minmax(25px, 1fr)); /* mindre men fyrkantig */
+    grid-template-columns: repeat(7, minmax(25px, 1fr));
     gap: 4px;
   }
 
@@ -162,7 +167,7 @@
 
 @media (max-width: 480px) {
   .Days {
-    grid-template-columns: repeat(7, minmax(20px, 1fr)); /* minsta fyrkanten */
+    grid-template-columns: repeat(7, minmax(20px, 1fr));
     gap: 3px;
   }
 
@@ -178,4 +183,12 @@
     flex-direction: column;
     gap: 6px;
   }
+.Heading,
+.Month,
+.Year {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 2px 0;
+  text-align: center;
+}
 }
