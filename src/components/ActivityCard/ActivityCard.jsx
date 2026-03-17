@@ -50,7 +50,7 @@ function ActivityCard({ activity = {} }) {
                 title: form.title.value,
                 category: form.category.value,
                 scheduledTime: { start: form.timeStart.value, end: form.timeEnd.value },
-                estimatedDuration: calculateDuration(form.timeStart.value, form.timeEnd.value)
+                estimatedDuration: calculateDuration(form.timeStart.value, form.timeEnd.value) * 60
             }
         });
     };
@@ -155,7 +155,7 @@ function ActivityCard({ activity = {} }) {
                             {/* --------------- CARD FOOTER --------------- */}
                             <div className={styles.cardFooter}>
 
-                                <p className={styles.cardFooterDuration}>Estimated duration: <span>{activity.totalDuration} min</span></p>
+                                <p className={styles.cardFooterDuration}>Estimated duration: <span>{activity.totalDuration / 60} min</span></p>
 
                                 {/* --------------- DELETE CONFIRM --------------- */}
                                 {activity.category !== "NonWork" && (

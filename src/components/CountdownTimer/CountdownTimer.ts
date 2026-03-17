@@ -2,8 +2,7 @@ interface SessionOptions {
   id: string;
   initialPhaseSeconds?: number;
   initialPhase?: "work" | "break";
-  totalMinutes: number;
-  totalSeconds?: number;
+  totalSeconds: number;
   activeMinutes: number;
   breakMinutes: number;
   onTick?: (
@@ -32,7 +31,7 @@ export class SessionTimer {
 
   constructor(options: SessionOptions) {
     this.id = options.id;
-    this.totalSecondsLeft = options.totalSeconds ?? options.totalMinutes * 60;
+    this.totalSecondsLeft = options.totalSeconds;
     this.activeSeconds = options.activeMinutes * 60;
     this.breakSeconds = options.breakMinutes * 60;
     const phaseTotal = (options.initialPhase ?? "work") === "work" ? this.activeSeconds : this.breakSeconds;
@@ -94,9 +93,9 @@ export class SessionTimer {
     this.start();
   }
 
-  reset(toTotalMinutes?: number) {
+  reset(toTotalSeconds?: number) {
     this.pause();
-    if (toTotalMinutes !== undefined) this.totalSecondsLeft = toTotalMinutes * 60;
+    if (toTotalSeconds !== undefined) this.totalSecondsLeft = toTotalSeconds;
     this.phase = "work";
     this.phaseSecondsLeft = this.activeSeconds;
   }
