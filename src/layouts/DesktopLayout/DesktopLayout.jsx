@@ -10,7 +10,7 @@ function DesktopLayout() {
     return (
         <div className={styles.container}>
             <header className={styles.siteHeader}>
-                <h1>BAE Productivity</h1>
+                <h1>BAE <span> Productivity</span></h1>
                 <nav className={styles.navigation}>
                     <NavLink to="/" end className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
                         Activity
