@@ -21,17 +21,28 @@ function ActivityCard({ activity = {} }) {
     const categoryColor = categoryColors[activity.category];
 
     const submitEdit = (form) => {
-        const timeGaps = createTimegapsArray(timeBlocks);
         const start = convertStringTimeToMinutes(form.timeStart.value);
         const end = convertStringTimeToMinutes(form.timeEnd.value);
 
-        const lowerTimeLimit = timeBlocks[0].start;
-        const upperTimeLimit = timeBlocks[timeBlocks.length - 1].end;
+        
 
-        if (start < lowerTimeLimit || end > upperTimeLimit)
-            throw new Error("The time is outside of designated work hours")
-        if (!timeGaps.some(gap => gap.start <= start && gap.end >= end))
-            throw new Error(`No timeslot exists for the time ${form.timeStart.value} - ${form.timeEnd.value}`);
+        const originalStart = convertStringTimeToMinutes(activity.scheduledTimeStart);
+        const originalEnd = convertStringTimeToMinutes(activity.scheduledTimeStop);
+
+        const timeChanged = start !== originalStart || end !== originalEnd;
+
+        if (timeChanged) {
+            const timeGaps = createTimegapsArray(timeBlocks);
+        
+            const lowerTimeLimit = timeBlocks[0].start;
+            const upperTimeLimit = timeBlocks[timeBlocks.length - 1].end;
+
+            if (start < lowerTimeLimit || end > upperTimeLimit)
+                throw new Error("The time is outside of designated work hours")
+            if (!timeGaps.some(gap => gap.start <= start && gap.end >= end))
+                throw new Error(`No timeslot exists for the time ${form.timeStart.value} - ${form.timeEnd.value}`);
+        }
+        
         activityDispatch({
             type: "EDIT_ACTIVITY",
             payload: {
@@ -76,6 +87,7 @@ function ActivityCard({ activity = {} }) {
 
                         <div className={styles.cardFormHeader} style={{backgroundColor: categoryColor}}>
                             <div className={styles.cardFormHeaderTime}>
+                                
                                 <input name="timeStart" type="time" defaultValue={activity.scheduledTimeStart} onChange={(e) => {
                                     e.target.setCustomValidity("");
                                     setValidationError("");
