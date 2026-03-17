@@ -18,7 +18,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     const [activeActivity, setActiveActivity] = useState<ActivityType | null>(null);
     const [timeLeft, setTimeLeft] = useState(activeActivity ? activeActivity.activeTime * 60 : 0);
     const [phase, setPhase] = useState<"work" | "break">("work");
-    const [totalRemaining, setTotalRemaining] = useState(activeActivity ? activeActivity.estimatedDuration * 60 : 0);
+    const [totalRemaining, setTotalRemaining] = useState(activeActivity ? activeActivity.estimatedDuration : 0);
     const [showPopup, setShowPopup] = useState(false);
     const { activities, activityDispatch } = useActivities();
     const totalTimeSpentRef = useRef(activeActivity?.totalTimeSpent ?? 0);
@@ -49,26 +49,21 @@ export function TimerProvider({ children }: { children: ReactNode }) {
     const timer = useMemo(() => {
         if (!activeActivity) return null;
         const a = activeActivity;
-        const now = Date.now();
-        let effectiveDurationMinutes = a.estimatedDuration;
+        let totalSeconds: number = a.estimatedDuration;
+
 
         if (a.scheduledTime) {
-            const [endHour, endMin] = a.scheduledTime.end.split(":").map(Number);
-            const endDate = new Date();
-            endDate.setHours(endHour, endMin, 0, 0);
-            const secondsUntilEnd = Math.max(0, Math.floor((endDate.getTime() - now) / 1000));
-            effectiveDurationMinutes = Math.min(a.estimatedDuration, Math.floor(secondsUntilEnd / 60));
+            const [hours, minutes] = a.scheduledTime.end.split(":").map(Number);
+            const scheduledEnd = new Date();
+            scheduledEnd.setHours(hours, minutes, 0, 0);
+            totalSeconds = Math.max(0, Math.ceil((scheduledEnd.getTime() - Date.now()) / 1000));
         }
-
-        const effectiveDurationSeconds = Math.max(0, (effectiveDurationMinutes * 60) - a.totalTimeSpent);
-        effectiveDurationMinutes = Math.floor(effectiveDurationSeconds / 60);
 
         return new SessionTimer({
             id: "session-1",
             initialPhase: a.currentPhase ?? "work",
             initialPhaseSeconds: a.currentPhaseTimeSpent ?? 0,
-            totalMinutes: effectiveDurationMinutes,
-            totalSeconds: effectiveDurationSeconds,
+            totalSeconds: totalSeconds,
             activeMinutes: a.activeTime,
             breakMinutes: a.breakTime,
             onTick: (_id, totalSec, currentPhase, phaseSec) => {

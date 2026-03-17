@@ -7,8 +7,6 @@ function generateId(): string {
     return Math.random().toString(36).substring(2, 6);
 }
 
-
-
 export function createTimegapsArray(timeSlots: TimeSlot[]) {
     const lowerTimeLimit = timeSlots[0].start;
     const upperTimeLimit = timeSlots[timeSlots.length - 1].end;
@@ -90,7 +88,7 @@ export function useActivityForm() {
             id: generateId(),
             category: form.category.value,
             title: form.activityTitle.value,
-            estimatedDuration: calculateDuration(startInput, endInput),
+            estimatedDuration: calculateDuration(startInput, endInput) * 60,
             activeTime: form.activeTime.value,
             breakTime: form.breakTime.value,
             isActive: false,
@@ -109,7 +107,7 @@ export function useActivityForm() {
             id: generateId(),
             category: form.category.value,
             title: form.activityTitle.value,
-            estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value),
+            estimatedDuration: calculateDuration(hoursInput.value, minutesInput.value) * 60,
             activeTime: form.activeTime.value,
             breakTime: form.breakTime.value,
             isActive: true,
