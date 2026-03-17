@@ -1,3 +1,4 @@
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -10,6 +11,7 @@
     align-items: flex-start;
     justify-content: center;
     z-index: 1000;
+    border-radius: 16px;
 }
 
 .modal-content-calendar-days {
@@ -34,9 +36,61 @@
     color: var(--text-color);
 }
 
+@media (max-width: 1024px) {
+    .modal-content-calendar-days {
+        width: 90%;
+        padding: 1rem;
+    }
+    .modal-overlay{
+        align-items: center;
+        padding-top: 2rem;
+    }
+    .modal-content-calendar-days {
+        width: 90%;
+        max-height: 25vh;
+        padding: 1rem;
+    }
+}
+
+
 @media (max-width: 768px) {
     .modal-overlay {
         align-items: center;
-        padding-top: 0;
+        padding-top: 2rem;
+        
+    }
+
+    .modal-content-calendar-days {
+        width: 90%;
+        max-height: 25vh;
+        padding: 1rem;
+        margin-bottom: 10px;
+    }
+
+    .modal-close {
+        font-size: 1.3rem;
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .modal-content-calendar-days {
+        width: 90%;
+        max-height: 40vh;
+        border-radius: 6px;
+        padding: 0.8rem;
+      
+    }
+
+    .modal-overlay {
+        align-items: center;
+        padding-top: 0.5rem;
+        margin-top: 1px;
+    }
+
+    .modal-close {
+        font-size: 1.2rem;
     }
 }
