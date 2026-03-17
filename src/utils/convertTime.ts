@@ -63,3 +63,13 @@ export function minutesToHHMM(minutes: number): string {
   const m = minutes % 60;
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
+
+/**
+ * Get the current time in minutes.
+ * 
+ * @returns - current time in minutes
+ */
+export function getCurrentTime(): number {
+    const now = new Date();
+    return now.getHours() * 60 + now.getMinutes();
+}
