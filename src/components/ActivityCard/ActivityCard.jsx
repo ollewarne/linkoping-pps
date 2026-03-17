@@ -105,7 +105,7 @@ function ActivityCard({ activity = {} }) {
                             </select>
                         </div>
 
-                        <input name="title" type="text" defaultValue={activity.title} style={{borderColor:categoryColor}}/>
+                        <input name="title" type="text" defaultValue={activity.title} style={{borderColor:categoryColor}} maxLength={120} />
 
                         {/* --------------- EDIT CONFIRM BUTTONS --------------- */}
                         <div className={styles['edit-confirm']}>
@@ -177,6 +177,7 @@ function ActivityCard({ activity = {} }) {
                                         </div>
                                     ) : (
                                         // --------------- CARD FOOTER: UTILITY BUTTONS ---------------
+                                        <>                                       { !activity.isActive && (
                                         <div className={styles['utility-buttons']}>
                                             <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
                                                 <img src="/settings.svg" alt="Edit icon" />
@@ -185,6 +186,10 @@ function ActivityCard({ activity = {} }) {
                                                 <img src="/delete.svg" alt="Delete icon" />
                                             </button>
                                         </div>
+                                        )
+                                        }
+                                        </>
+ 
                                     )
                                 )}
                             </div>
