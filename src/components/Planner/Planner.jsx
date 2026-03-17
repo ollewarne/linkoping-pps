@@ -14,7 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 function Planner() {
     const { activities, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const [currentTime, setCurrentTime] = useState(
-        getCurrentTime();
+        getCurrentTime()
         // () => {
         //     const now = new Date();
         //     return now.getHours() * 60 + now.getMinutes();
@@ -34,13 +34,12 @@ function Planner() {
     const { historyActivities, agendaActivities, activeActivities } = useMemo(() => {
         const history = [];
         const agenda = [];
-        const active = [];
 
         plannedActivities.forEach((a) => {
-            if (a.isActive) {
-                active.push(a);
-                return;
-            }
+            // if (a.isActive) {
+            //     agenda.push(a);
+            //     return;
+            // }
 
             if (a.isCompleted) {
                 history.push(a);
@@ -58,7 +57,7 @@ function Planner() {
             }
         })
 
-        return { historyActivities: history, agendaActivities: agenda, activeActivities: active }
+        return { historyActivities: history, agendaActivities: agenda, }
     }, [plannedActivities, currentTime])
 
     let workformData = getWorkdayFromStorage();
