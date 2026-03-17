@@ -8,16 +8,17 @@ import ActivityForm from "../ActivityForm/ActivityForm";
 import Modal from "../Modal/Modal";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
-import { convertStringTimeToMinutes } from "../../utils/convertTime";
+import { convertStringTimeToMinutes, getCurrentTime } from "../../utils/convertTime";
 import { useEffect, useMemo, useState } from "react";
 
 function Planner() {
     const { activities, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const [currentTime, setCurrentTime] = useState(
-        () => {
-            const now = new Date();
-            return now.getHours() * 60 + now.getMinutes();
-        }
+        getCurrentTime();
+        // () => {
+        //     const now = new Date();
+        //     return now.getHours() * 60 + now.getMinutes();
+        // }
     );
 
     useEffect(() => {
