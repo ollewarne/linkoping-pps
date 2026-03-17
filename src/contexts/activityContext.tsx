@@ -103,10 +103,13 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 
 
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
+    const plannerModeKey = "plannerMode";
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
     const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
-    const [plannerMode, setPlannerMode] = useState<boolean>(false);
+    const [plannerMode, setPlannerMode] = useState<boolean>(
+            () => localStorage.getItem(plannerModeKey) === "true"
+    );
 
     useEffect(() => {
         function handleWorkdayUpdate() {
@@ -242,7 +245,8 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         startPlannedActivity();
-    }, [plannerMode])
+        localStorage.setItem(plannerModeKey, String(plannerMode));
+    }, [plannerMode]);
 
     const value = useMemo(() => ({
         activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks, plannerMode, setPlannerMode
