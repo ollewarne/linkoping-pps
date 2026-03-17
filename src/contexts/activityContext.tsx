@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
 import { getWorkdayFromStorage } from '../utils/workdayStorage';
 import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
@@ -108,7 +108,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
     const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
     const [plannerMode, setPlannerMode] = useState<boolean>(
-            () => localStorage.getItem(plannerModeKey) === "true"
+        () => localStorage.getItem(plannerModeKey) === "true"
     );
 
     useEffect(() => {
@@ -208,7 +208,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         }, [activities, workday]
     )
 
-    function startPlannedActivity() {
+    const startPlannedActivity = useCallback(() => {
         const now = new Date();
 
         if (!plannerMode) return
@@ -227,13 +227,10 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         if (!activityDueToStart) return;
 
         const currentlyActiveActivity = activities.find(a => a.isActive);
-        if (currentlyActiveActivity) {
-            activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: currentlyActiveActivity.id } });
-            activityDispatch({ type: "MARK_COMPLETED", payload: { id: currentlyActiveActivity.id } });
-        }
+        if (currentlyActiveActivity) return;
 
         activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: activityDueToStart.id } })
-    }
+    }, [plannerMode, plannedActivities, activities])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -241,12 +238,15 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         }, 30000)
 
         return () => clearInterval(interval);
-    }, [plannedActivities, activities]);
+    }, [startPlannedActivity]);
+
+    useEffect(() => {
+        localStorage.setItem(plannerModeKey, String(plannerMode));
+    }, [plannerMode]);
 
     useEffect(() => {
         startPlannedActivity();
-        localStorage.setItem(plannerModeKey, String(plannerMode));
-    }, [plannerMode]);
+    }, [plannerMode, startPlannedActivity])
 
     const value = useMemo(() => ({
         activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks, plannerMode, setPlannerMode

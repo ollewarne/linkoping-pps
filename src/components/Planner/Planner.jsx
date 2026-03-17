@@ -15,10 +15,6 @@ function Planner() {
     const { activities, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
-        // () => {
-        //     const now = new Date();
-        //     return now.getHours() * 60 + now.getMinutes();
-        // }
     );
 
     useEffect(() => {
@@ -50,7 +46,7 @@ function Planner() {
 
             const start = +convertStringTimeToMinutes(a.scheduledTimeStart) + 15;
 
-            if (start <= currentTime) {
+            if (!plannerMode && start <= currentTime) {
                 history.push(a);
             } else {
                 agenda.push(a);
@@ -58,7 +54,7 @@ function Planner() {
         })
 
         return { historyActivities: history, agendaActivities: agenda, }
-    }, [plannedActivities, currentTime])
+    }, [plannedActivities, currentTime, plannerMode])
 
     let workformData = getWorkdayFromStorage();
 
