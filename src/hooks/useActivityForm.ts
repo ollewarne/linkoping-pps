@@ -1,26 +1,43 @@
 import type { ActivityType } from "../types";
 import { useActivities } from "../contexts/activityContext";
 import type { TimeSlot } from "../contexts/activityContext";
-import { calculateDuration, convertStringTimeToMinutes, minutesToHHMM } from "../utils/convertTime";
+import { calculateDuration, convertStringTimeToMinutes, minutesToHHMM, getCurrentTime } from "../utils/convertTime";
 
 function generateId(): string {
     return Math.random().toString(36).substring(2, 6);
 }
 
+
+
 export function createTimegapsArray(timeSlots: TimeSlot[]) {
     const lowerTimeLimit = timeSlots[0].start;
     const upperTimeLimit = timeSlots[timeSlots.length - 1].end;
+
+    const currentTime = getCurrentTime();
 
     const timeGaps: {start: number, end: number}[] = [];
     let prevEnd = lowerTimeLimit;
 
     for (let i = 1; i < timeSlots.length - 1; i++) {
         const slot = timeSlots[i];
-        timeGaps.push({start: prevEnd, end: slot.start});
+
+        const gapStart = Math.max(prevEnd, currentTime);
+        const gapEnd = slot.start;
+
+        if (gapStart < gapEnd) {
+            timeGaps.push({start: gapStart, end: gapEnd})
+        }
+
+        // timeGaps.push({start: prevEnd, end: slot.start});
         prevEnd = slot.end;
     }
 
-    timeGaps.push({start: prevEnd, end: upperTimeLimit});
+    const finalStart = Math.max(prevEnd, currentTime);
+
+    if(finalStart < upperTimeLimit) {
+        timeGaps.push({start: finalStart, end: upperTimeLimit});
+    }
+    // timeGaps.push({start: prevEnd, end: upperTimeLimit});
 
     return timeGaps
 }
@@ -46,6 +63,11 @@ export function useActivityForm() {
         if (startInput.includes(':')) {
             const start = convertStringTimeToMinutes(startInput);
             const end = convertStringTimeToMinutes(endInput);
+            const currentTime = getCurrentTime();
+
+            if (start < currentTime) {
+                throw new Error("Entered hours have already passed")
+            }
 
             const lowerTimeLimit = timeBlocks[0].start;
             const upperTimeLimit = timeBlocks[timeBlocks.length - 1].end;
