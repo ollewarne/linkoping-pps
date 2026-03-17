@@ -149,7 +149,7 @@ function ActivityForm({ onClose, defaultMode = null }) {
                                         }
                                     </select>
                                     <label htmlFor="activityTitle">{languageLibrary[language].form2Title}</label>
-                                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={50} />
+                                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={120} />
                                 </fieldset>
 
 
