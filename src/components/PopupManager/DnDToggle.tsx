@@ -7,8 +7,8 @@ const DndToggle: FC = () => {
 
   return (
 
-    <button onClick={toggleDnd} className={isDndEnabled ? `header-btn ${styles.dndBtn}` : `header-btn ${styles.dndBtn} ${styles.dndBtnActive}`}>
-      <img src={isDndEnabled ? '/notification-on.svg' : '/notification-off.svg'} alt="Notification selector" />
+    <button onClick={toggleDnd} className={isDndEnabled ? `header-btn ${styles.dndBtn} ${styles.dndBtnActive}` : `header-btn ${styles.dndBtn}`}>
+      <img src={isDndEnabled ? '/notification-off.svg' : '/notification-on.svg'} alt="Notification selector" />
     </button>
 
     // <div className="dnd-toggle" onClick={toggleDnd}>
