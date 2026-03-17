@@ -25,13 +25,7 @@
     
 }
 
-/* .done {
-  filter: invert(42%) sepia(55%) saturate(420%) hue-rotate(96deg) brightness(92%) contrast(90%);
-}
 
-.missed {
-  filter: invert(24%) sepia(93%) saturate(6027%) hue-rotate(3deg) brightness(96%) contrast(108%);
-} */
 
 
 .title {
@@ -49,10 +43,25 @@
     border-radius: 0 16px 16px 0;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
-.categoryColorBlock img {
-    width: 50%;
+/* .categoryColorBlock img {
     filter: brightness(0) invert(1);
 
+} */
+
+.imgBackground {
+    height: 45%;
+    aspect-ratio: 1;
+    border-radius: 100%;
+    background-color: var(--notepad-bg);
+}
+
+.done {
+  filter: invert(42%) sepia(55%) saturate(420%) hue-rotate(96deg) brightness(92%) contrast(90%);
+}
+
+.missed {
+  filter: invert(24%) sepia(93%) saturate(6027%) hue-rotate(3deg) brightness(96%) contrast(108%);
 }
