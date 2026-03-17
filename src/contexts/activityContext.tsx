@@ -85,7 +85,7 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
                 ...activity,
                 currentPhaseTimeSpent: action.payload.currentPhaseTimeSpent,
                 currentPhase: action.payload.currentPhase
-            }: activity)
+            } : activity)
         default:
             return state;
     }
@@ -205,34 +205,44 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         }, [activities, workday]
     )
 
+    function startPlannedActivity() {
+        const now = new Date();
+
+        if (!plannerMode) return
+
+        const currentTimeInHHMM =
+            `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        const currentTimeInMinutes = convertStringTimeToMinutes(currentTimeInHHMM);
+
+        const activityDueToStart = plannedActivities.find(
+            a => convertStringTimeToMinutes(a.scheduledTimeStart!) <= currentTimeInMinutes
+                && !a.isActive
+                && !a.isCompleted
+        )
+
+        if (!activityDueToStart) return;
+
+        const currentlyActiveActivity = activities.find(a => a.isActive);
+        if (currentlyActiveActivity) {
+            activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: currentlyActiveActivity.id } });
+            activityDispatch({ type: "MARK_COMPLETED", payload: { id: currentlyActiveActivity.id } });
+        }
+
+        activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: activityDueToStart.id } })
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
-            const now = new Date();
-
-            if (!plannerMode) return
-
-            const currentTimeInHHMM =
-                `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
-
-            const activityDueToStart = plannedActivities.find(
-                a => a.scheduledTimeStart === currentTimeInHHMM
-                    && !a.isActive
-                    && !a.isCompleted
-            )
-
-            if (!activityDueToStart) return;
-
-            const currentlyActiveActivity = activities.find(a => a.isActive);
-            if (currentlyActiveActivity) {
-                activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: currentlyActiveActivity.id } });
-                activityDispatch({ type: "MARK_COMPLETED", payload: { id: currentlyActiveActivity.id } });
-            }
-
-            activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: activityDueToStart.id } })
+            startPlannedActivity();
         }, 30000)
 
         return () => clearInterval(interval);
-    }, [plannerMode, plannedActivities, activities]);
+    }, [plannedActivities, activities]);
+
+    useEffect(() => {
+        startPlannedActivity();
+    }, [plannerMode])
 
     const value = useMemo(() => ({
         activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks, plannerMode, setPlannerMode
