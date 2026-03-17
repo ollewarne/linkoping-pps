@@ -1,12 +1,15 @@
 import "./CountdownDisplay.css";
 import { useTimer } from "../../contexts/TimerContext";
 import { useActivities } from "../../contexts/activityContext";
+import { categoryColors } from "../../constants/categoryColors";
 
 export const CountdownDisplay = () => {
     const { activeActivity, timeLeft, phase, totalRemaining } = useTimer();
     const { activityDispatch } = useActivities();
 
     if (!activeActivity) return null;
+
+    const categoryColor = categoryColors[activeActivity.category] ?? "#4a4aff";
 
     const formatMMSS = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
@@ -29,7 +32,7 @@ export const CountdownDisplay = () => {
         <div className="timer-container">
             <div className="timer-card">
 
-                <div className="timer-header">
+                <div className="timer-header" style={{ backgroundColor: categoryColor }}>
                     <span
                         className="timer-schedule"
                         style={{ visibility: activeActivity.scheduledTime ? "visible" : "hidden" }}
