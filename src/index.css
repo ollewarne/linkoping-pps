@@ -19,7 +19,8 @@
     --filter-svg: brightness(0) invert(0);
 
     /* CARD COLORS */
-    --notepad-bg: #f5f5f4;
+    /* --notepad-bg: #f5f5f4; */
+    --notepad-bg: #e8e5e3;
     --E5D9D9: #f5f5f4;
     --confirm: #358C4E;
     --reject: #EF2917;

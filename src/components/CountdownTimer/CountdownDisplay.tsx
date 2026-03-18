@@ -47,8 +47,8 @@ export const CountdownDisplay = () => {
                 </div>
 
                 <div className="timer-body">
-                    <h2 className="activity-name">{activeActivity.title}</h2>
-                    <hr className="timer-divider" />
+                    <h2 className="activity-name" style={{borderColor: categoryColor}}>{activeActivity.title}</h2>
+                    {/* <hr className="timer-divider" /> */}
 
                     <div className="timer-main">
                         <h3 className={`phase-status ${phase}`}>

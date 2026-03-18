@@ -139,3 +139,105 @@
   filter: var(--filter-svg);
   padding-top: 20%;
 }
+
+
+
+
+
+/* ===================== TABLET ===================== */
+@media (max-width: 1024px) {
+  .plannerGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 3;
+    gap: 1rem;
+  }
+
+  .historyContainer {
+    grid-row: 3;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    width: 30%;
+    gap: 1rem;
+  }
+
+  .agendaContainer {
+    grid-row: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  .buttonsContainer {
+    display: inline-flex;
+    gap: 0.5rem;
+
+    margin: 3% auto auto auto;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 1;
+    width: 40%;
+  }
+
+
+  .plannerGridTitles {
+    display: none;
+  }
+
+
+}
+
+
+/* ===================== MOBILE ===================== */
+@media (max-width: 600px) {
+  .plannerContainer {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .plannerGrid {
+    gap: 1.5rem;
+  }
+
+  .buttonsContainer {
+    flex-direction: column;
+    gap: 0.8rem;
+
+    position: sticky;
+    bottom: 10px;
+    background: var(--background);
+    padding: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .addActivityBtn,
+  .startActivityBtn {
+    grid-template-columns: 60px 1fr;
+    border-radius: 12px;
+  }
+
+  .addActivityBtn p,
+  .startActivityBtn p {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+  }
+
+  .colorBlock {
+    border-radius: 12px 0 0 12px;
+  }
+
+  .agendaContainer {
+    gap: 0.8rem;
+  }
+
+  .historyContainer {
+    gap: 0.8rem;
+  }
+
+  .emptyImg {
+    width: 60%;
+    padding-top: 10%;
+  }
+
+  .date {
+    font-size: 0.9rem;
+  }
+}
