@@ -8,7 +8,7 @@
   width: 600px;
   border-radius: 16px;
   overflow: hidden;
-  background-color: var(--modal-bg);
+  background-color: var(--notepad-bg);
   color: var(--text);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
@@ -44,16 +44,17 @@
 .activity-name {
   font-size: 1.4rem;
   font-weight: 500;
-  margin: 0 0 15px;
+  margin: 0 0 25px;
   color: var(--text);
-  opacity: 0.9;
+  padding: 0 0 3% 0;
+  border-bottom: 2px solid #44BF75;
 }
 
-.timer-divider {
+/* .timer-divider {
   border: none;
   border-top: 1px solid rgba(128, 128, 128, 0.25);
   margin: 0 0 25px;
-}
+} */
 
 .timer-main {
   display: flex;
