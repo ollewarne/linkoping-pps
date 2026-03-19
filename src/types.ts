@@ -9,6 +9,7 @@ export interface ActivityType {
     estimatedDuration: number;
     isActive: boolean;
     isCompleted: boolean;
+    isMissed?: boolean;
     totalTimeSpent: number;
     statistics: {
         [timestamp: string]: {

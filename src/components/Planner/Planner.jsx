@@ -14,7 +14,7 @@ import { CountdownDisplay } from "../CountdownTimer/CountdownDisplay";
 import { useTimer } from "../../contexts/TimerContext";
 
 function Planner() {
-    const { activities, plannedActivities, plannerMode, setPlannerMode } = useActivities();
+    const { activities, activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const {activeActivity } = useTimer();
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
@@ -53,6 +53,7 @@ function Planner() {
 
             if (!plannerMode && start <= currentTime) {
                 history.push(a);
+                activityDispatch({type: "SET_MISSED", payload: {id: a.id}})
             } else {
                 agenda.push(a);
             }
