@@ -24,8 +24,6 @@ function ActivityCard({ activity = {} }) {
         const start = convertStringTimeToMinutes(form.timeStart.value);
         const end = convertStringTimeToMinutes(form.timeEnd.value);
 
-        
-
         const originalStart = convertStringTimeToMinutes(activity.scheduledTimeStart);
         const originalEnd = convertStringTimeToMinutes(activity.scheduledTimeStop);
 
@@ -33,7 +31,7 @@ function ActivityCard({ activity = {} }) {
 
         if (timeChanged) {
             const timeGaps = createTimegapsArray(timeBlocks);
-        
+
             const lowerTimeLimit = timeBlocks[0].start;
             const upperTimeLimit = timeBlocks[timeBlocks.length - 1].end;
 
@@ -42,7 +40,7 @@ function ActivityCard({ activity = {} }) {
             if (!timeGaps.some(gap => gap.start <= start && gap.end >= end))
                 throw new Error(`No timeslot exists for the time ${form.timeStart.value} - ${form.timeEnd.value}`);
         }
-        
+
         activityDispatch({
             type: "EDIT_ACTIVITY",
             payload: {
@@ -85,17 +83,17 @@ function ActivityCard({ activity = {} }) {
                     }}>
                         {/* --------------- CARD EDIT FORM --------------- */}
 
-                        <div className={styles.cardFormHeader} style={{backgroundColor: categoryColor}}>
+                        <div className={styles.cardFormHeader} style={{ backgroundColor: categoryColor }}>
                             <div className={styles.cardFormHeaderTime}>
-                                
+
                                 <input name="timeStart" type="time" defaultValue={activity.scheduledTimeStart} onChange={(e) => {
                                     e.target.setCustomValidity("");
                                     setValidationError("");
-                                }}/>
+                                }} />
                                 <input name="timeEnd" type="time" defaultValue={activity.scheduledTimeStop} />
                             </div>
 
-                            <select name="category" className={`category ${styles.category}` } required defaultValue={activity.category}>
+                            <select name="category" className={`category ${styles.category}`} required defaultValue={activity.category}>
                                 <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
                                 {
                                     categories.map((category) => {
@@ -105,7 +103,7 @@ function ActivityCard({ activity = {} }) {
                             </select>
                         </div>
 
-                        <input name="title" type="text" defaultValue={activity.title} style={{borderColor:categoryColor}} maxLength={120} />
+                        <input name="title" type="text" defaultValue={activity.title} style={{ borderColor: categoryColor }} maxLength={120} />
 
                         {/* --------------- EDIT CONFIRM BUTTONS --------------- */}
                         <div className={styles['edit-confirm']}>
@@ -117,34 +115,14 @@ function ActivityCard({ activity = {} }) {
                 ) : (
                     <div className={styles.card}>
 
-                        {/* ------------------------------------------------------- */}
-                        {/* --------------- KOLLA SÅ ACTIVE FUNKAR? --------------- */}
-                        {/* ------------------------------------------------------- */}
-
-
                         {/* --------------- CARD HEADER --------------- */}
-                        <div className={styles.cardHeader} style={{backgroundColor: categoryColor}}>
+                        <div className={styles.cardHeader} style={{ backgroundColor: categoryColor }}>
                             <div className={styles.cardHeaderContainer}>
                                 <p className={styles.cardHeaderScheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
-
-                                {/* <div>
-                                {!activity.isActive 
-                                    ? <></>
-                                    : <p>Active</p>}
-                                {!activity.isActive 
-                                ? <></>
-                                : <img src="/throbber.svg" alt="" className={styles.activityThrobber}/>
-                                }
-                                </div> */}
 
                                 <p className={styles.cardHeaderCategory}>{activity.category}</p>
 
                             </div>
-
-                        {/* ------------------------------------------------------- */}
-                        {/* ------------------------------------------------------- */}
-                        {/* ------------------------------------------------------- */}
-
                         </div>
 
                         {/* --------------- CARD MAIN --------------- */}
@@ -177,19 +155,18 @@ function ActivityCard({ activity = {} }) {
                                         </div>
                                     ) : (
                                         // --------------- CARD FOOTER: UTILITY BUTTONS ---------------
-                                        <>                                       { !activity.isActive && (
-                                        <div className={styles['utility-buttons']}>
-                                            <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
-                                                <img src="/settings.svg" alt="Edit icon" />
-                                            </button>
-                                            <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
-                                                <img src="/delete.svg" alt="Delete icon" />
-                                            </button>
-                                        </div>
+                                        <>                                       {!activity.isActive && (
+                                            <div className={styles['utility-buttons']}>
+                                                <button disabled={activity.isActive} onClick={() => setEditMode(true)}>
+                                                    <img src="/settings.svg" alt="Edit icon" />
+                                                </button>
+                                                <button disabled={activity.isActive} onClick={() => setConfirmDelete(true)}>
+                                                    <img src="/delete.svg" alt="Delete icon" />
+                                                </button>
+                                            </div>
                                         )
                                         }
                                         </>
- 
                                     )
                                 )}
                             </div>

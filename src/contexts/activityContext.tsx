@@ -139,9 +139,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             try {
                 const data = JSON.parse(item);
                 const dataAgeInMs: number = Date.now() - data.timeStamp;
-                const maxDataAgeInMs: number = 16 * 60 * 60 * 1000;
+                const maxDataAgeInMs: number = 8 * 60 * 60 * 1000;
 
-                // tar bort aktiviteter om ingen uppdatering skett på över 16 timmar
+                // tar bort aktiviteter om ingen uppdatering skett på över 8 timmar
                 if (dataAgeInMs > maxDataAgeInMs) {
                     localStorage.removeItem("activities");
                     return [];
@@ -174,7 +174,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                     scheduledTimeStart: workday.nonWorkHours.start,
                     scheduledTimeStop: workday.nonWorkHours.end,
                     isActive: false,
-                    isCompleted: false, // UPPSIKT IFALL DETTA ORSAKAR PROBLEM I PLANNER??
+                    isCompleted: false,
                     totalDuration: totalDuration
                 };
 
