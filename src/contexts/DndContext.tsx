@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode, FC } from "react";
+import { createContext, useState, useContext, type ReactNode, type FC } from "react";
 
 interface DndContextValue {
   isDndEnabled: boolean;
