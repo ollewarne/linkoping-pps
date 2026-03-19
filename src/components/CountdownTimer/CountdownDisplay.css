@@ -1,11 +1,12 @@
 .timer-container {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .timer-card {
-  width: 600px;
+  width: 100%;
   border-radius: 16px;
   overflow: hidden;
   background-color: var(--notepad-bg);
@@ -14,11 +15,12 @@
 }
 
 .timer-header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #4a4aff;
-  padding: 15px 25px;
+  padding: 15px 2%;
 }
 
 .timer-schedule {
@@ -32,13 +34,14 @@
   font-size: 1rem;
   font-weight: 500;
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--E5D9D9);
   border-radius: 6px;
-  padding: 4px 12px;
+  padding: 1% 2%;
 }
 
 .timer-body {
-  padding: 25px 30px 15px;
+  margin: 0 2% 0 2%;
+  padding: 3% 0 3% 0;
 }
 
 .activity-name {
@@ -59,7 +62,7 @@
 .timer-main {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .phase-status {
