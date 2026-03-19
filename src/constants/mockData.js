@@ -19,9 +19,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 92,
                 statistics: {
-                    "08:32": { efficiency: 4, productivity: 3, factor: "focused" },
-                    "09:03": { efficiency: 3, productivity: 4, factor: null },
-                    "09:39": { efficiency: 4, productivity: 4, factor: null }
+                    "08:32": { energy: 4, productivity: 3, factor: "focused" },
+                    "09:03": { energy: 3, productivity: 4, factor: null },
+                    "09:39": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -37,10 +37,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 118,
                 statistics: {
-                    "10:02": { efficiency: 4, productivity: 4, factor: null },
-                    "10:30": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "11:37": { efficiency: 4, productivity: 4, factor: null },
-                    "11:59": { efficiency: 3, productivity: 3, factor: "notifications" }
+                    "10:02": { energy: 4, productivity: 4, factor: null },
+                    "10:30": { energy: 4, productivity: 4, factor: "energized" },
+                    "11:37": { energy: 4, productivity: 4, factor: null },
+                    "11:59": { energy: 3, productivity: 3, factor: "notifications" }
                 }
             },
             {
@@ -56,7 +56,7 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 30,
                 statistics: {
-                    "12:00": { efficiency: 2, productivity: 2, factor: "hungry" }
+                    "12:00": { energy: 2, productivity: 2, factor: "hungry" }
                 }
             },
             {
@@ -72,10 +72,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 125,
                 statistics: {
-                    "13:37": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "14:04": { efficiency: 4, productivity: 4, factor: null },
-                    "14:34": { efficiency: 4, productivity: 4, factor: null },
-                    "15:00": { efficiency: 4, productivity: 4, factor: "energized" }
+                    "13:37": { energy: 4, productivity: 4, factor: "focused" },
+                    "14:04": { energy: 4, productivity: 4, factor: null },
+                    "14:34": { energy: 4, productivity: 4, factor: null },
+                    "15:00": { energy: 4, productivity: 4, factor: "energized" }
                 }
             },
             {
@@ -91,8 +91,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 55,
                 statistics: {
-                    "15:49": { efficiency: 3, productivity: 2, factor: "tired" },
-                    "16:00": { efficiency: 2, productivity: 3, factor: null }
+                    "15:49": { energy: 3, productivity: 2, factor: "tired" },
+                    "16:00": { energy: 2, productivity: 3, factor: null }
                 }
             }
         ]
@@ -117,8 +117,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 60,
                 statistics: {
-                    "08:30": { efficiency: 4, productivity: 4, factor: null },
-                    "09:00": { efficiency: 4, productivity: 3, factor: null }
+                    "08:30": { energy: 4, productivity: 4, factor: null },
+                    "09:00": { energy: 4, productivity: 3, factor: null }
                 }
             },
             {
@@ -134,10 +134,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 123,
                 statistics: {
-                    "09:30": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "10:00": { efficiency: 4, productivity: 4, factor: null },
-                    "10:30": { efficiency: 3, productivity: 4, factor: "others" },
-                    "11:00": { efficiency: 4, productivity: 3, factor: null }
+                    "09:30": { energy: 4, productivity: 4, factor: "focused" },
+                    "10:00": { energy: 4, productivity: 4, factor: null },
+                    "10:30": { energy: 3, productivity: 4, factor: "others" },
+                    "11:00": { energy: 4, productivity: 3, factor: null }
                 }
             },
             {
@@ -153,8 +153,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 58,
                 statistics: {
-                    "11:30": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "12:00": { efficiency: 4, productivity: 4, factor: null }
+                    "11:30": { energy: 4, productivity: 4, factor: "energized" },
+                    "12:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -170,9 +170,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 87,
                 statistics: {
-                    "13:30": { efficiency: 3, productivity: 3, factor: "unfocused" },
-                    "14:00": { efficiency: 4, productivity: 4, factor: null },
-                    "14:30": { efficiency: 4, productivity: 3, factor: null }
+                    "13:30": { energy: 3, productivity: 3, factor: "unfocused" },
+                    "14:00": { energy: 4, productivity: 4, factor: null },
+                    "14:30": { energy: 4, productivity: 3, factor: null }
                 }
             },
             {
@@ -188,9 +188,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 92,
                 statistics: {
-                    "15:00": { efficiency: 4, productivity: 4, factor: null },
-                    "15:30": { efficiency: 3, productivity: 3, factor: "tired" },
-                    "16:00": { efficiency: 3, productivity: 4, factor: null }
+                    "15:00": { energy: 4, productivity: 4, factor: null },
+                    "15:30": { energy: 3, productivity: 3, factor: "tired" },
+                    "16:00": { energy: 3, productivity: 4, factor: null }
                 }
             }
         ]
@@ -216,10 +216,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 115,
                 statistics: {
-                    "08:30": { efficiency: 3, productivity: 4, factor: null },
-                    "09:00": { efficiency: 4, productivity: 3, factor: "noise" },
-                    "09:30": { efficiency: 3, productivity: 3, factor: "others" },
-                    "10:00": { efficiency: 4, productivity: 4, factor: null }
+                    "08:30": { energy: 3, productivity: 4, factor: null },
+                    "09:00": { energy: 4, productivity: 3, factor: "noise" },
+                    "09:30": { energy: 3, productivity: 3, factor: "others" },
+                    "10:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -235,8 +235,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 63,
                 statistics: {
-                    "10:30": { efficiency: 2, productivity: 2, factor: "procrastination" },
-                    "11:00": { efficiency: 3, productivity: 3, factor: null }
+                    "10:30": { energy: 2, productivity: 2, factor: "procrastination" },
+                    "11:00": { energy: 3, productivity: 3, factor: null }
                 }
             },
             {
@@ -252,8 +252,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 62,
                 statistics: {
-                    "11:30": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "12:00": { efficiency: 4, productivity: 4, factor: null }
+                    "11:30": { energy: 4, productivity: 4, factor: "focused" },
+                    "12:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -269,9 +269,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 88,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "14:00": { efficiency: 4, productivity: 4, factor: null },
-                    "14:30": { efficiency: 4, productivity: 4, factor: null }
+                    "13:30": { energy: 4, productivity: 4, factor: "energized" },
+                    "14:00": { energy: 4, productivity: 4, factor: null },
+                    "14:30": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -287,9 +287,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 92,
                 statistics: {
-                    "15:00": { efficiency: 3, productivity: 3, factor: "restless" },
-                    "15:30": { efficiency: 4, productivity: 3, factor: null },
-                    "16:00": { efficiency: 3, productivity: 4, factor: "tired" }
+                    "15:00": { energy: 3, productivity: 3, factor: "restless" },
+                    "15:30": { energy: 4, productivity: 3, factor: null },
+                    "16:00": { energy: 3, productivity: 4, factor: "tired" }
                 }
             }
         ]
@@ -315,12 +315,12 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 175,
                 statistics: {
-                    "08:30": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "09:00": { efficiency: 4, productivity: 4, factor: null },
-                    "09:30": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "10:00": { efficiency: 4, productivity: 4, factor: null },
-                    "10:30": { efficiency: 4, productivity: 4, factor: null },
-                    "11:00": { efficiency: 4, productivity: 4, factor: null }
+                    "08:30": { energy: 4, productivity: 4, factor: "focused" },
+                    "09:00": { energy: 4, productivity: 4, factor: null },
+                    "09:30": { energy: 4, productivity: 4, factor: "energized" },
+                    "10:00": { energy: 4, productivity: 4, factor: null },
+                    "10:30": { energy: 4, productivity: 4, factor: null },
+                    "11:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -336,8 +336,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 58,
                 statistics: {
-                    "11:30": { efficiency: 3, productivity: 3, factor: null },
-                    "12:00": { efficiency: 2, productivity: 3, factor: "hungry" }
+                    "11:30": { energy: 3, productivity: 3, factor: null },
+                    "12:00": { energy: 2, productivity: 3, factor: "hungry" }
                 }
             },
             {
@@ -353,9 +353,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 95,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "14:30": { efficiency: 4, productivity: 4, factor: null }
+                    "13:30": { energy: 4, productivity: 4, factor: null },
+                    "14:00": { energy: 4, productivity: 4, factor: "focused" },
+                    "14:30": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -371,9 +371,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 92,
                 statistics: {
-                    "15:00": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "15:30": { efficiency: 4, productivity: 4, factor: null },
-                    "16:00": { efficiency: 4, productivity: 4, factor: null }
+                    "15:00": { energy: 4, productivity: 4, factor: "energized" },
+                    "15:30": { energy: 4, productivity: 4, factor: null },
+                    "16:00": { energy: 4, productivity: 4, factor: null }
                 }
             }
         ]
@@ -399,9 +399,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 93,
                 statistics: {
-                    "08:30": { efficiency: 3, productivity: 3, factor: null },
-                    "09:00": { efficiency: 4, productivity: 3, factor: "internet" },
-                    "09:30": { efficiency: 3, productivity: 4, factor: null }
+                    "08:30": { energy: 3, productivity: 3, factor: null },
+                    "09:00": { energy: 4, productivity: 3, factor: "internet" },
+                    "09:30": { energy: 3, productivity: 4, factor: null }
                 }
             },
             {
@@ -417,8 +417,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 57,
                 statistics: {
-                    "10:00": { efficiency: 4, productivity: 4, factor: null },
-                    "10:30": { efficiency: 4, productivity: 3, factor: null }
+                    "10:00": { energy: 4, productivity: 4, factor: null },
+                    "10:30": { energy: 4, productivity: 3, factor: null }
                 }
             },
             {
@@ -434,9 +434,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 90,
                 statistics: {
-                    "11:00": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "11:30": { efficiency: 4, productivity: 4, factor: null },
-                    "12:00": { efficiency: 4, productivity: 4, factor: null }
+                    "11:00": { energy: 4, productivity: 4, factor: "focused" },
+                    "11:30": { energy: 4, productivity: 4, factor: null },
+                    "12:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -452,10 +452,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 118,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "14:30": { efficiency: 4, productivity: 4, factor: null },
-                    "15:00": { efficiency: 4, productivity: 4, factor: null }
+                    "13:30": { energy: 4, productivity: 4, factor: null },
+                    "14:00": { energy: 4, productivity: 4, factor: "energized" },
+                    "14:30": { energy: 4, productivity: 4, factor: null },
+                    "15:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -471,8 +471,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 62,
                 statistics: {
-                    "15:30": { efficiency: 2, productivity: 3, factor: "tired" },
-                    "16:00": { efficiency: 3, productivity: 2, factor: null }
+                    "15:30": { energy: 2, productivity: 3, factor: "tired" },
+                    "16:00": { energy: 3, productivity: 2, factor: null }
                 }
             }
         ]
@@ -498,8 +498,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 62,
                 statistics: {
-                    "08:30": { efficiency: 4, productivity: 4, factor: null },
-                    "09:00": { efficiency: 3, productivity: 4, factor: "noise" }
+                    "08:30": { energy: 4, productivity: 4, factor: null },
+                    "09:00": { energy: 3, productivity: 4, factor: "noise" }
                 }
             },
             {
@@ -515,10 +515,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 125,
                 statistics: {
-                    "09:30": { efficiency: 3, productivity: 4, factor: "others" },
-                    "10:00": { efficiency: 4, productivity: 3, factor: null },
-                    "10:30": { efficiency: 4, productivity: 4, factor: null },
-                    "11:00": { efficiency: 4, productivity: 4, factor: "focused" }
+                    "09:30": { energy: 3, productivity: 4, factor: "others" },
+                    "10:00": { energy: 4, productivity: 3, factor: null },
+                    "10:30": { energy: 4, productivity: 4, factor: null },
+                    "11:00": { energy: 4, productivity: 4, factor: "focused" }
                 }
             },
             {
@@ -534,8 +534,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 53,
                 statistics: {
-                    "11:30": { efficiency: 3, productivity: 3, factor: "notifications" },
-                    "12:00": { efficiency: 2, productivity: 3, factor: null }
+                    "11:30": { energy: 3, productivity: 3, factor: "notifications" },
+                    "12:00": { energy: 2, productivity: 3, factor: null }
                 }
             },
             {
@@ -551,9 +551,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 90,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "14:30": { efficiency: 4, productivity: 4, factor: null }
+                    "13:30": { energy: 4, productivity: 4, factor: null },
+                    "14:00": { energy: 4, productivity: 4, factor: "energized" },
+                    "14:30": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -569,9 +569,9 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 90,
                 statistics: {
-                    "15:00": { efficiency: 3, productivity: 3, factor: "stressed" },
-                    "15:30": { efficiency: 3, productivity: 4, factor: null },
-                    "16:00": { efficiency: 4, productivity: 3, factor: "tired" }
+                    "15:00": { energy: 3, productivity: 3, factor: "stressed" },
+                    "15:30": { energy: 3, productivity: 4, factor: null },
+                    "16:00": { energy: 4, productivity: 3, factor: "tired" }
                 }
             }
         ]
@@ -597,7 +597,7 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 28,
                 statistics: {
-                    "08:30": { efficiency: 3, productivity: 2, factor: null }
+                    "08:30": { energy: 3, productivity: 2, factor: null }
                 }
             },
             {
@@ -613,11 +613,11 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 152,
                 statistics: {
-                    "09:00": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "09:30": { efficiency: 4, productivity: 4, factor: null },
-                    "10:00": { efficiency: 4, productivity: 4, factor: null },
-                    "10:30": { efficiency: 4, productivity: 4, factor: "energized" },
-                    "11:00": { efficiency: 4, productivity: 4, factor: null }
+                    "09:00": { energy: 4, productivity: 4, factor: "focused" },
+                    "09:30": { energy: 4, productivity: 4, factor: null },
+                    "10:00": { energy: 4, productivity: 4, factor: null },
+                    "10:30": { energy: 4, productivity: 4, factor: "energized" },
+                    "11:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -633,8 +633,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 60,
                 statistics: {
-                    "11:30": { efficiency: 4, productivity: 4, factor: null },
-                    "12:00": { efficiency: 4, productivity: 4, factor: null }
+                    "11:30": { energy: 4, productivity: 4, factor: null },
+                    "12:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -650,10 +650,10 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 118,
                 statistics: {
-                    "13:30": { efficiency: 4, productivity: 4, factor: null },
-                    "14:00": { efficiency: 4, productivity: 4, factor: "focused" },
-                    "14:30": { efficiency: 4, productivity: 4, factor: null },
-                    "15:00": { efficiency: 4, productivity: 4, factor: null }
+                    "13:30": { energy: 4, productivity: 4, factor: null },
+                    "14:00": { energy: 4, productivity: 4, factor: "focused" },
+                    "14:30": { energy: 4, productivity: 4, factor: null },
+                    "15:00": { energy: 4, productivity: 4, factor: null }
                 }
             },
             {
@@ -669,8 +669,8 @@ export const mockData = {
                 currentlyActive: false,
                 totalTimeSpent: 62,
                 statistics: {
-                    "15:30": { efficiency: 3, productivity: 3, factor: "tired" },
-                    "16:00": { efficiency: 3, productivity: 4, factor: null }
+                    "15:30": { energy: 3, productivity: 3, factor: "tired" },
+                    "16:00": { energy: 3, productivity: 4, factor: null }
                 }
             }
         ]

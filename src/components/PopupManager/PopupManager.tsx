@@ -15,7 +15,7 @@ const PopupManager = ({ children }: Props) => {
 
 const handleSaveStats = (data: {
   timestamp: string;
-  efficiency: number | null;
+  energy: number | null;
   productivity: number | null;
   factor: string | null;
 }) => {
@@ -42,7 +42,7 @@ const handleSaveStats = (data: {
   statistics: {
     ...(rest.statistics ?? {}),
     [data.timestamp]: {
-      efficiency: data.efficiency ?? 0,
+      energy: data.energy ?? 0,
       productivity: data.productivity ?? 0,
       factor: data.factor ?? null,
     },
