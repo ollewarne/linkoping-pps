@@ -6,7 +6,7 @@ export default function ProductivityChart({ mockData, historyData, useRealData =
     const source = useRealData ? (historyData ?? {}) : mockData;
 
     const data = useMemo(
-        () => getAverageStats(source, 'efficiency'),
+        () => getAverageStats(source, 'productivity'),
         [source]
     );
 

@@ -7,7 +7,7 @@ export default function EnergyChart({ mockData, historyData, useRealData = false
     const source = useRealData ? (historyData ?? {}) : mockData;
 
     const data = useMemo(
-        () => getAverageStats(source, "efficiency"),
+        () => getAverageStats(source, "energy"),
         [source]
     );
 
