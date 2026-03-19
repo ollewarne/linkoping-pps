@@ -127,7 +127,7 @@ function ActivityCard({ activity = {} }) {
                             <div className={styles.cardHeaderContainer}>
                                 <p className={styles.cardHeaderScheduled}>{activity.scheduledTimeStart} - {activity.scheduledTimeStop}</p>
 
-                                <div>
+                                {/* <div>
                                 {!activity.isActive 
                                     ? <></>
                                     : <p>Active</p>}
@@ -135,7 +135,7 @@ function ActivityCard({ activity = {} }) {
                                 ? <></>
                                 : <img src="/throbber.svg" alt="" className={styles.activityThrobber}/>
                                 }
-                                </div>
+                                </div> */}
 
                                 <p className={styles.cardHeaderCategory}>{activity.category}</p>
 

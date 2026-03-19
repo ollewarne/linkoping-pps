@@ -10,11 +10,11 @@ import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
 
 
-function ActivityForm({ onClose, defaultMode = null }) {
+function ActivityForm({ onClose, planMode = false }) {
 
     // ----- STATES FÖR ATT STYRA ANVÄNDARFLÖDET I FORMET ----- 
-    const [showForm, setShowForm] = useState(defaultMode ? true : false);
-    const [isScheduled, setIsScheduled] = useState(defaultMode === "scheduled");
+    const [showForm, setShowForm] = useState(planMode ? true : false);
+    const [isScheduled, setIsScheduled] = useState(planMode);
     const [scheduleOption, setScheduleOption] = useState(null);
     const [showScheduleOption, setShowScheduleOption] = useState(false);
 
@@ -102,38 +102,11 @@ function ActivityForm({ onClose, defaultMode = null }) {
 
             {workformData ? (
                 <>
-                    <h2>{languageLibrary[language].form2Header /* Register activity*/}</h2>
+                
                     <form onSubmit={handleSubmit}>
-
-
-                        {/* ---------- PLANNER BUTTONS (Start Activity / Schedule Activity) ---------- */}
-                        {!defaultMode && (
-                            <div className={styles.plannerButtons}>
-                                <button
-                                    id='start-activity'
-                                    className={!showForm ? styles.bigActivityButton : styles.smallActivityButton}
-                                    onClick={() => {
-                                        setIsScheduled(false)
-                                        setShowForm(true)
-                                    }}>
-                                    START
-                                </button>
-                                <button
-                                    id='schedule-activity'
-                                    className={!showForm ? styles.bigScheduleButton : styles.smallScheduleButton}
-                                    onClick={() => {
-                                        setIsScheduled(true)
-                                        setShowForm(true)
-                                    }}>
-                                    SCHEDULE
-                                </button>
-                            </div>
-                        )}
-
 
                         {/* ---------- SHOW FORM ---------- */}
 
-                        {showForm && (
                             <>
 
                                 {/* ---------- CATEGORY & TITLE ---------- */}
@@ -245,7 +218,7 @@ function ActivityForm({ onClose, defaultMode = null }) {
                                     </button>
                                 </div>
                             </>
-                        )}
+                        
                     </form>
                 </>) : (
                 <>

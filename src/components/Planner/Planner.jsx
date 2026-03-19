@@ -10,12 +10,16 @@ import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
 import { convertStringTimeToMinutes, getCurrentTime } from "../../utils/convertTime";
 import { useEffect, useMemo, useState } from "react";
+import { CountdownDisplay } from "../CountdownTimer/CountdownDisplay";
+import { useTimer } from "../../contexts/TimerContext";
 
 function Planner() {
     const { activities, plannedActivities, plannerMode, setPlannerMode } = useActivities();
+    const {activeActivity } = useTimer();
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
     );
+    // const [isScheduled, setIsScheduled] = useState(defaultMode === "scheduled");
 
     useEffect(() => {
         if (plannerMode) return;
@@ -30,12 +34,13 @@ function Planner() {
     const { historyActivities, agendaActivities, activeActivities } = useMemo(() => {
         const history = [];
         const agenda = [];
+        const active = [];
 
         plannedActivities.forEach((a) => {
-            // if (a.isActive) {
-            //     agenda.push(a);
-            //     return;
-            // }
+            if (a.isActive) {
+                active.push(a);
+                return;
+            }
 
             if (a.isCompleted) {
                 history.push(a);
@@ -53,7 +58,7 @@ function Planner() {
             }
         })
 
-        return { historyActivities: history, agendaActivities: agenda, }
+        return { historyActivities: history, agendaActivities: agenda, activeActivities: active }
     }, [plannedActivities, currentTime, plannerMode])
 
     let workformData = getWorkdayFromStorage();
@@ -89,9 +94,11 @@ function Planner() {
                 {/* --------------- AGENDA --------------- */}
                 <div className={styles.agendaContainer}>
 
+                    <CountdownDisplay/>
+
                     
                     {/* --------------- EMPTY PAGE --------------- */}
-                    {agendaActivities.length === 0
+                    {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
                         ? <div className={styles.emptyContainer}>
                             <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
                             <p className={styles.emptyText}>A bit empty here...?</p>
@@ -114,6 +121,29 @@ function Planner() {
                 <div className={styles.buttonsContainer}>
 
 
+                  
+                    {/* --------------- START ACTIVITY BTN --------------- */}
+                    <Modal trigger={(
+                        <button
+                            id='start-activity'
+                            className={styles.startActivityBtn}
+                            // onClick={() => {
+                            //     setIsScheduled(false)
+                            //     // setShowForm(true)
+                            // }}
+                            >
+                            <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
+                            <img src="/timer.svg" alt="" />
+                            <p>Starta Aktivitet</p>
+                        </button>
+                    )}>
+                        <ActivityForm
+                            planMode={false}
+                        />
+
+                    </Modal>
+
+
                     {/* --------------- ADD BTN --------------- */}
                     <Modal trigger={(
                         <button className={styles.addActivityBtn}>
@@ -125,7 +155,7 @@ function Planner() {
 
                         {workformData ? (
                             <ActivityForm
-                                defaultMode="scheduled"
+                                planMode={true}
                             />
                         ) : (
                             <>
@@ -136,7 +166,7 @@ function Planner() {
                     </Modal>
 
                     {/* --------------- START / STOP BTN --------------- */}
-                    {agendaActivities.length === 0 
+                    {agendaActivities.length === 0 && !plannerMode
                         ? <></>
                         : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
                             <div className={styles.colorBlock} style={{backgroundColor: plannerMode ? '#EF2917' : '#358C4E'}}></div>

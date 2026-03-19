@@ -12,14 +12,11 @@ function DesktopLayout() {
             <header className={styles.siteHeader}>
                 <h1>BAE <span> Productivity</span></h1>
                 <nav className={styles.navigation}>
-                    <NavLink to="/" end className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                        Activity
+                    <NavLink to="/" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
+                        Home
                     </NavLink>
-                    <NavLink to="/planner" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                        Planner
-                    </NavLink>
-                    <NavLink to="/history" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                        History
+                    <NavLink to="/statPage" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
+                        Statistics
                     </NavLink>
                 </nav>
                 <div className={styles.buttonGroup}>
