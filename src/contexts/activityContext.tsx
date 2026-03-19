@@ -11,6 +11,7 @@ type PlannedActivity = {
     scheduledTimeStop: string | null;
     isCompleted: boolean;
     isActive: boolean;
+    isMissed?: boolean;
     totalDuration: number;
 }
 
@@ -27,6 +28,7 @@ type ActivityAction =
     | { type: "DELETE_ACTIVITY"; payload: { id: string } }
     | { type: "MARK_COMPLETED"; payload: { id: string } }
     | { type: "UPDATE_PHASE_PROGRESS"; payload: { id: string; currentPhaseTimeSpent: number; currentPhase: "work" | "break" } }
+    | { type: "SET_MISSED"; payload: { id: string } }
 
 const activityContext = createContext<{
     activities: ActivityType[];
@@ -85,6 +87,11 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
                 ...activity,
                 currentPhaseTimeSpent: action.payload.currentPhaseTimeSpent,
                 currentPhase: action.payload.currentPhase
+            } : activity)
+        case 'SET_MISSED':
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                isMissed: true
             } : activity)
         default:
             return state;
@@ -182,7 +189,8 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 scheduledTimeStop: a.scheduledTime!.end,
                 totalDuration: a.estimatedDuration,
                 isCompleted: a.isCompleted,
-                isActive: a.isActive
+                isActive: a.isActive,
+                isMissed: a.isMissed ?? false
             }))
 
             const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
@@ -222,6 +230,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             a => convertStringTimeToMinutes(a.scheduledTimeStart!) <= currentTimeInMinutes
                 && !a.isActive
                 && !a.isCompleted
+                && !a.isMissed
         )
 
         if (!activityDueToStart) return;
