@@ -40,7 +40,8 @@ export default function ProductivityChart({ mockData, historyData, useRealData =
             series={[
                 {
                     data: yValues,
-                    label: 'Average Productivity'
+                    label: 'Average Productivity',
+                    color: '#1976d2'
                 }
             ]}
             height={350}
