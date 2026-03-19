@@ -26,7 +26,6 @@ export function createTimegapsArray(timeSlots: TimeSlot[]) {
             timeGaps.push({start: gapStart, end: gapEnd})
         }
 
-        // timeGaps.push({start: prevEnd, end: slot.start});
         prevEnd = slot.end;
     }
 
@@ -35,7 +34,6 @@ export function createTimegapsArray(timeSlots: TimeSlot[]) {
     if(finalStart < upperTimeLimit) {
         timeGaps.push({start: finalStart, end: upperTimeLimit});
     }
-    // timeGaps.push({start: prevEnd, end: upperTimeLimit});
 
     return timeGaps
 }
@@ -94,7 +92,9 @@ export function useActivityForm() {
             isActive: false,
             isCompleted: false,
             totalTimeSpent: 0,
-            statistics: {}
+            statistics: {},
+            currentPhase: "work",
+            currentPhaseTimeSpent: 0
         };
         activityDispatch({ type: "ADD_ACTIVITY", payload: { ...newActivity } })
     } 
@@ -113,7 +113,9 @@ export function useActivityForm() {
             isActive: true,
             isCompleted: false,
             totalTimeSpent: 0,
-            statistics: {}
+            statistics: {},
+            currentPhase: "work",
+            currentPhaseTimeSpent: 0
         };
         activityDispatch({ type: "ADD_ACTIVITY", payload: { ...newActivity } })
     }

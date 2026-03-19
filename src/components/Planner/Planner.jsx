@@ -4,7 +4,6 @@ import ActivityCard from "../ActivityCard/ActivityCard";
 import HistoryCard from "../HistoryCard/HistoryCard";
 import ClockTimeline from "../ClockTimeline/ClockTimeline";
 import ActivityForm from "../ActivityForm/ActivityForm";
-
 import Modal from "../Modal/Modal";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
@@ -14,12 +13,11 @@ import { CountdownDisplay } from "../CountdownTimer/CountdownDisplay";
 import { useTimer } from "../../contexts/TimerContext";
 
 function Planner() {
-    const { activities, activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
+    const {activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const {activeActivity } = useTimer();
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
     );
-    // const [isScheduled, setIsScheduled] = useState(defaultMode === "scheduled");
 
     useEffect(() => {
         if (plannerMode) return;
@@ -30,11 +28,12 @@ function Planner() {
 
         return () => clearInterval(interval);
     }, [plannerMode])
-
-    const { historyActivities, agendaActivities, activeActivities } = useMemo(() => {
+       
+    const { historyActivities, agendaActivities, activeActivities, missedIds } = useMemo(() => {
         const history = [];
         const agenda = [];
         const active = [];
+        const missed = [];
 
         plannedActivities.forEach((a) => {
             if (a.isActive) {
@@ -53,51 +52,56 @@ function Planner() {
 
             if (!plannerMode && start <= currentTime) {
                 history.push(a);
-                activityDispatch({type: "SET_MISSED", payload: {id: a.id}})
+
+                if (!a.isMissed) {
+                    missed.push(a.id);
+                }
+
             } else {
                 agenda.push(a);
             }
         })
 
-        return { historyActivities: history, agendaActivities: agenda, activeActivities: active }
+        return { historyActivities: history, agendaActivities: agenda, activeActivities: active, missedIds: missed }
+
     }, [plannedActivities, currentTime, plannerMode])
 
-    let workformData = getWorkdayFromStorage();
+    useEffect(() => {
+        if (missedIds.length === 0) return;
 
+        missedIds.forEach((id) => {
+            activityDispatch({ type: "SET_MISSED", payload: { id } });
+        });
+    }, [missedIds, activityDispatch]);
+
+    let workformData = getWorkdayFromStorage();
     const date = new Date().toLocaleDateString();
 
     return (
         <div className={styles.plannerContainer}>
-
             <h2 className={styles.date}>{date}</h2>
-
-            {workformData &&
-                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesTop}`}>
-                    <p className={`${styles.historyTitle} ${styles.plannerTitles}`}>History</p>
-                    <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
-                </div>
-            }
-
 
             <div className={styles.plannerGrid}>
 
                 {/* --------------- HISTORY --------------- */}
                 <div className={styles.historyContainer}>
+                    <p className={styles.historyTitle}>History</p>
 
                         {
                             historyActivities.map((a, index) => (
                                 <HistoryCard key={a.id} activity={a} index={index} />
                             ))
                         }
-
                 </div>
 
                 {/* --------------- AGENDA --------------- */}
                 <div className={styles.agendaContainer}>
-
+                    {workformData &&
+                        <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
+                    }
+            
                     <CountdownDisplay/>
 
-                    
                     {/* --------------- EMPTY PAGE --------------- */}
                     {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
                         ? <div className={styles.emptyContainer}>
@@ -114,24 +118,18 @@ function Planner() {
                             }
                         </>
                     }
-
+                    <p className={styles.endTime}><span>End</span> {workformData.workHours.end}</p>
                     
                 </div>
 
                 {/* --------------- BUTTONS --------------- */}
                 <div className={styles.buttonsContainer}>
 
-
-                  
                     {/* --------------- START ACTIVITY BTN --------------- */}
                     <Modal trigger={(
                         <button
                             id='start-activity'
                             className={styles.startActivityBtn}
-                            // onClick={() => {
-                            //     setIsScheduled(false)
-                            //     // setShowForm(true)
-                            // }}
                             >
                             <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
                             <img src="/timer.svg" alt="" />
@@ -143,7 +141,6 @@ function Planner() {
                         />
 
                     </Modal>
-
 
                     {/* --------------- ADD BTN --------------- */}
                     <Modal trigger={(
@@ -175,18 +172,8 @@ function Planner() {
                             <p>{plannerMode ? "Stop planner" : "Start planner"}</p>
                         </button>
                     }
-
                 </div>
-
             </div>
-
-
-            {workformData &&
-                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesBottom}`}>
-                    <p className={`${styles.agendaTime} ${styles.endTime}`}><span>End</span> {workformData.workHours.end}</p>
-                </div>
-            }
-
         </div>
     );
 }

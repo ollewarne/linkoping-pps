@@ -29,7 +29,7 @@ function PauseStatistics() {
     const impacts: ImpactOption[] = userOptions[language].impacts;
 
     const [formData, setFormData] = useState<StatisticEntry>({
-        efficiency: 3,
+        productivity: 3,
         energy: 3,
         factor: "",
     });
@@ -46,7 +46,7 @@ function PauseStatistics() {
                 id: activeActivity.id,
                 timestamp: timestamp,
                 stat: {
-                    efficiency: data.efficiency,
+                    productivity: data.productivity,
                     energy: data.energy,
                     factor: data.factor
                 }
@@ -57,7 +57,7 @@ function PauseStatistics() {
 
     const saveNull = () => {
         saveEvent({
-            efficiency: null,
+            productivity: null,
             energy: null,
             factor: null
         });
@@ -75,7 +75,7 @@ function PauseStatistics() {
         event.preventDefault();
         saveEvent(formData);
         setFormData({
-            efficiency: 3,
+            productivity: 3,
             energy: 3,
             factor: "",
         });
@@ -97,11 +97,11 @@ function PauseStatistics() {
                                 <label key={num}>
                                     <input
                                         type="radio"
-                                        name="efficiency"
+                                        name="productivity"
                                         value={num}
-                                        checked={formData.efficiency === num}
+                                        checked={formData.productivity === num}
                                         onChange={() =>
-                                            setFormData((prev) => ({ ...prev, efficiency: num }))
+                                            setFormData((prev) => ({ ...prev, productivity: num }))
                                         }
                                     />
                                     {num}

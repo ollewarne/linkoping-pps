@@ -1,6 +1,5 @@
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
 import Modal from "../Modal/Modal";
-// import styles from "./SettingsMenu.module.css";
 
 function SettingsMenu() {
     return (

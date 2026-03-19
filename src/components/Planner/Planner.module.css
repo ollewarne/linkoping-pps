@@ -21,14 +21,8 @@
   min-height: 50vh;
 }
 
-.plannerGridTitlesTop {
-  border-bottom: 1px solid var(--text);
-}
+/* --------------- DATE TITLE --------------- */
 
-.plannerGridTitlesBottom {
-  margin-top: 1%;
-  border-top: 1px solid var(--text);
-}
 
 .date {
   margin: 1% 0 0 0;
@@ -37,19 +31,31 @@
   letter-spacing: 8%;
 }
 
+/* --------------- HISTORY TITLE - START & END TITLES --------------- */
+
 .historyTitle, 
 .agendaTime {
-  margin: 0 0 0 1%;
+  margin: 0;
+  padding-bottom: 10px;
+  width: 100%;
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 5%;
   font-weight: 600;
+  border-bottom: 1px solid var(--text);
 }
 
 .endTime {
-  grid-column: 2;
-  margin-top: 1%;
+  margin: 0;
+  padding-top: 10px;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 5%;
+  font-weight: 600;
+  border-top: 1px solid var(--text);
 }
+
 
 /* --------------- HISTORY --------------- */
 .historyContainer {
@@ -187,7 +193,7 @@
 
 
 /* ===================== MOBILE ===================== */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .plannerContainer {
     width: 100%;
     padding: 0 1rem;
