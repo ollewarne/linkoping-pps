@@ -8,7 +8,7 @@ import { TranslatePage } from './contexts/languageContext.jsx'
 import { NotificationProvider } from './contexts/NotificationContext'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { TimerProvider } from './contexts/TimerContext'
-import { ActivityHistoryProvider } from './contexts/activityHistoryContext'
+// import { ActivityHistoryProvider } from './contexts/activityHistoryContext'
 import { DndProvider } from "./contexts/DndContext"
 
 createRoot(document.getElementById('root')).render(
@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')).render(
             <ThemeProvider>
                 <NotificationProvider>
                     <TranslatePage>
-                        <ActivityHistoryProvider>
+                        {/* <ActivityHistoryProvider> */}
                             <ActivityProvider>
                                     <TimerProvider>
                                         <DndProvider>
@@ -25,7 +25,7 @@ createRoot(document.getElementById('root')).render(
                                         </DndProvider>
                                     </TimerProvider>
                             </ActivityProvider>
-                        </ActivityHistoryProvider>
+                        {/* </ActivityHistoryProvider> */}
                     </TranslatePage>
                 </NotificationProvider>
             </ThemeProvider>
