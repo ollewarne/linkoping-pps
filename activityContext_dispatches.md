@@ -16,6 +16,10 @@
     * Toggles isActive on an activity
 - `activityDispatch({type: "MARK_COMPLETED", payload: {id: string}})`
     * Marks an activity as completed
+- `activityDispatch({type: "UPDATE_PHASE_PROGRESS", payload: { id: string; currentPhaseTimeSpent: number; currentPhase: "work" | "break" })`
+    * Updated the phase and progress of the current phase to save to local storage
+- `activityDispatch({type: "SET_MISSED", payload: {id: string} })`
+    * Marks an activity as missed
 
 ## how to import the context
 
