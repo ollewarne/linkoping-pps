@@ -11,6 +11,7 @@ export interface ActivityType {
     isCompleted: boolean;
     isMissed?: boolean;
     totalTimeSpent: number;
+    date: string;
     statistics: {
         [timestamp: string]: {
             productivity: number | null;
