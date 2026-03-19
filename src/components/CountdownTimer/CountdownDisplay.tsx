@@ -2,10 +2,13 @@ import "./CountdownDisplay.css";
 import { useTimer } from "../../contexts/TimerContext";
 import { useActivities } from "../../contexts/activityContext";
 import { categoryColors } from "../../constants/categoryColors";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
 
 export const CountdownDisplay = () => {
     const { activeActivity, timeLeft, phase, totalRemaining } = useTimer();
     const { activityDispatch } = useActivities();
+    const {language} = useTranslator();
 
     if (!activeActivity) return null;
 
@@ -47,15 +50,15 @@ export const CountdownDisplay = () => {
                 </div>
 
                 <div className="timer-body">
-                    <h2 className="activity-name" style={{borderColor: categoryColor}}>{activeActivity.title}</h2>
+                    <h3 className="activity-name" style={{borderColor: categoryColor}}>{activeActivity.title}</h3>
                     {/* <hr className="timer-divider" /> */}
 
                     <div className="timer-main">
                         <h3 className={`phase-status ${phase}`}>
-                            {phase === "work" ? "WORKING" : "PAUSE"}
+                            {phase === "work" ? languageLibrary[language].timerWorking : languageLibrary[language].timerPause} {/* Working : Pause */}
                         </h3>
                         <div className="time-right">
-                            <span className="label">Time left</span>
+                            <span className="label">{languageLibrary[language].timerTimeLeft /* Time left */}</span>
                             <span className={`time-count ${phase}`}>
                                 {formatMMSS(timeLeft)}
                             </span>
@@ -65,10 +68,10 @@ export const CountdownDisplay = () => {
 
                 <div className="timer-footer">
                     <span className="total-end-time">
-                        Total time remaining: {formatLongTime(totalRemaining)}
+                        {languageLibrary[language].timerTimeRemaining}: {formatLongTime(totalRemaining)} {/* Total time remaining */}
                     </span>
                     <button className="stop-btn" onClick={handleStop}>
-                        Stop activity
+                        {languageLibrary[language].timerBtnStopTimer /* Stop activity */}
                     </button>
                 </div>
 

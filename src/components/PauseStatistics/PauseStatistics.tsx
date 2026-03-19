@@ -5,6 +5,7 @@ import "./PauseStatistics.css";
 import { useActivities } from "../../contexts/activityContext";
 import { useTimer } from "../../contexts/TimerContext";
 import type { StatisticEntry } from "../../types"
+import { languageLibrary } from "../../locales/language";
 
 
 

@@ -94,61 +94,20 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     evaluateFactorsDefault: 'Select a factor or leave blank',
 
 
-    // -------------------------------------------------------------------------------------------------
-    // --------------------------------------------- GAMLA ---------------------------------------------
-    // -------------------------------------------------------------------------------------------------
-
-
-
-    
-    // // ----- FORM 1 ----- 
-    // form1Header: 'Register Workday',
-    // // fieldset 1
-    // form1WorkH: 'Working hours',
-    // // fieldset 2
-    // form1Checkbox: 'I have non-working hours to register',
-    // nonWorkH: 'Non-working hours',
-    // nonWorkHExplanation: "Block the time that you don't want to plan",
-    // // fieldset 3
-    // workEnvironment: 'Work Environment',
-    // workEnvironmentDefault: 'Select an environment',
-    // // submit
-    // submitSuccess: 'Workday settings saved',
-
-    // //  ----- FORM 1 - ERRORS ----- 
-
-
-    // // ----- FORM 2 ----- 
-    // form2Header: 'Register Activity',
-    // // fieldset 1
-    // form2Activity: 'Activity',
-    // form2Category: 'Category',
-    // form2CategoryDefault: 'Pick a category',
-    // form2Title: 'Title',
-    // form2TitleDefault: 'Enter a title',
-    // // fieldset 2
-    // form2Rank: 'Rank of importance',
-    // form2RankLow: '1: Low',
-    // form2RankHigh: '4: High',
-    // // fieldset 3
-    // form2EstimatedDuration: 'Estimated Duration',
-    // // fieldset 4
-    // form2TimeStructure: 'Time Structure',
-    // // submit
-    // form2Submit: 'Add Activity',
-
-    // //  ----- FORM 2 - ERRORS ----- 
-
-
-
+    // TIMER
+    timerWorking: 'Working',
+    timerPause: 'Pause',
+    timerTimeLeft: 'Time left',
+    timerTimeRemaining: 'Total time remaining',
+    timerBtnStopTimer: 'Stop timer',
 
     },
 
-    // -------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------
-    // -------- SVENSKA ---------
-    // -------------------------------------------------------------------------------------------------
-    // -------------------------------------------------------------------------------------------------
+
+    // ------------------------------------------------
+    // ------------------- SVENSKA --------------------
+    // ------------------------------------------------
+
 
     sv: {
 
@@ -244,53 +203,12 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     evaluateFactors: 'Påverkande faktorer: ',
     evaluateFactorsDefault: 'Välj en faktor eller lämna blank',
 
-
-
-
-
-    // -------------------------------------------------------------------------------------------------
-    // --------------------------------------------- GAMLA ---------------------------------------------
-    // -------------------------------------------------------------------------------------------------
-    //     // ----- FORM 1 ----- 
-    // form1Header: 'Registera Arbetsdag',
-    // // fieldset 1
-    // form1WorkH: 'Arbetstid',
-    // // fieldset 2
-    // form1Checkbox: 'Jag har arbetsfri tid att registrera',
-    // nonWorkH: 'Arbetsfri Tid',
-    // nonWorkHExplanation: 'Blockera den tid du inte vill planera',
-    // // fieldset 3
-    // workEnvironment: 'Arbetsmiljö',
-    // workEnvironmentDefault: 'Välj en arbetsmiljö',
-    // // submit
-    // submitSuccess: 'Inställningar för arbetsdag sparade',
-
-    // //  ----- FORM 1 - ERRORS ----- 
-
-    // // ----- FORM 2 ----- 
-    // form2Header: 'Registera Aktivitet',
-    // // fieldset 1
-    // form2Activity: 'Aktivitet',
-    // form2Category: 'Kategori',
-    // form2CategoryDefault: 'Välj en kategori',
-    // form2Title: 'Titel',
-    // form2TitleDefault: 'Fyll i en titel',
-    // // fieldset 2
-    // form2Rank: 'Rankning',
-    // form2RankLow: '1: Låg prio',
-    // form2RankHigh: '4: Hög prio',
-    // // fieldset 3
-    // form2EstimatedDuration: 'Uppskattad tidsåtgång',
-    // // fieldset 4
-    // form2TimeStructure: 'Tidsstruktur',
-    // // submit
-    // form2Submit: 'Lägg till aktivitet',
-
-    // //  ----- FORM 2 - ERRORS ----- 
-
-
-
-
+    // TIMER
+    timerWorking: 'Arbetar',
+    timerPause: 'Paus',
+    timerTimeLeft: 'Tid kvar',
+    timerTimeRemaining: 'Total tid kvar',
+    timerBtnStopTimer: 'Stoppa timer',
 
     },
 
