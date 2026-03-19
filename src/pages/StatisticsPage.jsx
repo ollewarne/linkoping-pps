@@ -3,12 +3,16 @@ import EnergyChart from "../components/Statistics/EnergyChart";
 import TimeSpentChart from "../components/Statistics/TimeSpentChart";
 import { mockData } from "../constants/mockData";
 import { useActivities } from "../contexts/activityContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CalendarApp from "../components/Calendar/CalendarApp";
 import "./StatisticsPage.css";
 
 function StatisticsPage() {
-  const { activities } = useActivities();
+const [historyData, setHistoryData] = useState({});
+useEffect(() => {
+  const data = JSON.parse(localStorage.getItem("activityHistory") || "{}");
+  setHistoryData(data);
+}, []);
   const [useRealData, setUseRealData] = useState(false);
 
   return (
@@ -24,20 +28,20 @@ function StatisticsPage() {
 
         <ProductivityChart
           mockData={mockData}
-          historyData={activities}
+          historyData={historyData}
           useRealData={useRealData}
         />
         <div className="TimeSpentChart">
           <TimeSpentChart
             mockData={mockData}
-            historyData={activities}
+            historyData={historyData}
             useRealData={useRealData}
           />
         </div>
 
         <EnergyChart
           mockData={mockData}
-          historyData={activities}
+          historyData={historyData}
           useRealData={useRealData}
         />
       </div>
