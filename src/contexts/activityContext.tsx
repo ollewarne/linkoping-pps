@@ -2,6 +2,7 @@ import { useCallback, createContext, useContext, useEffect, useMemo, useReducer,
 import type { ActivityType, StatisticEntry } from '../types';
 import { getWorkdayFromStorage } from '../utils/workdayStorage';
 import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
+import { saveActivityHistory } from "./saveActivityHistory";
 
 type PlannedActivity = {
     id: string;
@@ -44,7 +45,10 @@ const activityContext = createContext<{
 function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
         case "ADD_ACTIVITY":
-            return [...state, action.payload];
+            return [...state,     {
+                    ...action.payload,
+                    date: new Date().toISOString().split("T")[0],
+                    },];
         case "EDIT_ACTIVITY":
             return state.map(activity => activity.id === action.payload.id ?
                 {
@@ -160,6 +164,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 timeStamp: Date.now()
             }
             localStorage.setItem("activities", JSON.stringify(data));
+            saveActivityHistory(activities);
 
             if (!workday) return;
 
