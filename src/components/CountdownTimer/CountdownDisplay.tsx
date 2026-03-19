@@ -9,7 +9,7 @@ export const CountdownDisplay = () => {
 
     if (!activeActivity) return null;
 
-    const categoryColor = categoryColors[activeActivity.category] ?? "#4a4aff";
+    const categoryColor = categoryColors[activeActivity.category as keyof typeof categoryColors];
 
     const formatMMSS = (seconds: number) => {
         const mins = Math.floor(seconds / 60);

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { useTimer } from "../../contexts/TimerContext";
 import { useDnd } from "../../contexts/DndContext";
 import { useActivityHistory, getDateKeyFromIso } from "../../contexts/activityHistoryContext";
@@ -38,7 +38,6 @@ const handleSaveStats = (data: {
   totalTimeSpent: (activeActivity as any).totalTimeSpent ?? 0,
 
   currentlyActive: false,
-  // isActive: undefined,
 
   statistics: {
     ...(rest.statistics ?? {}),
