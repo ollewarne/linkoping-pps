@@ -13,7 +13,7 @@ export interface ActivityType {
     totalTimeSpent: number;
     statistics: {
         [timestamp: string]: {
-            efficiency: number | null;
+            productivity: number | null;
             energy: number | null;
             factor: string | null;
         }
@@ -25,7 +25,7 @@ export interface ActivityType {
 }
 
 export interface StatisticEntry {
-    efficiency: number | null;
+    productivity: number | null;
     energy: number | null;
     factor: string | null;
 }
