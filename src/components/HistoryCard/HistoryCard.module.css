@@ -65,3 +65,9 @@
 .missed {
   filter: invert(24%) sepia(93%) saturate(6027%) hue-rotate(3deg) brightness(96%) contrast(108%);
 }
+
+@media (max-width: 768px) {
+    .historyCard {
+        width: 100%;
+    }
+}

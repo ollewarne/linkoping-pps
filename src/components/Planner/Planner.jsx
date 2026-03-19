@@ -23,6 +23,7 @@ function Planner() {
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
     );
+    const [historyOpen, setHistoryOpen] = useState(false);
 
     useEffect(() => {
         if (plannerMode) return;
@@ -33,7 +34,7 @@ function Planner() {
 
         return () => clearInterval(interval);
     }, [plannerMode])
-       
+
     const { historyActivities, agendaActivities, activeActivities, missedIds } = useMemo(() => {
         const history = [];
         const agenda = [];
@@ -90,13 +91,12 @@ function Planner() {
 
                 {/* --------------- HISTORY --------------- */}
                 <div className={styles.historyContainer}>
-                    <p className={styles.historyTitle}> {languageLibrary[language].homeHistoryTitle}</p>
-
-                        {
-                            historyActivities.map((a, index) => (
-                                <HistoryCard key={a.id} activity={a} index={index} />
-                            ))
-                        }
+                    <p className={styles.historyTitle} onClick={() => setHistoryOpen(!historyOpen)}>
+                        {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <span>{historyOpen ? "▴" : "▾"}</span>}
+                    </p>
+                    {(historyOpen || window.innerWidth > 768) && historyActivities.map((a, index) => (
+                        <HistoryCard key={a.id} activity={a} index={index} />
+                    ))}
                 </div>
 
                 {/* --------------- AGENDA --------------- */}
@@ -104,8 +104,8 @@ function Planner() {
                     {workformData &&
                         <p className={styles.agendaTime}><span>{languageLibrary[language].start}</span> {workformData.workHours.start}</p> // Start xx:xx
                     }
-            
-                    <CountdownDisplay/>
+
+                    <CountdownDisplay />
 
                     {/* --------------- EMPTY PAGE --------------- */}
                     {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
@@ -113,8 +113,8 @@ function Planner() {
                             <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
                             <p className={styles.emptyText}>{languageLibrary[language].homeEmptyPage}</p> {/* A bit empty here...? */}
                         </div>
-                        
-                    // --------------- ACTIVITY CARDS PAGE ---------------
+
+                        // --------------- ACTIVITY CARDS PAGE ---------------
                         : <>
                             {
                                 agendaActivities.map((a, index) => (
@@ -124,7 +124,6 @@ function Planner() {
                         </>
                     }
                     <p className={styles.endTime}><span>{languageLibrary[language].end}</span> {workformData.workHours.end}</p> {/* End */}
-                    
                 </div>
 
                 {/* --------------- BUTTONS --------------- */}
@@ -135,8 +134,8 @@ function Planner() {
                         <button
                             id='start-activity'
                             className={styles.startActivityBtn}
-                            >
-                            <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
+                        >
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
                             <img src="/timer.svg" alt="" />
                             <p>{languageLibrary[language].homePageBtnStartActivity}</p> {/* Start Timer */}
                         </button>
@@ -150,7 +149,7 @@ function Planner() {
                     {/* --------------- ADD BTN --------------- */}
                     <Modal trigger={(
                         <button className={styles.addActivityBtn}>
-                            <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
                             <img src="/add-large.svg" alt="" />
                             <p>{languageLibrary[language].homePageBtnAddActivity}</p> {/* Plan Activity */}
                         </button>)}
