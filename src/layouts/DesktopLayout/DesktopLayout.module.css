@@ -68,7 +68,7 @@ h1 span {
 
 .navLink {
     position: relative;
-    padding: 0.7rem 3rem 1% 3rem;
+    padding: 0.6rem 3rem 0.5rem 3rem;
     text-decoration: none;
     background-color: var(--navlink-bg);
 
@@ -104,7 +104,7 @@ h1 span {
 
 .active {
     position: relative;
-    padding: 0.7rem 3rem 1.5% 3rem;
+    padding: 0.6rem 3rem 0.5rem 3rem;
     text-decoration: none;
     background-color: var(--bg);
 
