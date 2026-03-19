@@ -31,10 +31,14 @@ function Planner() {
         return () => clearInterval(interval);
     }, [plannerMode])
 
-    const { historyActivities, agendaActivities, activeActivities } = useMemo(() => {
+    // const { historyActivities, agendaActivities, activeActivities, missedIds } = useMemo(() => {
+    const { historyActivities, agendaActivities, activeActivities} = useMemo(() => {
+
         const history = [];
         const agenda = [];
         const active = [];
+
+        // const missed = [];
 
         plannedActivities.forEach((a) => {
             if (a.isActive) {
@@ -54,16 +58,31 @@ function Planner() {
             if (!plannerMode && start <= currentTime) {
                 history.push(a);
                 activityDispatch({type: "SET_MISSED", payload: {id: a.id}})
+
+                // if (!a.isMissed) {
+                //     missed.push(a.id);
+                // }
+
             } else {
                 agenda.push(a);
             }
         })
 
-        return { historyActivities: history, agendaActivities: agenda, activeActivities: active }
+        // return { historyActivities: history, agendaActivities: agenda, activeActivities: active, missedIds: missed }
+        return { historyActivities: history, agendaActivities: agenda, activeActivities: active}
+
     }, [plannedActivities, currentTime, plannerMode])
 
-    let workformData = getWorkdayFromStorage();
+    // useEffect(() => {
+    //     if (missedIds.length === 0) return;
 
+    //     missedIds.forEach((id) => {
+    //         activityDispatch({ type: "SET_MISSED", payload: { id } });
+    //     });
+    // }, [missedIds, activityDispatch]);
+
+
+    let workformData = getWorkdayFromStorage();
     const date = new Date().toLocaleDateString();
 
     return (
@@ -71,18 +90,11 @@ function Planner() {
 
             <h2 className={styles.date}>{date}</h2>
 
-            {workformData &&
-                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesTop}`}>
-                    <p className={`${styles.historyTitle} ${styles.plannerTitles}`}>History</p>
-                    <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
-                </div>
-            }
-
-
             <div className={styles.plannerGrid}>
 
                 {/* --------------- HISTORY --------------- */}
                 <div className={styles.historyContainer}>
+                    <p className={styles.historyTitle}>History</p>
 
                         {
                             historyActivities.map((a, index) => (
@@ -94,6 +106,10 @@ function Planner() {
 
                 {/* --------------- AGENDA --------------- */}
                 <div className={styles.agendaContainer}>
+                    {workformData &&
+                        <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
+                    }
+            
 
                     <CountdownDisplay/>
 
@@ -115,6 +131,7 @@ function Planner() {
                         </>
                     }
 
+                    <p className={styles.endTime}><span>End</span> {workformData.workHours.end}</p>
                     
                 </div>
 
@@ -177,16 +194,7 @@ function Planner() {
                     }
 
                 </div>
-
             </div>
-
-
-            {workformData &&
-                <div className={`${styles.plannerGridTitles} ${styles.plannerGridTitlesBottom}`}>
-                    <p className={`${styles.agendaTime} ${styles.endTime}`}><span>End</span> {workformData.workHours.end}</p>
-                </div>
-            }
-
         </div>
     );
 }
