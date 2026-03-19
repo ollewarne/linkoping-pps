@@ -9,13 +9,10 @@ import StatisticsPage from "./pages/StatisticsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { Route, Routes } from "react-router";
 
-import { useTranslator } from "./contexts/languageContext";
-import { languageLibrary } from "./locales/language";
 
 function App() {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const isMobile = windowWidth < 768;
-    const { language } = useTranslator();
 
     useEffect(() => {
         const handleResize = () => {

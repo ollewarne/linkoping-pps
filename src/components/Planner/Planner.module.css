@@ -121,7 +121,7 @@
   font-weight: 500;
   text-align: start;
   text-transform: uppercase;
-  margin: auto 0 auto 10%;
+  margin: auto 0 auto 5%;
 }
 
 .addActivityBtn:hover, .startActivityBtn:hover {

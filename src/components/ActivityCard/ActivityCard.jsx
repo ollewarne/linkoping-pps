@@ -94,7 +94,7 @@ function ActivityCard({ activity = {} }) {
                             </div>
 
                             <select name="category" className={`category ${styles.category}`} required defaultValue={activity.category}>
-                                <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
+                                <option value="" disabled>{languageLibrary[language].aFormCategoryDefault}</option>
                                 {
                                     categories.map((category) => {
                                         return (<option key={category} value={category}>{category}</option>)
@@ -107,8 +107,8 @@ function ActivityCard({ activity = {} }) {
 
                         {/* --------------- EDIT CONFIRM BUTTONS --------------- */}
                         <div className={styles['edit-confirm']}>
-                            <button type="submit" className={styles.editSubmit}>Save</button>
-                            <button onClick={() => setEditMode(false)} className={styles.editCancel}>Cancel</button>
+                            <button type="submit" className={styles.editSubmit}>{languageLibrary[language].save /* Save */}</button>
+                            <button onClick={() => setEditMode(false)} className={styles.editCancel}>{languageLibrary[language].cancel /* Cancel */}</button>
                         </div>
 
                     </form>
@@ -133,24 +133,25 @@ function ActivityCard({ activity = {} }) {
                             {/* --------------- CARD FOOTER --------------- */}
                             <div className={styles.cardFooter}>
 
-                                <p className={styles.cardFooterDuration}>Estimated duration: <span>{activity.totalDuration / 60} min</span></p>
+                                <p className={styles.cardFooterDuration}>{languageLibrary[language].aCardDuration}: <span>{activity.totalDuration / 60} min</span></p> {/* Esitmated duration: X min */}
 
                                 {/* --------------- DELETE CONFIRM --------------- */}
                                 {activity.category !== "NonWork" && (
                                     confirmDelete ? (
                                         <div className={styles.confirmContainer}>
-                                            <p className={styles.confirmText}>Are you sure?</p>
+                                            <p className={styles.confirmText}>{ languageLibrary[language].aCardDelete /* Are you sure? */}</p>
                                             <button
                                                 className={`${styles.confirmButton} ${styles.confirmYes}`}
                                                 onClick={handleDelete}
                                             >
-                                                Yes
+                                                {languageLibrary[language].yes /* Yes */}
                                             </button>
                                             <button
                                                 className={`${styles.confirmButton} ${styles.confirmNo}`}
                                                 onClick={() => setConfirmDelete(false)}
                                             >
-                                                No
+                                                {languageLibrary[language].no /* No */}
+
                                             </button>
                                         </div>
                                     ) : (
