@@ -1,6 +1,6 @@
 import styles from "./ActivityForm.module.css"
 import Modal from "../Modal/Modal";
-import { languageLibrary } from "../../locales/language";
+import { languageLibrary } from "../../locales/language.ts";
 import { useTranslator } from "../../contexts/languageContext";
 import { useState } from "react";
 import { userOptions } from "../../constants/userOptions";
@@ -35,7 +35,7 @@ function ActivityForm({ onClose, planMode = false }) {
         const minutes = parseFloat(minutesValue) || 0;
 
         if (hours <= 0 && minutes <= 0) {
-            return languageLibrary[language].errorGreaterThanZero
+            return languageLibrary[language].errorGreaterThanZero // 'One field must be greater than 0'
         }
         return "";
     }
@@ -106,23 +106,26 @@ function ActivityForm({ onClose, planMode = false }) {
                     <form onSubmit={handleSubmit}>
 
                         {/* ---------- SHOW FORM ---------- */}
+                        
+                        {isScheduled ? <h2>{languageLibrary[language].aFormActivityPlan}</h2> : <h2>{languageLibrary[language].aFormTimerSubmit}</h2> /* Plan Activity : Start Timer  */}
+
 
                             <>
 
                                 {/* ---------- CATEGORY & TITLE ---------- */}
                                 <fieldset>
-                                    <legend>{languageLibrary[language].form2Activity}</legend>
-                                    <label htmlFor="category">{languageLibrary[language].form2Category}</label>
+                                    <legend>{languageLibrary[language].aFormActivity}</legend> {/* Activity */}
+                                    <label htmlFor="category">{languageLibrary[language].aFormCategory}</label> {/* Category */}
                                     <select name="category" className="category" required defaultValue={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                                        <option value="" disabled>{languageLibrary[language].form2CategoryDefault}</option>
+                                        <option value="" disabled>{languageLibrary[language].aFormCategoryDefault}</option> {/* Pick a category */}
                                         {
                                             categories.map((category) => {
                                                 return (<option key={category} value={category}>{category}</option>)
                                             })
                                         }
                                     </select>
-                                    <label htmlFor="activityTitle">{languageLibrary[language].form2Title}</label>
-                                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].form2TitleDefault} required maxLength={120} />
+                                    <label htmlFor="activityTitle">{languageLibrary[language].aFormTitle}</label> {/* Title */}
+                                    <input name="activityTitle" type="text" placeholder={languageLibrary[language].aFormTitleDefault} required maxLength={120} /> {/* Enter a title */}
                                 </fieldset>
 
 
@@ -131,10 +134,10 @@ function ActivityForm({ onClose, planMode = false }) {
 
                                     // IS NOT SCHEDULED: Enter ESTIMATED DURATION
                                     <fieldset>
-                                        <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
-                                        <label htmlFor="hours">{languageLibrary[language].hours}</label>
+                                        <legend>{languageLibrary[language].aFormEstimated}</legend> {/* Estimated Duration */}
+                                        <label htmlFor="hours">{languageLibrary[language].hours}</label> {/* Hours */}
                                         <input name="hours" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange} />
-                                        <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
+                                        <label htmlFor="minutes">{languageLibrary[language].minutes}</label> {/* Minutes */}
                                         <input name="minutes" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange} />
                                     </fieldset>
 
@@ -155,7 +158,7 @@ function ActivityForm({ onClose, planMode = false }) {
                                                         setScheduleOption(e.target.value)
                                                         setShowScheduleOption(true)
                                                     }} />
-                                                Schedule start & end time
+                                                    {languageLibrary[language].aFormEnterScheduleTime} {/* Schedule start & end time */}
                                             </label>
                                             <label>
                                                 <input
@@ -167,7 +170,7 @@ function ActivityForm({ onClose, planMode = false }) {
                                                         setScheduleOption(e.target.value)
                                                         setShowScheduleOption(true)
                                                     }} />
-                                                Enter activity duration
+                                                {languageLibrary[language].aFormEnterDuration} {/* Enter activity duration */}
                                             </label>
                                         </fieldset>
 
@@ -178,10 +181,10 @@ function ActivityForm({ onClose, planMode = false }) {
                                                 {/* RADIOBUTTON: TIME */}
                                                 {scheduleOption === 'time' && (
                                                     <fieldset>
-                                                        <legend>{languageLibrary[language].times}</legend>
-                                                        <label htmlFor="hours">{languageLibrary[language].start}</label>
+                                                        <legend>{languageLibrary[language].times}</legend> {/* Times */}
+                                                        <label htmlFor="hours">{languageLibrary[language].start}</label> {/* Start */}
                                                         <input onChange={handleInputChange} name="hours" type="time" step={60} required />
-                                                        <label htmlFor="minutes">{languageLibrary[language].end}</label>
+                                                        <label htmlFor="minutes">{languageLibrary[language].end}</label> {/* End */}
                                                         <input onChange={handleInputChange} name="minutes" type="time" step={60} required />
                                                     </fieldset>
                                                 )}
@@ -189,10 +192,10 @@ function ActivityForm({ onClose, planMode = false }) {
                                                 {/* RADIOBUTTON: DURATION */}
                                                 {scheduleOption === 'duration' && (
                                                     <fieldset>
-                                                        <legend>{languageLibrary[language].form2EstimatedDuration}</legend>
-                                                        <label htmlFor="hours">{languageLibrary[language].hours}</label>
+                                                        <legend>{languageLibrary[language].aFormEstimated}</legend> {/* Estimated Duration' */}
+                                                        <label htmlFor="hours">{languageLibrary[language].hours}</label> {/* Hours */}
                                                         <input name="hours" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange} />
-                                                        <label htmlFor="minutes">{languageLibrary[language].minutes}</label>
+                                                        <label htmlFor="minutes">{languageLibrary[language].minutes}</label> {/* Minutes */}
                                                         <input name="minutes" type="number" placeholder="0" defaultValue="" min="0" onChange={handleInputChange} />
                                                     </fieldset>
                                                 )}
@@ -204,17 +207,17 @@ function ActivityForm({ onClose, planMode = false }) {
 
                                 {/* TIME STRUCTURE  */}
                                 <fieldset>
-                                    <legend>{languageLibrary[language].form2TimeStructure}</legend>
-                                    <label htmlFor="activeTime">{languageLibrary[language].active}</label>
+                                    <legend>{languageLibrary[language].aFormTimeStructure}</legend> {/* Time Structure */}
+                                    <label htmlFor="activeTime">{languageLibrary[language].active}</label> {/* Active */}
                                     <input type="number" name="activeTime" defaultValue={25} min="0" />
-                                    <label htmlFor="breakTime">{languageLibrary[language].break}</label>
+                                    <label htmlFor="breakTime">{languageLibrary[language].break}</label> {/* Break */}
                                     <input type="number" name="breakTime" defaultValue={5} min="0" />
                                 </fieldset>
 
-                                <div style={{ display: "flex" }}>
+                                <div style={{ display: "flex", justifyContent: 'center'}}>
 
                                     <button type="submit" className={styles.buttonSubmit}>
-                                        {isScheduled ? 'Add To Planner' : 'Start Activity'}
+                                        {isScheduled ? languageLibrary[language].aFormScheduleSubmit : languageLibrary[language].aFormTimerSubmit /* Add to Planner : Start Timer  */}
                                     </button>
                                 </div>
                             </>
@@ -222,7 +225,7 @@ function ActivityForm({ onClose, planMode = false }) {
                     </form>
                 </>) : (
                 <>
-                    <p>Please enter the specifics for your workday before registering activities</p>
+                    <p>{languageLibrary[language].aFormEnterWD}</p> {/* Please enter the specifics for your workday before registering activities */}
                     <WorkDayForm />
                 </>
             )}

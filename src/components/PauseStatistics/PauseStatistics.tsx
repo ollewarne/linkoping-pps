@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import "./PauseStatistics.css";
-import { languageLibrary } from "../../locales/language";
 import { useActivities } from "../../contexts/activityContext";
 import { useTimer } from "../../contexts/TimerContext";
 import type { StatisticEntry } from "../../types"
+
+
 
 type ImpactOption = {
     value: string;

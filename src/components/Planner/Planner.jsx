@@ -12,7 +12,12 @@ import { useEffect, useMemo, useState } from "react";
 import { CountdownDisplay } from "../CountdownTimer/CountdownDisplay";
 import { useTimer } from "../../contexts/TimerContext";
 
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language.ts";
+
+
 function Planner() {
+    const {language} = useTranslator();
     const {activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const {activeActivity } = useTimer();
     const [currentTime, setCurrentTime] = useState(
@@ -85,7 +90,7 @@ function Planner() {
 
                 {/* --------------- HISTORY --------------- */}
                 <div className={styles.historyContainer}>
-                    <p className={styles.historyTitle}>History</p>
+                    <p className={styles.historyTitle}> {languageLibrary[language].homeHistoryTitle}</p>
 
                         {
                             historyActivities.map((a, index) => (
@@ -97,7 +102,7 @@ function Planner() {
                 {/* --------------- AGENDA --------------- */}
                 <div className={styles.agendaContainer}>
                     {workformData &&
-                        <p className={styles.agendaTime}><span>Start</span> {workformData.workHours.start}</p>
+                        <p className={styles.agendaTime}><span>{languageLibrary[language].start}</span> {workformData.workHours.start}</p> // Start xx:xx
                     }
             
                     <CountdownDisplay/>
@@ -106,7 +111,7 @@ function Planner() {
                     {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
                         ? <div className={styles.emptyContainer}>
                             <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
-                            <p className={styles.emptyText}>A bit empty here...?</p>
+                            <p className={styles.emptyText}>{languageLibrary[language].homeEmptyPage}</p> {/* A bit empty here...? */}
                         </div>
                         
                     // --------------- ACTIVITY CARDS PAGE ---------------
@@ -118,7 +123,7 @@ function Planner() {
                             }
                         </>
                     }
-                    <p className={styles.endTime}><span>End</span> {workformData.workHours.end}</p>
+                    <p className={styles.endTime}><span>{languageLibrary[language].end}</span> {workformData.workHours.end}</p> {/* End */}
                     
                 </div>
 
@@ -133,7 +138,7 @@ function Planner() {
                             >
                             <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
                             <img src="/timer.svg" alt="" />
-                            <p>Starta Aktivitet</p>
+                            <p>{languageLibrary[language].homePageBtnStartActivity}</p> {/* Start Timer */}
                         </button>
                     )}>
                         <ActivityForm
@@ -147,7 +152,7 @@ function Planner() {
                         <button className={styles.addActivityBtn}>
                             <div className={styles.colorBlock} style={{backgroundColor: '#358C4E'}}></div>
                             <img src="/add-large.svg" alt="" />
-                            <p>Lägg till</p>
+                            <p>{languageLibrary[language].homePageBtnAddActivity}</p> {/* Plan Activity */}
                         </button>)}
                     >
 
@@ -157,7 +162,7 @@ function Planner() {
                             />
                         ) : (
                             <>
-                                <p>Please enter the specifics for your workday before registering activities</p>
+                                <p>{languageLibrary[language].aFormEnterWD}</p> {/* Please enter the specifics for your workday before registering activities */}
                                 <WorkDayForm />
                             </>
                         )}
@@ -169,7 +174,7 @@ function Planner() {
                         : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
                             <div className={styles.colorBlock} style={{backgroundColor: plannerMode ? '#EF2917' : '#358C4E'}}></div>
                             <img src={ plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
-                            <p>{plannerMode ? "Stop planner" : "Start planner"}</p>
+                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner }</p> {/* Stop Planned : Start Planned */}
                         </button>
                     }
                 </div>
