@@ -11,20 +11,24 @@ const formatTime = (minutes) => {
 export default function TimeSpentChart({ mockData, historyData, useRealData = false }) {
   const source = useRealData ? (historyData ?? {}) : mockData;
 
-  const aggregatedData = useMemo(
-    () =>
-      Object.values(source).reduce((acc, day) => {
-        (day.activities ?? []).forEach((activity) => {
-          const { category, totalTimeSpent } = activity;
-          acc[category] = (acc[category] || 0) + (totalTimeSpent || 0);
-        });
-        return acc;
-      }, {}),
-    [source]
-  );
+  const aggregatedData = useMemo(() => {
+    const activities = Array.isArray(source)
+      ? source
+      : Object.values(source).flatMap((day) => day.activities || []);
+
+    return activities.reduce((acc, activity) => {
+      const { category, totalTimeSpent } = activity;
+      // ändrat: totalTimeSpent är i sekunder nu (inte minuter) så annars det räknade ner mins istälet för sec 
+      // vi behöver ändra tillbaka sen 
+      // acc[category] = (acc[category] || 0) + (totalTimeSpent || 0);
+      acc[category] = (acc[category] || 0) + Math.floor((totalTimeSpent || 0) / 60);
+      return acc;
+    }, {});
+  }, [source]);
 
   const finalChartData = Object.entries(aggregatedData)
-    .filter(([, totalTimeSpent]) => totalTimeSpent > 60)
+  // ändrat: totalTimeSpent är i sekunder nu (inte minuter),vi behöver ändra tillbaka sen 
+    .filter(([, totalTimeSpent]) => totalTimeSpent > 0)
     .map(([category, totalTimeSpent], index) => ({
       id: index,
       value: totalTimeSpent,
