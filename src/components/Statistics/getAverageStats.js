@@ -16,15 +16,20 @@ export function getAverageStats(data, key) {
         // eftersom funktionen inte kan hantera hela datumsträngen.
         const timeOnly = time.includes("T") ? time.split("T")[1].slice(0, 5) : time;
 
-        // ändra för just nu från time till min så jag kan se när det ändras direkt 
-        // const roundedTime = roundTime(timeOnly);
-        const roundedTime = timeOnly;
-
+        const roundedTime = roundTime(timeOnly);
+        
         if(!timeSlot[roundedTime]) {
           timeSlot[roundedTime] = [];
         };
 
-        timeSlot[roundedTime].push(statData[key]);
+        const value =
+          key === "productivity"
+            ? (statData.productivity ?? statData.efficiency)
+            : statData[key];
+
+        if (value == null) return;
+
+        timeSlot[roundedTime].push(value);
 
       });
 
