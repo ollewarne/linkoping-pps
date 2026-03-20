@@ -107,7 +107,7 @@ function ActivityForm({ onClose, planMode = false }) {
 
                         {/* ---------- SHOW FORM ---------- */}
                         
-                        {isScheduled ? <h2>{languageLibrary[language].aFormActivityPlan}</h2> : <h2>{languageLibrary[language].aFormTimerSubmit}</h2> /* Plan Activity : Start Timer  */}
+                        {isScheduled ? <h2 className={styles.title}>{languageLibrary[language].aFormActivityPlan}</h2> : <h2 className={styles.title}>{languageLibrary[language].aFormTimerSubmit}</h2> /* Plan Activity : Start Timer  */}
 
 
                             <>
