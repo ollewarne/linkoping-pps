@@ -1,9 +1,12 @@
 import { LineChart } from '@mui/x-charts/LineChart';
 import { useMemo } from 'react';
 import { getAverageStats } from './getAverageStats';
+import { languageLibrary } from '../../locales/language';
+import { useTranslator } from '../../contexts/languageContext';
 
 export default function EnergyChart({ mockData, historyData, useRealData = false }) {
 
+    const language = useTranslator();
     const source = useRealData ? (historyData ?? {}) : mockData;
 
     const data = useMemo(
@@ -15,6 +18,8 @@ export default function EnergyChart({ mockData, historyData, useRealData = false
     const yValues = data.map((d) => d.average);
 
     return (
+        <>
+        <h2 style={{textAlign: 'center', fontSize: '1.3rem', borderBottom: '2px solid #f50057', paddingBottom: '1%'}}>{languageLibrary[language.language].statsAverageEnergy}</h2>
         <LineChart
             sx={{
                 '& .MuiChartsAxis-tickLabel': { fill: 'var(--text) !important' },
@@ -27,7 +32,7 @@ export default function EnergyChart({ mockData, historyData, useRealData = false
                 {
                     scaleType: 'point',
                     data: xLables,
-                    label: 'Time',
+                    label: languageLibrary[language.language].time,
                 }
             ]}
             yAxis={[
@@ -35,17 +40,18 @@ export default function EnergyChart({ mockData, historyData, useRealData = false
                     min: 1,
                     max: 4,
                     tickNumber: 4,
-                    label: 'Score',
+                    label: languageLibrary[language.language].score,
                 }
             ]}
             series={[
                 {
                     data: yValues,
-                    label: 'Average Energy',
+                    // label: languageLibrary[language.language].statsAverageEnergy,
                     color: '#f50057'
                 }
             ]}
             height={350}
         />
+        </>
     );
 }

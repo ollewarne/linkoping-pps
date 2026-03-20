@@ -2,6 +2,9 @@ import { useMemo } from "react";
 import { PieChart } from "@mui/x-charts";
 import { useMediaQuery } from "@mui/material";
 import { categoryColors } from "../../constants/categoryColors";
+import { userOptions } from "../../constants/userOptions";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
 
 const formatTime = (minutes) => {
   const h = Math.floor(minutes / 60);
@@ -9,11 +12,24 @@ const formatTime = (minutes) => {
   return h > 0 ? `${h}h ${m}m` : `${m}m`;
 };
 
+
+  const getCategoryLabel = (category, language) => {
+  const enCategories = userOptions.en.category;
+  const index = enCategories.indexOf(category);
+
+  if (index === -1) return category;
+
+  return userOptions[language].category[index];
+}
+
 export default function TimeSpentChart({
   mockData,
   historyData,
   useRealData = false,
 }) {
+  const languageObj = useTranslator();
+  const language = languageObj.language;
+
   const source = useRealData ? (historyData ?? {}) : mockData;
 
   const aggregatedData = useMemo(() => {
@@ -38,13 +54,16 @@ export default function TimeSpentChart({
     .map(([category, totalTimeSpent], index) => ({
       id: index,
       value: totalTimeSpent,
-      label: `${category} (${formatTime(totalTimeSpent)})`,
+      label: `${getCategoryLabel(category, language)} (${formatTime(totalTimeSpent)})`,
       color: categoryColors[category] || "pink",
     }));
 
   const isTabletOrDown = useMediaQuery("(max-width:1200px)");
 
   return (
+    <>
+    <h2 style={{textAlign: 'center', fontSize: '1.3rem', borderBottom: '2px solid var(--text)', paddingBottom: '1%'}}>{languageLibrary[language].statsPieTitle}</h2>
+    
     <PieChart
       series={[
         {
@@ -75,5 +94,6 @@ export default function TimeSpentChart({
         },
       }}
     />
+    </>
   );
 }
