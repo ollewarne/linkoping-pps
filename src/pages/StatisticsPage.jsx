@@ -1,6 +1,7 @@
 import ProductivityChart from "../components/Statistics/ProductivityChart";
 import EnergyChart from "../components/Statistics/EnergyChart";
 import TimeSpentChart from "../components/Statistics/TimeSpentChart";
+import LocationStats from "../components/Statistics/LocationStats";
 import { mockData } from "../constants/mockData";
 import { useActivities } from "../contexts/activityContext";
 import { useState } from "react";
@@ -48,6 +49,9 @@ function StatisticsPage() {
           </div>
         </div>
       </div>
+
+    <LocationStats/>
+
     </>
   );
 }
