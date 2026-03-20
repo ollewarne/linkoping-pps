@@ -69,18 +69,14 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     wdFormWorkEnvironment: 'Work environment',
     wdFormWorkEnvironmentDefault: 'Select an environment',
 
-
-
     // ACTIVITY CARD
     aCardDuration: 'Estimated duration',
     aCardDelete: 'Are you sure?',
-
 
     // ERRORS
     errorNoWorkHoursStart: 'Please enter your start time',
     errorNoWorkHoursEnd: 'Please enter your end time',
     errorEndBeforeStart: "End time can't be before start time",
-    
     errorNoNonWorkHours: 'Please enter your non-working hours',
     errorHoursBetweenWorkingHours: 'Non-working hours must be within your working hours',
     errorNoWorkEnvironment: 'Please select your work environment',
@@ -93,13 +89,23 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     evaluateFactors: 'Influencing factors: ',
     evaluateFactorsDefault: 'Select a factor or leave blank',
 
-
     // TIMER
     timerWorking: 'Working',
     timerPause: 'Pause',
     timerTimeLeft: 'Time left',
     timerTimeRemaining: 'Total time remaining',
     timerBtnStopTimer: 'Stop timer',
+
+    // STATISTICS
+    statsAverageProd: 'Average Productivity',
+    statsAverageEnergy: 'Average Energy',
+    time: 'Time',
+    score: 'Score',
+    statsPieTitle: 'Time Distribution by Category',
+
+
+
+
 
     },
 
@@ -209,6 +215,13 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     timerTimeLeft: 'Tid kvar',
     timerTimeRemaining: 'Total tid kvar',
     timerBtnStopTimer: 'Stoppa timer',
+
+    // STATISTICS
+    statsAverageProd: 'Genomsnitt: Produktivitet',
+    statsAverageEnergy: 'Genomsnitt: Energi',
+    time: 'Tider',
+    score: 'Värde',
+    statsPieTitle: 'Tidsfördelning per kategori',
 
     },
 
