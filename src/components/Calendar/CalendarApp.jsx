@@ -3,6 +3,8 @@ import { DayDetailsPopup } from "./DayDetails/DayDetails";
 import { useCalendarMonthsWeeksDays } from "./MonthsWeeksDays/CalendarMonthsWeeksDays";
 import "./MonthsWeeksDays/CalendarApp.css";
 import ModalToCalendarDaysPopup from "./DayDetails/ModalToCalendarDaysPopup/ModalToCalendarDaysPopup";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
 
 
 const CalenderApp = () => {
@@ -29,11 +31,14 @@ const CalenderApp = () => {
     normalizedMock[fullDate] = mockData[key];
   }
 
+  const { language } = useTranslator();
+  const t = languageLibrary[language];
+
   return (
     <div className="Calender-container">
       <div className="Calendar-app">
         <div className="calender">
-          <h1 className="Heading">Calendar</h1>
+          <h1 className="Heading">{t.calendarTitle}</h1>
 
           <div className="Navigate-Date">
             <h2 className="Month">{monthOfYear[currentMonth]}</h2>

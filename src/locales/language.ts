@@ -1,4 +1,4 @@
-export const languageLibrary: Record<string, Record<string, string>> = {
+export const languageLibrary: Record<string, Record<string, string | string[]>> = {
 
 
 // -------- ENGELSKA ---------
@@ -103,8 +103,14 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     score: 'Score',
     statsPieTitle: 'Time Distribution by Category',
 
-
-
+    // CALENDAR
+    calendarTitle: "Calendar",
+    daysOfWeek: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    monthLabel: "Month",
+    noPlannedActivity: "No activities registered for this day!",
+    detailsFor: "Details for day"
+    
 
 
     },
@@ -223,6 +229,13 @@ export const languageLibrary: Record<string, Record<string, string>> = {
     score: 'Värde',
     statsPieTitle: 'Tidsfördelning per kategori',
 
+    // CALENDAR
+    calendarTitle: "Kalender",
+    daysOfWeek: ["Mån", "Tis", "Ons", "Tor", "Fre", "Lör", "Sön"],
+    months: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
+    monthLabel: "Månad",
+    noPlannedActivity: "Inga registrerade aktiviteter för denna dag!",
+    detailsFor: "Detaljer för dag"
     },
 
 }
