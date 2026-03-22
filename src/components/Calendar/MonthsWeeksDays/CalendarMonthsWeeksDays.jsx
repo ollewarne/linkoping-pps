@@ -1,28 +1,18 @@
 import { useState } from "react";
+import { useTranslator } from "../../../contexts/languageContext";
+import { languageLibrary } from "../../../locales/language";
 
 // Custom hook som sköter all logik kring månader, veckodagar och dagar i rutnätet
 export const useCalendarMonthsWeeksDays = () => {
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const { language } = useTranslator();
+  const t = languageLibrary[language];
 
-  const monthOfYear = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const daysOfWeek = t.daysOfWeek;
+  const monthOfYear = t.months
 
   const today = new Date();
 
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
-
   const [currentYear, setCurrentYear] = useState(today.getFullYear());
 
   // Funktion som byter månad och uppdaterar både månad och år
