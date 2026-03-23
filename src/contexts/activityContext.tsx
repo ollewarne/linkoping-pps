@@ -143,9 +143,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             try {
                 const data = JSON.parse(item);
                 const dataAgeInMs: number = Date.now() - data.timeStamp;
-                const maxDataAgeInMs: number = 8 * 60 * 60 * 1000;
+                const maxDataAgeInMs: number = 10 * 60 * 60 * 1000;
 
-                // tar bort aktiviteter om ingen uppdatering skett på över 8 timmar
+                // tar bort aktiviteter om ingen uppdatering skett på över 10 timmar
                 if (dataAgeInMs > maxDataAgeInMs) {
                     localStorage.removeItem("activities");
                     return [];
