@@ -1,0 +1,60 @@
+.locStatContainer {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.locStatTitle {
+    width: 70%;
+
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    letter-spacing: 2%;
+}
+
+.locStatTitleSvg {
+    height: 30px;
+    filter: var(--filter-svg);
+    padding-left: 1%;
+}
+
+.locStatBtn {
+    margin: 5px;
+        padding: 8px 20px;
+    color: var(--btn-text);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.btnActive {
+    background-color: var(--bg);
+    border: 0.5px solid var(--text);
+}
+
+.btnNoActive {
+    background-color: var(--navlink-bg);
+
+}
+
+
+.locStatLocation {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2%;
+}

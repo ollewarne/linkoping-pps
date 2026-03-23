@@ -5,9 +5,15 @@ import "./MonthsWeeksDays/CalendarApp.css";
 import ModalToCalendarDaysPopup from "./DayDetails/ModalToCalendarDaysPopup/ModalToCalendarDaysPopup";
 import { useTranslator } from "../../contexts/languageContext";
 import { languageLibrary } from "../../locales/language";
+import { getHistorydataFromStorage } from "../../utils/workdayStorage";
 
 
-const CalenderApp = () => {
+const CalenderApp = ({useRealData}) => {
+
+  const historyData = getHistorydataFromStorage();
+  const source = useRealData ? historyData : mockData;
+
+
   const {
     daysOfWeek,
     monthOfYear,
@@ -24,12 +30,12 @@ const CalenderApp = () => {
     return `${currentYear}-${monthString}-${dayString}`;
   };
 
-  const normalizedMock = {};
-  for (let key in mockData) {
-    const [y, m, d] = key.split("-");
-    const fullDate = `20${y}-${m}-${d}`;
-    normalizedMock[fullDate] = mockData[key];
-  }
+  // const normalizedMock = {};
+  // for (let key in source) {
+  //   const [y, m, d] = key.split("-");
+  //   const fullDate = `20${y}-${m}-${d}`;
+  //   normalizedMock[fullDate] = source[key];
+  // }
 
   const { language } = useTranslator();
   const t = languageLibrary[language];
@@ -76,7 +82,7 @@ const CalenderApp = () => {
                   trigger={
                     <span
                       className={`${obj.isToday ? "today" : ""} ${
-                        normalizedMock[dateStr] ? "has-event" : ""
+                        source[dateStr] ? "has-event" : ""
                       }`}
                     >
                       {obj.day}
@@ -85,7 +91,7 @@ const CalenderApp = () => {
                 >
                   <DayDetailsPopup
                     selectedDate={dateStr}
-                    dayData={normalizedMock[dateStr]}
+                    dayData={source[dateStr]}
                   />
                 </ModalToCalendarDaysPopup>
               );

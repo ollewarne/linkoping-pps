@@ -6,6 +6,8 @@ import { userOptions } from "../../constants/userOptions";
 import { useTranslator } from "../../contexts/languageContext";
 import { languageLibrary } from "../../locales/language";
 
+import { getHistorydataFromStorage } from "../../utils/workdayStorage";
+
 const formatTime = (minutes) => {
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
@@ -24,11 +26,13 @@ const formatTime = (minutes) => {
 
 export default function TimeSpentChart({
   mockData,
-  historyData,
-  useRealData = false,
+  // historyData,
+  useRealData = false
 }) {
   const languageObj = useTranslator();
   const language = languageObj.language;
+
+  const historyData = getHistorydataFromStorage();
 
   const source = useRealData ? (historyData ?? {}) : mockData;
 

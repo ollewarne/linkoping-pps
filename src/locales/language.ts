@@ -109,8 +109,19 @@ export const languageLibrary: Record<string, Record<string, string | string[]>> 
     months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     monthLabel: "Month",
     noPlannedActivity: "No activities registered for this day!",
-    detailsFor: "Details for day"
+    detailsFor: "Details for day",
     
+
+    // LOCATION STATS:
+    locTitle: 'Insights',
+    locBestCategory: 'Best Category: ',
+    locFactor: 'External Impacts: ',
+    locWorstCategory: 'Worst Category: ',
+    locExplain1: 'You achieve best productivity between: ',
+    locExplain2: 'You have the most energy around: ',
+    locNoData: 'No data to display'
+
+
 
 
     },
@@ -235,7 +246,15 @@ export const languageLibrary: Record<string, Record<string, string | string[]>> 
     months: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
     monthLabel: "Månad",
     noPlannedActivity: "Inga registrerade aktiviteter för denna dag!",
-    detailsFor: "Detaljer för dag"
-    },
+    detailsFor: "Detaljer för dag",
 
+      // LOCATION STATS:
+    locTitle: 'Insikter',
+    locBestCategory: 'Bäst Kategori: ',
+    locFactor: 'Påverkande Faktor: ',
+    locWorstCategory: 'Sämst Kategori: ',
+    locExplain1: 'Du uppnår du bäst produktivitet mellan: ',
+    locExplain2: 'Du har mest energi runt: ',
+    locNoData: 'Ingen data att visa'
+    },
 }

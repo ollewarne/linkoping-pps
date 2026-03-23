@@ -20,21 +20,24 @@ function StatisticsPage() {
 
       <div className="statistics-wrapper">
         <div className="left-column-statistics">
-          <div className="statistics-item TimeSpentChart">
-            <TimeSpentChart
+           <div className="statistics-item CalendarApp">
+            <CalendarApp
+              useRealData={useRealData}/>
+          </div>
+           <div className="statistics-item ProductivityChart">
+            <ProductivityChart
               mockData={mockData}
               historyData={activities}
               useRealData={useRealData}
             />
           </div>
-          <div className="statistics-item CalendarApp">
-            <CalendarApp />
-          </div>
+          
+         
         </div>
 
         <div className="right-column-statistics">
-          <div className="statistics-item ProductivityChart">
-            <ProductivityChart
+          <div className="statistics-item TimeSpentChart">
+            <TimeSpentChart
               mockData={mockData}
               historyData={activities}
               useRealData={useRealData}
@@ -50,7 +53,10 @@ function StatisticsPage() {
         </div>
       </div>
 
-    <LocationStats/>
+    <LocationStats
+      mockData={mockData}
+      // historyData={activities}
+      useRealData={useRealData}/>
 
     </>
   );
