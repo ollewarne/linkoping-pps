@@ -19,3 +19,22 @@ fieldset label {
     text-align: left;
     font-weight: bold;
 }
+
+
+.buttonSubmit {
+    padding: 10px 24px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    align-self: flex-start;
+    margin-top: 4px;
+}
+
+.buttonSubmit:hover {
+    background-color: var(--btn-hover);
+}

@@ -255,7 +255,7 @@ export default function WorkDayForm({onClose}) {
 
             {/* ---------- SUBMIT ---------- */}
             <div>
-                <button type="submit">{languageLibrary[language].save /* Save */}</button>
+                <button type="submit" className={styles.buttonSubmit}>{languageLibrary[language].save /* Save */}</button>
             </div>
             
         </form>
