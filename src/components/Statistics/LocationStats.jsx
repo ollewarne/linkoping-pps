@@ -1,22 +1,34 @@
 import React, { useMemo, useState } from "react";
-import { mockData } from "../../constants/mockData";
+import { getHistorydataFromStorage } from "../../utils/workdayStorage";
+import styles from "./LocationStats.module.css";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
 
-export default function WorkEnvironmentInsights() {
+
+export default function WorkEnvironmentInsights({ mockData, useRealData = false }) {
     const [selectedLocation, setSelectedLocation] = useState(null);
+    const [show, setShow] = useState(false);
+    const historyData = getHistorydataFromStorage();
 
-    // 🔘 Hämta locations
+    const language = useTranslator();
+
+    const source = useRealData ? (historyData ?? {}) : mockData;
+
+    // ---------- LOCATIONS ----------
+
     const locations = useMemo(() => {
         const set = new Set();
 
-        Object.values(mockData).forEach(day => {
+        Object.values(source).forEach(day => {
             const loc = day.workdayData?.workEnvironment?.location;
             if (loc) set.add(loc);
         });
 
         return Array.from(set);
-    }, []);
+    }, [source]);
 
-    // 📊 Insights
+
+    // ---------- INSIGHTS ----------
     const insights = useMemo(() => {
     if (!selectedLocation) return null;
 
@@ -25,7 +37,7 @@ export default function WorkEnvironmentInsights() {
 
     const allStats = []; // 🔥 för tid-analys
 
-    Object.values(mockData).forEach(day => {
+    Object.values(source).forEach(day => {
         const loc = day.workdayData?.workEnvironment?.location;
         if (loc !== selectedLocation) return;
 
@@ -52,7 +64,7 @@ export default function WorkEnvironmentInsights() {
                             (categoryFactors[category][stat.factor] || 0) + 1;
                     }
 
-                    // 🔥 samla för tidsanalys
+                    // tidsanalys
                     allStats.push({
                         time,
                         productivity: stat.productivity,
@@ -80,9 +92,10 @@ export default function WorkEnvironmentInsights() {
         return Object.entries(factors).sort((a, b) => b[1] - a[1])[0]?.[0] || "Ingen";
     };
 
-    // 🔥 TIDSANALYS
 
-    // sortera tider
+    // ---------- TIME ANALYSIS ----------
+
+    // sort times
     const sortedStats = [...allStats].sort((a, b) =>
         a.time.localeCompare(b.time)
     );
@@ -120,78 +133,95 @@ export default function WorkEnvironmentInsights() {
             peakEnergyTime
         }
     };
-}, [selectedLocation]);
+}, [source, selectedLocation]);
+
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Work Environment Insights</h2>
+        <div 
+            className={styles.locStatContainer}
+            >
+            <h2
+                className={styles.locStatTitle}
+                onClick={() => setShow(prev => !prev)}
+                >
+                    {languageLibrary[language.language].locTitle}
+                    < img 
+                        src={show ? "/collaps.svg" : "/expand.svg"}
+                        className={styles.locStatTitleSvg} />
+              </h2> 
 
-            {/* 🔘 Buttons */}
-            <div style={{ marginBottom: "20px" }}>
-                {locations.map(loc => (
-                    <button
-                        key={loc}
-                        onClick={() => setSelectedLocation(loc)}
-                        style={{
-                            marginRight: "10px",
-                            padding: "8px 12px",
-                            background:
-                                selectedLocation === loc ? "#333" : "#eee",
-                            color: selectedLocation === loc ? "#fff" : "#000",
-                            border: "none",
-                            cursor: "pointer"
-                        }}
-                    >
-                        {loc}
-                    </button>
-                ))}
+            {show && ( 
+            <div >
+                {locations.length === 0 && (
+                    <p>{languageLibrary[language.language].locNoData}</p>
+                )}
+
+                {/* Buttons */}
+                <div>
+                    {locations.map(loc => (
+                        <button
+                            key={loc}
+                            onClick={() => setSelectedLocation(loc)}
+                            className={`${styles.locStatBtn} 
+                            ${selectedLocation === loc ? styles.btnActive : styles.btnNoActive}`}
+                        >
+                            {loc}
+                        </button>
+                    ))}
+                </div>
+
+                
+
+                {/* Result */}
+                {insights && (
+                    <div 
+                    className={styles.locStatInsightsContainer}>
+                        <h3
+                            className={styles.locStatLocation}>
+                                {selectedLocation}</h3>
+
+                        <p>
+                            <strong>{languageLibrary[language.language].locBestCategory}</strong>{" "}
+                            {insights.best.category} (
+                            {insights.best.avg.toFixed(2)})
+                        </p>
+                        <p>
+                            <strong>{languageLibrary[language.language].locFactor}</strong>{" "}
+                            {insights.best.topFactor}
+                        </p>
+
+                        <br />
+
+                        <p>
+                            <strong>{languageLibrary[language.language].locWorstCategory}</strong>{" "}
+                            {insights.worst.category} (
+                            {insights.worst.avg.toFixed(2)})
+                        </p>
+                        <p>
+                            <strong>{languageLibrary[language.language].locFactor}</strong>{" "}
+                            {insights.worst.topFactor}
+                        </p>
+                    </div>
+                )}
+
+                {insights?.timeInsights && (
+                    <div style={{ marginTop: "20px" }}>
+                        <p>
+                            {languageLibrary[language.language].locExplain1}
+                            <strong>
+                                {insights.timeInsights.productivityRange.start} -{" "}
+                                {insights.timeInsights.productivityRange.end}
+                            </strong>
+                        </p>
+
+                        <p>
+                            {languageLibrary[language.language].locExplain2}
+                            <strong>{insights.timeInsights.peakEnergyTime}</strong>
+                        </p>
+                    </div>
+                )}
             </div>
 
-            {/* 📊 Result */}
-            {insights && (
-                <div>
-                    <h3>{selectedLocation}</h3>
-
-                    <p>
-                        <strong>Bästa kategori:</strong>{" "}
-                        {insights.best.category} (
-                        {insights.best.avg.toFixed(2)})
-                    </p>
-                    <p>
-                        <strong>Påverkande faktor:</strong>{" "}
-                        {insights.best.topFactor}
-                    </p>
-
-                    <br />
-
-                    <p>
-                        <strong>Sämsta kategori:</strong>{" "}
-                        {insights.worst.category} (
-                        {insights.worst.avg.toFixed(2)})
-                    </p>
-                    <p>
-                        <strong>Påverkande faktor:</strong>{" "}
-                        {insights.worst.topFactor}
-                    </p>
-                </div>
-            )}
-
-            {insights?.timeInsights && (
-                <div style={{ marginTop: "20px" }}>
-                    <p>
-                        I work environment <strong>'{selectedLocation}'</strong> uppnår du
-                        bäst produktivitet mellan{" "}
-                        <strong>
-                            {insights.timeInsights.productivityRange.start} -{" "}
-                            {insights.timeInsights.productivityRange.end}
-                        </strong>
-                    </p>
-
-                    <p>
-                        Du har mest energi runt{" "}
-                        <strong>{insights.timeInsights.peakEnergyTime}</strong>
-                    </p>
-                </div>
             )}
         </div>
     );
