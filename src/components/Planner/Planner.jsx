@@ -92,7 +92,7 @@ function Planner() {
                 {/* --------------- HISTORY --------------- */}
                 <div className={styles.historyContainer}>
                     <p className={styles.historyTitle} onClick={() => setHistoryOpen(!historyOpen)}>
-                        {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <span>{historyOpen ? "▴" : "▾"}</span>}
+                        {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <img className={styles.historyExpandable} src={historyOpen ? "/collaps.svg" : "/expand.svg"} />}
                     </p>
                     {(historyOpen || window.innerWidth > 768) && historyActivities.map((a, index) => (
                         <HistoryCard key={a.id} activity={a} index={index} />

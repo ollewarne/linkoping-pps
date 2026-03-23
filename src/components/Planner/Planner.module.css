@@ -46,6 +46,12 @@
     border-bottom: 1px solid var(--text);
 }
 
+.historyTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 .endTime {
     margin: 0;
     padding-top: 10px;
@@ -151,7 +157,10 @@
     padding-top: 20%;
 }
 
-
+.historyExpandable {
+    height: 20px;
+    filter: var(--filter-svg);
+}
 
 
 
