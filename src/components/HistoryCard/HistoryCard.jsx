@@ -1,5 +1,5 @@
 import styles from "./HistoryCard.module.css";
-
+import React from "react";
 import { categoryColors } from "../../constants/categoryColors";
 
 // Kommer användas sen
