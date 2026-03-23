@@ -1,5 +1,5 @@
 export const mockData = {
-    "26-03-03": {
+    "2026-03-03": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -98,7 +98,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-04": {
+    "2026-03-04": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -196,7 +196,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-05": {
+    "2026-03-05": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -295,7 +295,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-06": {
+    "2026-03-06": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -379,7 +379,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-07": {
+    "2026-03-07": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -478,7 +478,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-08": {
+    "2026-03-08": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
@@ -577,7 +577,7 @@ export const mockData = {
         ]
     },
 
-    "26-03-09": {
+    "2026-03-09": {
         workdayData: {
             workHours: { start: "08:00", end: "16:00" },
             nonWorkHours: { start: "12:00", end: "13:00" },
