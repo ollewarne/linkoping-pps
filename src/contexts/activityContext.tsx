@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { useCallback, createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import type { ActivityType, StatisticEntry } from '../types';
 import { getWorkdayFromStorage } from '../utils/workdayStorage';
 import { calculateDuration, convertStringTimeToMinutes } from '../utils/convertTime';
+import { saveActivityHistory } from "./saveActivityHistory";
 
 type PlannedActivity = {
     id: string;
@@ -9,8 +10,9 @@ type PlannedActivity = {
     title: string;
     scheduledTimeStart: string | null;
     scheduledTimeStop: string | null;
-    isDone: boolean;
+    isCompleted: boolean;
     isActive: boolean;
+    isMissed?: boolean;
     totalDuration: number;
 }
 
@@ -24,7 +26,10 @@ type ActivityAction =
     | { type: "UPDATE_TIME_SPENT"; payload: { id: string; totalTime: number } }
     | { type: "ADD_STATISTIC"; payload: { id: string; timestamp: string; stat: StatisticEntry } }
     | { type: "TOGGLE_ACTIVE"; payload: { id: string } }
-    | { type: "DELETE_ACTIVITY"; payload: { id: string } };
+    | { type: "DELETE_ACTIVITY"; payload: { id: string } }
+    | { type: "MARK_COMPLETED"; payload: { id: string } }
+    | { type: "UPDATE_PHASE_PROGRESS"; payload: { id: string; currentPhaseTimeSpent: number; currentPhase: "work" | "break" } }
+    | { type: "SET_MISSED"; payload: { id: string } }
 
 const activityContext = createContext<{
     activities: ActivityType[];
@@ -32,13 +37,18 @@ const activityContext = createContext<{
     plannedActivities: PlannedActivity[];
     setPlannedActivities: React.Dispatch<React.SetStateAction<PlannedActivity[]>>;
     timeBlocks: TimeSlot[];
-    setTimeBlocks: React.Dispatch<React.SetStateAction<TimeSlot[]>>
+    setTimeBlocks: React.Dispatch<React.SetStateAction<TimeSlot[]>>;
+    plannerMode: boolean;
+    setPlannerMode: React.Dispatch<React.SetStateAction<boolean>>;
 } | null>(null);
 
 function activitiesReducer(state: ActivityType[], action: ActivityAction): ActivityType[] {
     switch (action.type) {
         case "ADD_ACTIVITY":
-            return [...state, action.payload];
+            return [...state,     {
+                    ...action.payload,
+                    date: new Date().toISOString().split("T")[0],
+                    },];
         case "EDIT_ACTIVITY":
             return state.map(activity => activity.id === action.payload.id ?
                 {
@@ -71,6 +81,22 @@ function activitiesReducer(state: ActivityType[], action: ActivityAction): Activ
             } : activity)
         case "DELETE_ACTIVITY":
             return [...state.filter(activity => activity.id !== action.payload.id)]
+        case "MARK_COMPLETED":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                isCompleted: true
+            } : activity)
+        case "UPDATE_PHASE_PROGRESS":
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                currentPhaseTimeSpent: action.payload.currentPhaseTimeSpent,
+                currentPhase: action.payload.currentPhase
+            } : activity)
+        case 'SET_MISSED':
+            return state.map(activity => activity.id === action.payload.id ? {
+                ...activity,
+                isMissed: true
+            } : activity)
         default:
             return state;
     }
@@ -88,9 +114,13 @@ function sortPlannedActivities(array: PlannedActivity[]): PlannedActivity[] {
 
 
 export function ActivityProvider({ children }: { children: React.ReactNode }) {
+    const plannerModeKey = "plannerMode";
     const [workday, setWorkday] = useState(getWorkdayFromStorage());
     const [plannedActivities, setPlannedActivities] = useState<PlannedActivity[]>([]);
     const [timeBlocks, setTimeBlocks] = useState<TimeSlot[]>([]);
+    const [plannerMode, setPlannerMode] = useState<boolean>(
+        () => localStorage.getItem(plannerModeKey) === "true"
+    );
 
     useEffect(() => {
         function handleWorkdayUpdate() {
@@ -113,9 +143,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
             try {
                 const data = JSON.parse(item);
                 const dataAgeInMs: number = Date.now() - data.timeStamp;
-                const maxDataAgeInMs: number = 16 * 60 * 60 * 1000;
+                const maxDataAgeInMs: number = 10 * 60 * 60 * 1000;
 
-                // tar bort aktiviteter om ingen uppdatering skett på över 16 timmar
+                // tar bort aktiviteter om ingen uppdatering skett på över 10 timmar
                 if (dataAgeInMs > maxDataAgeInMs) {
                     localStorage.removeItem("activities");
                     return [];
@@ -134,6 +164,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 timeStamp: Date.now()
             }
             localStorage.setItem("activities", JSON.stringify(data));
+            saveActivityHistory(activities,workday);
+
+            if (!workday) return;
 
             const basePlannedActivity: PlannedActivity[] = [];
 
@@ -146,8 +179,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                     scheduledTimeStart: workday.nonWorkHours.start,
                     scheduledTimeStop: workday.nonWorkHours.end,
                     isActive: false,
-                    isDone: false,
-                    totalDuration: totalDuration
+                    isCompleted: false,
+                    isMissed: false,
+                    totalDuration: totalDuration * 60
                 };
 
                 basePlannedActivity.push(nonWorkPlan);
@@ -160,8 +194,9 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 scheduledTimeStart: a.scheduledTime!.start,
                 scheduledTimeStop: a.scheduledTime!.end,
                 totalDuration: a.estimatedDuration,
-                isDone: false,
-                isActive: a.isActive
+                isCompleted: a.isCompleted,
+                isActive: a.isActive,
+                isMissed: a.isMissed ?? false
             }))
 
             const sorted = sortPlannedActivities([...basePlannedActivity, ...newActivities]);
@@ -187,9 +222,51 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
         }, [activities, workday]
     )
 
+    const startPlannedActivity = useCallback(() => {
+        const now = new Date();
+
+        if (!plannerMode) return
+
+        const currentTimeInHHMM =
+            `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+
+        const currentTimeInMinutes = convertStringTimeToMinutes(currentTimeInHHMM);
+
+        const activityDueToStart = plannedActivities.find(
+            a => convertStringTimeToMinutes(a.scheduledTimeStart!) <= currentTimeInMinutes
+                && !a.isActive
+                && !a.isCompleted
+                && !a.isMissed
+                && a.category !== "NonWork"
+        )
+
+        if (!activityDueToStart) return;
+
+        const currentlyActiveActivity = activities.find(a => a.isActive);
+        if (currentlyActiveActivity) return;
+
+        activityDispatch({ type: "TOGGLE_ACTIVE", payload: { id: activityDueToStart.id } })
+    }, [plannerMode, plannedActivities, activities])
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            startPlannedActivity();
+        }, 30000)
+
+        return () => clearInterval(interval);
+    }, [startPlannedActivity]);
+
+    useEffect(() => {
+        localStorage.setItem(plannerModeKey, String(plannerMode));
+    }, [plannerMode]);
+
+    useEffect(() => {
+        startPlannedActivity();
+    }, [plannerMode, startPlannedActivity])
+
     const value = useMemo(() => ({
-        activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks
-    }), [activities, plannedActivities, timeBlocks])
+        activities, activityDispatch, plannedActivities, setPlannedActivities, timeBlocks, setTimeBlocks, plannerMode, setPlannerMode
+    }), [activities, plannedActivities, timeBlocks, plannerMode])
 
     return (
         <activityContext.Provider value={value}>

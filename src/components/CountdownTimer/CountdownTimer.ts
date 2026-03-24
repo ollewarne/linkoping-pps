@@ -1,6 +1,8 @@
 interface SessionOptions {
   id: string;
-  totalMinutes: number;
+  initialPhaseSeconds?: number;
+  initialPhase?: "work" | "break";
+  totalSeconds: number;
   activeMinutes: number;
   breakMinutes: number;
   onTick?: (
@@ -29,10 +31,14 @@ export class SessionTimer {
 
   constructor(options: SessionOptions) {
     this.id = options.id;
-    this.totalSecondsLeft = options.totalMinutes * 60;
+    this.totalSecondsLeft = options.totalSeconds;
     this.activeSeconds = options.activeMinutes * 60;
     this.breakSeconds = options.breakMinutes * 60;
-    this.phaseSecondsLeft = this.activeSeconds;
+    const phaseTotal = (options.initialPhase ?? "work") === "work" ? this.activeSeconds : this.breakSeconds;
+    this.phase = options.initialPhase ?? "work";
+    this.phaseSecondsLeft = options.initialPhaseSeconds !== undefined 
+        ? Math.min(phaseTotal - options.initialPhaseSeconds, this.totalSecondsLeft)
+        : Math.min(phaseTotal, this.totalSecondsLeft);
     this.onPause = options.onPause;
     this.showPausePopup = options.showPausePopup;
     this.onTick = options.onTick;
@@ -59,16 +65,18 @@ export class SessionTimer {
       );
 
       if (this.phaseSecondsLeft <= 0) {
-        if (this.phase === "work") {
-            this.showPausePopup?.();
-          this.phase = "break";
-          this.phaseSecondsLeft =
-            Math.min(this.breakSeconds, this.totalSecondsLeft);
-        } else {
-          this.phase = "work";
-          this.phaseSecondsLeft =
-          Math.min(this.activeSeconds, this.totalSecondsLeft);
-        }
+          if (this.phase === "work") {
+              if (this.totalSecondsLeft <= this.breakSeconds) {
+                  this.phaseSecondsLeft = this.totalSecondsLeft;
+              } else {
+                  this.showPausePopup?.();
+                  this.phase = "break";
+                  this.phaseSecondsLeft = this.breakSeconds;
+              }
+          } else {
+              this.phase = "work";
+              this.phaseSecondsLeft = Math.min(this.activeSeconds, this.totalSecondsLeft);
+          }
       }
     }, 1000);
   }
@@ -85,9 +93,9 @@ export class SessionTimer {
     this.start();
   }
 
-  reset(toTotalMinutes?: number) {
+  reset(toTotalSeconds?: number) {
     this.pause();
-    if (toTotalMinutes !== undefined) this.totalSecondsLeft = toTotalMinutes * 60;
+    if (toTotalSeconds !== undefined) this.totalSecondsLeft = toTotalSeconds;
     this.phase = "work";
     this.phaseSecondsLeft = this.activeSeconds;
   }

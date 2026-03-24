@@ -1,57 +1,212 @@
 import styles from "./Planner.module.css";
 import { useActivities } from "../../contexts/activityContext";
 import ActivityCard from "../ActivityCard/ActivityCard";
+import HistoryCard from "../HistoryCard/HistoryCard";
 import ClockTimeline from "../ClockTimeline/ClockTimeline";
 import ActivityForm from "../ActivityForm/ActivityForm";
-
 import Modal from "../Modal/Modal";
 import { getWorkdayFromStorage } from "../../utils/workdayStorage";
 import WorkDayForm from "../WorkDayForm/WorkDayForm";
+import { convertStringTimeToMinutes, getCurrentTime } from "../../utils/convertTime";
+import { useEffect, useMemo, useState } from "react";
+import { CountdownDisplay } from "../CountdownTimer/CountdownDisplay";
+import { useTimer } from "../../contexts/TimerContext";
 
-function Planner() {
-    const { activities, plannedActivities } = useActivities();
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language.ts";
 
-    let workformData = getWorkdayFromStorage();
 
-    return (
-        <>
-            <div className={styles.container}>
-                <p className={`${styles.workTime} ${styles.start}`}><span>Start</span> {workformData.workHours.start}</p>
-                <Modal trigger={(
-                    <button className={styles.addActivityBtn}>
-                        <img src="/add.svg" alt="" />
-                    </button>)}
-                >
+export default function Planner() {
+    const { language } = useTranslator();
+    const { activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
+    const { activeActivity } = useTimer();
+    const [currentTime, setCurrentTime] = useState(
+        getCurrentTime()
+    );
+    const [historyOpen, setHistoryOpen] = useState(false);
 
-                    {workformData ? (
-                        <ActivityForm
-                            defaultMode="scheduled"
-                        />
-                    ) : (
-                        <>                    
-                        <p>Please enter the specifics for your workday before registering activities</p>
-                        <WorkDayForm/>
-                        </>
-                    )}
-                </Modal>
+    useEffect(() => {
+        if (plannerMode) return;
+        const interval = setInterval(() => {
+            const now = new Date();
+            setCurrentTime(now.getHours() * 60 + now.getMinutes())
+        }, 30000)
 
-                {plannedActivities.length === 0 
-                ?  <div className={styles.emptyContainer}>
-                    <p className={styles.emptyAdd}>Add activity to planner<span>⤴</span></p>
-                    <img src="/empty.svg" alt="Empty box" className={styles.emptyImg}/>
-                    <p className={styles.emptyText}>A bit empty here...?</p>
-                    </div>
-                :  <>
-                {plannedActivities.map((a, index) => (
-                    <ActivityCard key={a.id} activity={a} index={index} />
-                ))}</>
+        return () => clearInterval(interval);
+    }, [plannerMode])
+
+    const { historyActivities, agendaActivities, activeActivities, missedIds } = useMemo(() => {
+        const history = [];
+        const agenda = [];
+        const active = [];
+        const missed = [];
+
+        plannedActivities.forEach((a) => {
+            if (a.category === "NonWork") {
+                const end = +convertStringTimeToMinutes(a.scheduledTimeStop);
+                if (currentTime >= end) {
+                    history.push(a);
+                    return;
+                }
+                agenda.push(a)
+                return
+            }
+
+            if (a.isActive) {
+                active.push(a);
+                return;
+            }
+
+            if (a.isCompleted) {
+                history.push(a);
+                return;
+            }
+
+            if (!a.scheduledTimeStart) return;
+
+            const start = +convertStringTimeToMinutes(a.scheduledTimeStart) + 15;
+
+            if (!plannerMode && start <= currentTime) {
+                history.push(a);
+
+                if (!a.isMissed) {
+                    missed.push(a.id);
                 }
 
-                <p className={`${styles.workTime} ${styles.end}`}><span>End</span> {workformData.workHours.end}</p>
+            } else {
+                agenda.push(a);
+            }
+        })
+
+        return { historyActivities: history, agendaActivities: agenda, activeActivities: active, missedIds: missed }
+
+    }, [plannedActivities, currentTime, plannerMode])
+
+    useEffect(() => {
+        if (missedIds.length === 0) return;
+
+        missedIds.forEach((id) => {
+            activityDispatch({ type: "SET_MISSED", payload: { id } });
+        });
+    }, [missedIds, activityDispatch]);
+
+    let workformData = getWorkdayFromStorage();
+    const date = new Date().toLocaleDateString();
+
+
+    return (
+
+    workformData ? (
+        <>
+        <div className={styles.plannerContainer}>
+            <h2 className={styles.date}>{date}</h2>
+
+            <div className={styles.plannerGrid}>
+
+                {/* --------------- HISTORY --------------- */}
+                <div className={styles.historyContainer}>
+                    <p className={styles.historyTitle} onClick={() => setHistoryOpen(!historyOpen)}>
+                        {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <img className={styles.historyExpandable} src={historyOpen ? "/collaps.svg" : "/expand.svg"} />}
+                    </p>
+                    {(historyOpen || window.innerWidth > 768) && historyActivities.map((a, index) => (
+                        <HistoryCard key={a.id} activity={a} index={index} />
+                    ))}
+                </div>
+
+                {/* --------------- AGENDA --------------- */}
+                <div className={styles.agendaContainer}>
+                    {workformData &&
+                        <p className={styles.agendaTime}><span>{languageLibrary[language].start}</span> {workformData.workHours.start}</p> /* Start xx:xx */
+                    }
+
+                    <CountdownDisplay />
+
+                    {/* --------------- EMPTY PAGE --------------- */}
+                    {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
+                        ? <div className={styles.emptyContainer}>
+                            <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
+                            <p className={styles.emptyText}>{languageLibrary[language].homeEmptyPage}</p>
+                        </div>
+
+                        /* --------------- ACTIVITY CARDS PAGE --------------- */
+                        : <>
+                            {
+                                agendaActivities.map((a, index) => (
+                                    <ActivityCard key={a.id} activity={a} index={index} />
+                                ))
+                            }
+                        </>
+                    }
+                    <p className={styles.endTime}><span>{languageLibrary[language].end}</span> {workformData.workHours.end}</p>
+                </div>
+
+                {/* --------------- BUTTONS --------------- */}
+                <div className={styles.buttonsContainer}> 
+
+                    {/* --------------- START ACTIVITY BTN --------------- */}
+                    <Modal trigger={(
+                        <button
+                            id='start-activity'
+                            className={styles.startActivityBtn}
+                        >
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
+                            <img src="/timer.svg" alt="" />
+                            <p>{languageLibrary[language].homePageBtnStartActivity}</p>
+                        </button>                      
+                    )}>
+                        <ActivityForm
+                            planMode={false}
+                        />
+                    </Modal>
+
+                    {/* --------------- ADD BTN --------------- */}
+                    <Modal trigger={(
+                        <button className={styles.addActivityBtn}>                      
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
+                            <img src="/add-large.svg" alt="" />
+                            <p>{languageLibrary[language].homePageBtnAddActivity}</p>
+                        </button>)}                  
+                    >
+
+                        {workformData ? (
+                            <ActivityForm
+                                planMode={true}
+                            />
+                        ) : (
+                            <>
+                                <p>{languageLibrary[language].aFormEnterWD}</p>
+                                <WorkDayForm />
+                            </>
+                        )}
+                    </Modal>
+
+                    {/* --------------- START / STOP BTN --------------- */}
+                    {agendaActivities.length === 0 && !plannerMode
+                        ? <></>
+                        : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
+                            <div className={styles.colorBlock} style={{ backgroundColor: plannerMode ? '#EF2917' : '#358C4E' }}></div>
+                            <img src={plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
+                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner}</p>
+                        </button>
+                    }
+                </div>
             </div>
-
+        </div>
         </>
-    );
-}
+    ) : (
 
-export default Planner;
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            <p style={{margin: '5% 0 0 0', fontSize: '1.5rem', textAlign: 'center'}}>
+                {languageLibrary[language].welcome} <span style={{fontWeight: '700'}}>BAE {languageLibrary[language].pageTitle}</span>
+            </p>
+            <p>{languageLibrary[language].prompt}</p>
+            <p style={{margin: '0 0 3% 0', fontStyle: 'italic', fontSize: '0.9rem'}}>
+                {languageLibrary[language].change}
+            </p>
+            <div style={{ padding: '18px', borderRadius: '16px', marginTop: '2%'}} className={styles.firstPrompt}>
+                <WorkDayForm />
+            </div>
+        </div>
+    )
+)};
+

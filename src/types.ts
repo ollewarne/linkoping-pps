@@ -8,20 +8,25 @@ export interface ActivityType {
     title: string;
     estimatedDuration: number;
     isActive: boolean;
+    isCompleted: boolean;
+    isMissed?: boolean;
     totalTimeSpent: number;
+    date: string;
     statistics: {
         [timestamp: string]: {
-            efficiency: number | null;
+            productivity: number | null;
             energy: number | null;
             factor: string | null;
         }
     };
     activeTime: number;
     breakTime: number;
+    currentPhaseTimeSpent: number;
+    currentPhase: "work" | "break";
 }
 
 export interface StatisticEntry {
-    efficiency: number | null;
+    productivity: number | null;
     energy: number | null;
     factor: string | null;
 }

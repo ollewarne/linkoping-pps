@@ -98,25 +98,32 @@
 font-weight: bold;
 }
 
-.popup-button {
-  display: flex;
-  gap: 8px;
-  
+    .button-close {
+    padding: 10px 24px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    align-self: flex-start;
+    margin-top: 4px;
+    margin-bottom: 5px;
 }
 
-.popup-button i {
+.button-close i {
   background-color: var(--btn-bg);
   color: var(--btn-text);
   cursor: pointer;
   font-size: 12px;
   padding: 4px;
   border-radius: 50%;
-  
 }
 
-.popup-button i:hover {
-  background: var(--btn-hover);
-  cursor: pointer;
+.button-close:hover {
+  background-color: var(--btn-hover);
 }
 .day-details-container {
   max-height: 25vh;
@@ -124,66 +131,85 @@ font-weight: bold;
 }
 
 @media (max-width: 1024px) {
-  .popup {
-    max-width: 380px;
+  .popup-text {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .workday-section h3,
+  .activities-section h3 {
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  .workday-section p,
+  .activity-item p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 4px 0;
+  }
+
+  .activity-item h4 {
+    font-size: 1rem;
+    margin-bottom: 4px;
   }
 }
 @media (max-width: 768px) {
-  .popup {
-    max-width: 95%;
-    max-height: 90vh;
+  .popup-text {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
   }
 
   .workday-section h3,
   .activities-section h3 {
     font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .workday-section p,
+  .activity-item p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 3px 0;
+  }
+
+  .activity-item h4 {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-text {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    font-weight: bold;
+  }
+
+  .workday-section h3,
+  .activities-section h3 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+
+  .workday-section p {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 4px 0;
+    font-weight: bold;
   }
 
   .activity-item h4 {
     font-size: 0.9rem;
+    margin-bottom: 4px;
+    font-weight: bold;
   }
 
-  .activity-item p,
-  .statistics div p {
+  .activity-item p {
     font-size: 0.8rem;
-  }
-
-  .popup-button i {
-    font-size: 11px;
-    padding: 4px;
-  }
-}
-@media (max-width: 480px) {
-  .popup-overlay {
-    align-items: flex-end;
-  }
-
-  .popup {
-    max-width: 100%;
-    width: 100%;
-    height: 90vh;
-    max-height: 90vh;
-    border-radius: 16px 16px 0 0;
-  }
-
-  .popup h2 {
-    font-size: 1.1rem;
-  }
-
-  .activity-item {
-    padding: 10px;
-  }
-
-  .activity-item h4 {
-    font-size: 0.85rem;
-  }
-
-  .activity-item p,
-  .statistics div p {
-    font-size: 0.75rem;
-  }
-
-  .popup-button {
-    justify-content: space-between;
+    line-height: 1.4;
+    margin: 2px 0;
+    opacity: 0.9;
+    font-weight: bold;
   }
 }

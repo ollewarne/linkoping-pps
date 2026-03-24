@@ -1,5 +1,22 @@
+
+h1 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 6%;
+    margin: 0 0 0 5%;
+    align-self: flex-end;
+    padding-bottom: 1%;
+}
+
+h1 span {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    letter-spacing: normal;
+}
+
 .container {
-    margin: 0 auto;
+    margin: 2% auto;
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
@@ -30,6 +47,7 @@
     align-items: flex-end;
     gap: 1em;
     padding-bottom: 1%;
+    margin: 0 5% 0 0;
 }
 
 .navigation {
@@ -50,7 +68,7 @@
 
 .navLink {
     position: relative;
-    padding: 0.7rem 3rem;
+    padding: 0.6rem 3rem 0.5rem 3rem;
     text-decoration: none;
     background-color: var(--navlink-bg);
 
@@ -63,7 +81,7 @@
 
     margin-left: -0.5rem;
     
-    font-size: 20px;
+    font-size: 1.2rem;
     color: var(--text);
     
     transition: background-color 0.2s ease,
@@ -86,7 +104,7 @@
 
 .active {
     position: relative;
-    padding: 0.7rem 3rem;
+    padding: 0.6rem 3rem 0.5rem 3rem;
     text-decoration: none;
     background-color: var(--bg);
 

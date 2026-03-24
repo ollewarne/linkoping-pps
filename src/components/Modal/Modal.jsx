@@ -7,14 +7,12 @@ function Modal({ trigger, children }) {
 
     return (
         <>
-            <div onClick={() => setIsOpen(true)}>
-                {trigger}
-            </div>
+            {React.cloneElement(trigger, { onClick: () => setIsOpen(true) })}
             {isOpen && (
                 <div className="modal-overlay" onClick={() => setIsOpen(false)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <button className="modal-close" onClick={close}>×</button>
-                        {React.Children.map(children, child => React.cloneElement(child, {onClose: close}))}
+                        {React.Children.map(children, child => React.cloneElement(child, { onClose: close }))}
                     </div>
                 </div>
             )}

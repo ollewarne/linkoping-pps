@@ -1,7 +1,7 @@
 import styles from "./WorkDayForm.module.css";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useTranslator } from "../../contexts/languageContext";
-import { languageLibrary } from "../../locales/language";
+import { languageLibrary } from "../../locales/language.ts";
 import { userOptions } from "../../constants/userOptions";
 import {convertStringTimeToMinutes} from "../../utils/convertTime";
 import { saveWorkdayToStorage, getWorkdayFromStorage } from "../../utils/workdayStorage";
@@ -61,7 +61,7 @@ export default function WorkDayForm({onClose}) {
 
         if(convertStringTimeToMinutes(workStart) >= convertStringTimeToMinutes(workEnd)){
             workHoursEnd.current.setCustomValidity(
-                languageLibrary[language].errorEndBeforeStart // "End time can't be after start time"
+                languageLibrary[language].errorEndBeforeStart // "End time can't be before start time"
             );
             workHoursEnd.current.reportValidity();
             return;
@@ -158,20 +158,20 @@ export default function WorkDayForm({onClose}) {
         // };
 
         /* ------------------ SHOW SUCESSFULL SUBMIT ------------------ */
-        showNotification("Saved!");
+        showNotification(languageLibrary[language].saved);
         onClose();
     };
 
     // ------------------ DRAW FORM ------------------
     return (
     <>
-        <h2>{languageLibrary[language].form1Header /* 'Register Workday' */}</h2>
+        <h2>{languageLibrary[language].wdFormTitle /* 'Register Workday' */}</h2>
     
         <form onSubmit={handleSubmit} noValidate>
 
             {/* ---------- WORKING HOURS ---------- */}
             <fieldset>
-                <legend>{languageLibrary[language].form1WorkH /* 'Working hours' */}</legend>
+                <legend>{languageLibrary[language].wdFormWHTitle /* 'Working hours' */}</legend>
 
                 <label htmlFor="work-hours-start">{languageLibrary[language].start /* 'Start' */}</label>
                 <input 
@@ -201,14 +201,14 @@ export default function WorkDayForm({onClose}) {
                 onChange={(e) => setHasNonWorkHours(e.target.checked)}
             />
             <label htmlFor="register-non-work" style={{margin: '0'}} /* ------------ MOVE TO STYLE ------------ */> 
-                {languageLibrary[language].form1Checkbox /* 'I have non-working hours to register' */}
+                {languageLibrary[language].wdFormNonWH /* 'I have non-working hours to register' */}
             </label>
             </span>
 
             {hasNonWorkHours && (
                     <fieldset>
-                        <legend>{languageLibrary[language].nonWorkH /* 'Non-working hours' */}</legend>
-                        <p className={styles.explanation}>{languageLibrary[language].nonWorkHExplanation}</p>
+                        <legend>{languageLibrary[language].wdFormNonWHTitle /* 'Non-working hours' */}</legend>
+                        <p className={styles.explanation}>{languageLibrary[language].wdFormNonWHExplain /* 'Block the time that you don\'t want to plan hour' */}</p>
 
                         <label htmlFor="non-work-hours-start">{languageLibrary[language].start}</label>
                         <input
@@ -234,7 +234,7 @@ export default function WorkDayForm({onClose}) {
 
             {/* ---------- ENVIRONMENT ---------- */}
             <fieldset>
-                <legend>{languageLibrary[language].workEnvironment /* 'Work Environment' */}</legend>
+                <legend>{languageLibrary[language].wdFormWorkEnvironment /* 'Work Environment' */}</legend>
                 <select
                     ref={workEnvironment}
                     id="working-environment"
@@ -242,7 +242,7 @@ export default function WorkDayForm({onClose}) {
                     onChange={(e) => e.target.setCustomValidity("")}>
 
                     <option value="" disabled>
-                        {languageLibrary[language].workEnvironmentDefault /* 'Select an environment' */}
+                        {languageLibrary[language].wdFormWorkEnvironmentDefault /* 'Select an environment' */}
                     </option>
 
                     {environmentOptions.map((environment) => (
@@ -255,7 +255,7 @@ export default function WorkDayForm({onClose}) {
 
             {/* ---------- SUBMIT ---------- */}
             <div>
-                <button type="submit">{languageLibrary[language].save /* Save */}</button>
+                <button type="submit" className={styles.buttonSubmit}>{languageLibrary[language].save /* Save */}</button>
             </div>
             
         </form>

@@ -2,10 +2,18 @@ import { mockData } from "../../constants/mockData";
 import { DayDetailsPopup } from "./DayDetails/DayDetails";
 import { useCalendarMonthsWeeksDays } from "./MonthsWeeksDays/CalendarMonthsWeeksDays";
 import "./MonthsWeeksDays/CalendarApp.css";
-import Modal from "../Modal/Modal";
+import ModalToCalendarDaysPopup from "./DayDetails/ModalToCalendarDaysPopup/ModalToCalendarDaysPopup";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
+import { getHistorydataFromStorage } from "../../utils/workdayStorage";
 
 
-const CalenderApp = () => {
+const CalenderApp = ({useRealData}) => {
+
+  const historyData = getHistorydataFromStorage();
+  const source = useRealData ? historyData : mockData;
+
+
   const {
     daysOfWeek,
     monthOfYear,
@@ -22,18 +30,21 @@ const CalenderApp = () => {
     return `${currentYear}-${monthString}-${dayString}`;
   };
 
-  const normalizedMock = {};
-  for (let key in mockData) {
-    const [y, m, d] = key.split("-");
-    const fullDate = `20${y}-${m}-${d}`;
-    normalizedMock[fullDate] = mockData[key];
-  }
+  // const normalizedMock = {};
+  // for (let key in source) {
+  //   const [y, m, d] = key.split("-");
+  //   const fullDate = `20${y}-${m}-${d}`;
+  //   normalizedMock[fullDate] = source[key];
+  // }
+
+  const { language } = useTranslator();
+  const t = languageLibrary[language];
 
   return (
     <div className="Calender-container">
       <div className="Calendar-app">
         <div className="calender">
-          <h1 className="Heading">Calendar</h1>
+          <h1 className="Heading">{t.calendarTitle}</h1>
 
           <div className="Navigate-Date">
             <h2 className="Month">{monthOfYear[currentMonth]}</h2>
@@ -66,12 +77,12 @@ const CalenderApp = () => {
               }
 
               return (
-                <Modal
+                <ModalToCalendarDaysPopup
                   key={index}
                   trigger={
                     <span
                       className={`${obj.isToday ? "today" : ""} ${
-                        normalizedMock[dateStr] ? "has-event" : ""
+                        source[dateStr] ? "has-event" : ""
                       }`}
                     >
                       {obj.day}
@@ -80,9 +91,9 @@ const CalenderApp = () => {
                 >
                   <DayDetailsPopup
                     selectedDate={dateStr}
-                    dayData={normalizedMock[dateStr]}
+                    dayData={source[dateStr]}
                   />
-                </Modal>
+                </ModalToCalendarDaysPopup>
               );
             })}
           </div>

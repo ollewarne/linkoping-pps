@@ -1,42 +1,86 @@
 .statistics-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 2fr;
-    gap: 2rem;
-    width: 100%;
-    min-height: 100vh;
-    padding: 2rem 4rem;
-    box-sizing: border-box;
-    align-items: stretch;
-   
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  height: auto;
+  padding: 2rem 4rem;
+  box-sizing: border-box;
 }
 
-.statistics-wrapper > * {
-    height: 100%;
+.left-column-statistics,
+.right-column-statistics {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2rem;
+  min-height: 0;
 }
-.statistics-wrapper > .CalendarApp {
-    margin-right: 375px;
+
+.statistics-item {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
-.statistics-wrapper > .TimeSpentChart {
-    margin-right: 225px;
+.left-column-statistics > .statistics-item.CalendarApp {
+  margin-left: -4.5rem;
+  width: calc(100% + 5rem);
+  box-sizing: border-box;
+}
+
+.statistics-item TimeSpentChart {
+  padding-right: 0;
 }
 
 @media (max-width: 1024px) {
-    .statistics-wrapper{
-        gap: 1.5rem;
-        padding: 2rem;
-    }
+  .statistics-wrapper {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+  }
+  .left-column-statistics {
+    order: -1;
+  }
+  .right-column-statistics {
+    grid-template-rows: auto;
+    gap: 1.5rem;
+    order: -2;
+  }
+  .statistics-item {
+    min-height: 280px;
+  }
+  .left-column-statistics > .statistics-item.CalendarApp {
+    margin-left: 0 !important;
+    width: 100% !important;
+    transform: none !important;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .statistics-item.CalendarApp > * {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 }
+
 @media (max-width: 768) {
-    .statistics-wrapper{
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        padding: 1.5rem;
-    }
+  .left-column-statistics > .statistics-item.CalendarApp {
+    max-width: 95%;
+  }
+  .statistics-wrapper {
+    padding: 1rem 1.5rem;
+    gap: 1.25rem;
+  }
 }
-@media (max-width: 480) {
-    .statistics-wrapper{
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 1rem;
-    }
+
+@media (max-width: 480px) {
+  .left-column-statistics > .statistics-item.CalendarApp {
+    max-width: 100%;
+  }
+  .statistics-wrapper {
+    padding: 0.8rem 1rem;
+    gap: 1rem;
+  }
 }

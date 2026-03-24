@@ -1,73 +1,106 @@
-.card {
-  width: 90%;
-  padding: 12px 16px;
-  border-style: solid;
-  border-width: 5px;
+.cardContainer {
+  width: 100%;
   border-radius: 16px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2), 
-              0 2px 8px rgba(0, 0, 0, 0.2);
-
-  color: var(--text);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background-color: var(--notepad-bg);
+  /* box-shadow: -2px 3px 4px rgba(0, 0, 0, 0.3); */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-/* .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12), 
-              0 4px 12px rgba(0, 0, 0, 0.08);
-} */
+/* --------------- CARD HEADER --------------- */
+.cardHeader, .cardFormHeader {
+  border-radius: 16px 16px 0 0 ;
+}
 
-/* --------------- CARD CONTENT --------------- */
-.cardSpecificsTop, .cardSpecificsBottom {
+.cardForm {
+  border-radius: 16px;
+}
+
+.cardHeader {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3;
+}
+
+
+.cardHeader .cardHeaderContainer {
+  margin: 0 2% 0 2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--E5D9D9);
+}
+
+.cardHeader .cardHeaderContainer div {
+  display: flex;
+  align-items: center;
+}
+
+.cardHeader .cardHeaderContainer div p {
+  text-transform: uppercase;
+  letter-spacing: 1%;
+  margin-right: 10%;
+  font-weight: 700;
+}
+
+.cardHeaderScheduled {
+  font-size: 1.1rem;
+  font-weight: 600;
+  grid-column: 1;
+}
+
+.cardHeaderCategory {
+  grid-column: 3;
+  padding: 1% 2%;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 1px solid var(--E5D9D9);
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+
+/* --------------- CARD MAIN --------------- */
+.cardMain {
+  background-color: var(--notepad-bg);
+  border-radius: 0 0 16px 16px;
+}
+
+.cardMainTitle {
+  margin: 0 2% 0 2%;
+  padding: 3% 0 3% 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-bottom: 2px solid;
+}
+
+/* --------------- CARD FOOTER --------------- */
+.cardFooter {
+  width: 92%;
+  margin: auto;
+  padding: 1% 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.scheduled {
-  margin: 0;
-  font-weight: 600;
+.cardFooterDuration {
+  font-size: 0.9rem;
+  opacity: 0.5;
 }
 
-.title {
-  font-size: 1.5rem;
-  margin: 0;
-  padding: 0.5% 0 3% 0;
-  border-bottom: 1px solid;
+.cardFooterDuration span {
+ font-weight: 700;
 }
 
-.category {
-  font-size: 1.1rem;
-  font-weight: 700;
-  padding: 1% 2%;
-  border-radius: 8px;
-  color: white;
-}
-
-.cardSpecificsBottom {
-  padding-top: 3%;
-}
-
-.duration{
-  margin: 0;
-}
-
-.duration span {
-  font-weight: 700;
-}
-
-/* --------------- UTILITY BUTTONS --------------- */
+/* --------------- CARD FOOTER: UTILITY BUTTONS --------------- */
 .utility-buttons {
   display: flex;
-  justify-content: flex-end;
-  gap: 5px;
+  gap: 8px;
 }
 
 .utility-buttons button {
   all: unset;
   cursor: pointer;
-  margin: 1%;
   transition: transform 0.2s ease;
 }
 
@@ -89,15 +122,17 @@
 }
 
 .confirmText {
-  font-size: 13px;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .confirmButton {
-    color: white;
+    padding: 4px 12px;
+    color: var(--E5D9D9);
+    font-size: 0.8rem;
+    font-weight: 700;
     border: none;
     border-radius: 10px;
-    padding: 4px 12px;
-    font-size: 0.8rem;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -108,32 +143,81 @@
 }
 
 .confirmYes {
-    background: #358C4E;
+    background: var(--confirm);
 }
 
 .confirmNo {
-    background-color: #EF2917;
+    background-color: var(--reject);
 }
 
+/* --------------- CARD EDIT FORM --------------- */
+.cardForm {
+  background-color: var(--notepad-bg);
+}
+
+.cardFormHeader {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 1.7%;
+
+}
+
+.cardFormHeaderTime {
+  display: flex;
+  gap: 10px;
+}
+
+.cardFormHeaderTime input[type=time] {
+  border: 2px solid var(--E5D9D9);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+.cardFormHeader .category {
+  padding: 1% 2%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: 2px solid var(--E5D9D9);
+  border-radius: 6px;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+.cardForm input[type=text] {
+  width: 92%;
+  margin: 1% auto;
+  border: none;
+  border-radius: 4px 4px 0 0;
+  padding: 1.5% 0 2% 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-bottom: 2px solid;
+  background-color: var(--bg);
+  color: var(--text);
+}
 
 /* --------------- EDIT CONFIRM BUTTONS --------------- */
 .edit-confirm {
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 2%;
 }
 
 .edit-confirm button {
-  width: 30%;
+  width: 15%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--E5D9D9);
   border: none;
   border-radius: 10px;
-  margin: 0 1%;
   padding: 4px 12px;
   font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
   transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
@@ -150,61 +234,14 @@
 
 .editCancel {
   background-color: #EF2917;
+  margin-right: 4%;
 }
 
-/* --------------------------------------------- */
-/* --------------- TABLET LAYOUT --------------- */
-/* --------------------------------------------- */
-@media (max-width: 1024px) {
 
-  .card {
-    width: 95%;
-    padding: 12px;
-  }
 
-  .title {
-    font-size: 1.3rem;
-  }
+@media (max-width: 768px) {
 
-  .category {
-    font-size: 1rem;
-  }
-
-  .edit-confirm button {
-    width: 30%;
-  }
-
+.cardContainer {
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.25);
 }
-/* --------------------------------------------- */
-/* --------------- MOBILE LAYOUT --------------- */
-/* --------------------------------------------- */
-@media (max-width: 600px) {
-
-  .card {
-    width: 100%;
-    padding: 10px;
-    border-width: 4px;
-  }
-
-  .title {
-    font-size: 1.2rem;
-  }
-
-  .category {
-    font-size: 0.95rem;
-  }
-
-  .duration {
-    font-size: 0.9rem;
-  }
-
-  .edit-confirm {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .edit-confirm button {
-    width: 100%;
-  }
 }

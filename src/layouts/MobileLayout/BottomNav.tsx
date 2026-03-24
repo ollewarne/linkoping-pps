@@ -1,18 +1,19 @@
 import { NavLink } from "react-router";
-import styles from "./BottomNav.module.css"
+import styles from "./BottomNav.module.css";
+import { useTranslator } from "../../contexts/languageContext";
+import { languageLibrary } from "../../locales/language";
 
 export default function BottomNav() {
+    const {language} = useTranslator();
+
     return (
         <div className={styles.container}>
             <nav className={styles.navigation}>
-                <NavLink to="/" end className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                    Activity
+                <NavLink to="/" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
+                    {languageLibrary[language].navLinkHome} {/*Home*/}
                 </NavLink>
-                <NavLink to="/planner" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                    Planner
-                </NavLink>
-                <NavLink to="/history" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
-                    History
+                <NavLink to="/statPage" className={({ isActive }) => (isActive ? styles.active : styles.navLink)}>
+                    {languageLibrary[language].navLinkStats} {/*Statistics*/}
                 </NavLink>
             </nav>
         </div>
