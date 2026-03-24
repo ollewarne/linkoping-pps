@@ -17,9 +17,9 @@ import { languageLibrary } from "../../locales/language.ts";
 
 
 function Planner() {
-    const {language} = useTranslator();
-    const {activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
-    const {activeActivity } = useTimer();
+    const { language } = useTranslator();
+    const { activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
+    const { activeActivity } = useTimer();
     const [currentTime, setCurrentTime] = useState(
         getCurrentTime()
     );
@@ -42,6 +42,16 @@ function Planner() {
         const missed = [];
 
         plannedActivities.forEach((a) => {
+            if (a.category === "NonWork") {
+                const end = +convertStringTimeToMinutes(a.scheduledTimeStop);
+                if (currentTime >= end) {
+                    history.push(a);
+                    return;
+                }
+                agenda.push(a)
+                return
+            }
+
             if (a.isActive) {
                 active.push(a);
                 return;
@@ -171,9 +181,9 @@ function Planner() {
                     {agendaActivities.length === 0 && !plannerMode
                         ? <></>
                         : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
-                            <div className={styles.colorBlock} style={{backgroundColor: plannerMode ? '#EF2917' : '#358C4E'}}></div>
-                            <img src={ plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
-                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner }</p> {/* Stop Planned : Start Planned */}
+                            <div className={styles.colorBlock} style={{ backgroundColor: plannerMode ? '#EF2917' : '#358C4E' }}></div>
+                            <img src={plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
+                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner}</p> {/* Stop Planned : Start Planned */}
                         </button>
                     }
                 </div>
