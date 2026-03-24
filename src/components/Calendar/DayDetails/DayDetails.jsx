@@ -35,13 +35,13 @@ export const DayDetailsPopup = ({
           <div className="workday-section">
             <h3>{t.wdFormTitle}</h3>
             <p>
-              {t.start}: {dayData.workdayData.workHours.start} - {dayData.workdayData.workHours.end}
+              {t.start}: {dayData?.workdayData?.workHours?.start} - {dayData?.workdayData?.workHours?.end}
             </p>
             <p>
-              Lunch: {dayData.workdayData.nonWorkHours.start} - {dayData.workdayData.nonWorkHours.end}
+              Lunch: {dayData?.workdayData?.nonWorkHours?.start} - {dayData?.workdayData?.nonWorkHours?.end}
             </p>
             <p>
-              {t.wdFormWorkEnvironment}: {getTranslatedEnvironment(dayData.workdayData.workEnvironment.location)}
+              {t.wdFormWorkEnvironment}: {getTranslatedEnvironment(dayData?.workdayData?.workEnvironment?.location)}
             </p>
           </div>
 

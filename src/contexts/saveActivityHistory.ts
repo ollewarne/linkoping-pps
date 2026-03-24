@@ -1,6 +1,6 @@
 import type { ActivityType } from "../types";
 
-export function saveActivityHistory(activities: ActivityType[]) {
+export function saveActivityHistory(activities: ActivityType[],workdayData: any) {
   const today = new Date().toISOString().split("T")[0];
 
   const historyKey = "activityHistory";
@@ -9,10 +9,12 @@ export function saveActivityHistory(activities: ActivityType[]) {
   if (!existingHistory[today]) {
     existingHistory[today] = {
       activities: [],
+      workdayData: {}
     };
   }
 
   existingHistory[today].activities = activities;
+  existingHistory[today].workdayData = workdayData;
 
   localStorage.setItem(historyKey, JSON.stringify(existingHistory));
 }
