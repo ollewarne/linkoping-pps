@@ -164,7 +164,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 timeStamp: Date.now()
             }
             localStorage.setItem("activities", JSON.stringify(data));
-            saveActivityHistory(activities);
+            saveActivityHistory(activities,workday);
 
             if (!workday) return;
 
