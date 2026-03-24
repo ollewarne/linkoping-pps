@@ -180,6 +180,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                     scheduledTimeStop: workday.nonWorkHours.end,
                     isActive: false,
                     isCompleted: false,
+                    isMissed: false,
                     totalDuration: totalDuration * 60
                 };
 
@@ -236,6 +237,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                 && !a.isActive
                 && !a.isCompleted
                 && !a.isMissed
+                && a.category !== "NonWork"
         )
 
         if (!activityDueToStart) return;
