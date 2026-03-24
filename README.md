@@ -1,5 +1,6 @@
 # BAE Productivity
 
+Rapport kring arbetet med projektet: [Rapport linköping](https://docs.google.com/document/d/1FmoNj-0hzrGWGfIcODe04Tu4mVXEnSxWANqkgJZkD6U/edit?usp=sharing)  
 En webapp som är till för att planera din arbetsdag. Där användaren får spara statistik och se vilka arbetsuppgifter som man utför effektivast på olika tidpunkter.
 
 <a href="assets/screenshot.png">
