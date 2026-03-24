@@ -7,17 +7,19 @@ import { useActivities } from "../contexts/activityContext";
 import { useState } from "react";
 import CalendarApp from "../components/Calendar/CalendarApp";
 import "./StatisticsPage.css";
+import { hasHistoryData } from "../utils/hasHistoryData";
 
 function StatisticsPage() {
-  const { activities } = useActivities();
   const [useRealData, setUseRealData] = useState(false);
   const historyData = JSON.parse(localStorage.getItem("activityHistory") || "{}");
-
+  const hasRealData = hasHistoryData(historyData);
   return (
     <>
-      <button type="button" onClick={() => setUseRealData((v) => !v)}>
-        {useRealData ? "Mock data" : "Real data"}
-      </button>
+      {hasRealData && (
+        <button type="button" onClick={() => setUseRealData((v) => !v)}>
+          {useRealData ? "Mock data" : "Real data"}
+        </button>
+      )}
 
       <div className="statistics-wrapper">
         <div className="left-column-statistics">
