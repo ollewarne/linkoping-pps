@@ -45,13 +45,13 @@ npm run dev
 
 ##  Grupp
 
-| Namn | Roll |
-|---|---|
-| Delzar Kafashi | [Roll/ansvar] |
-| Ingrid Berggren | [Roll/ansvar] |
-| Mattias Ingvaldsson | [Roll/ansvar] |
-| Mårten Mattsson | PauseStatistics, PopupManager, Context |
-| Olle Warne | [Roll/ansvar] |
+| Namn 
+|---
+| Delzar Kafashi 
+| Ingrid Berggren 
+| Mattias Ingvaldsson 
+| Mårten Mattsson 
+| Olle Warne 
 
 ---
 
