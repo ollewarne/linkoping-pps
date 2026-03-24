@@ -11,6 +11,7 @@ import "./StatisticsPage.css";
 function StatisticsPage() {
   const { activities } = useActivities();
   const [useRealData, setUseRealData] = useState(false);
+  const historyData = JSON.parse(localStorage.getItem("activityHistory") || "{}");
 
   return (
     <>
@@ -27,7 +28,7 @@ function StatisticsPage() {
            <div className="statistics-item ProductivityChart">
             <ProductivityChart
               mockData={mockData}
-              historyData={activities}
+              historyData={historyData}
               useRealData={useRealData}
             />
           </div>
@@ -39,14 +40,14 @@ function StatisticsPage() {
           <div className="statistics-item TimeSpentChart">
             <TimeSpentChart
               mockData={mockData}
-              historyData={activities}
+              historyData={historyData}
               useRealData={useRealData}
             />
           </div>
           <div className="statistics-item EneryChart">
             <EnergyChart
               mockData={mockData}
-              historyData={activities}
+              historyData={historyData}
               useRealData={useRealData}
             />
           </div>
