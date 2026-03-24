@@ -162,6 +162,10 @@
     filter: var(--filter-svg);
 }
 
+.firstPrompt {
+    border: 1px solid var(--text);
+    background-color: var(--notepad-bg);
+}
 
 
 /* ===================== TABLET ===================== */

@@ -119,9 +119,12 @@ export const languageLibrary: Record<string, Record<string, string | string[]>> 
     locWorstCategory: 'Worst Category: ',
     locExplain1: 'You achieve best productivity between: ',
     locExplain2: 'You have the most energy around: ',
-    locNoData: 'No data to display'
+    locNoData: 'No data to display',
 
-
+    // LANDING PAGE:
+    welcome: 'Welcome to',
+    prompt: 'Please enter the specifics for your workday to access the app.',
+    change: 'You can access or change this later from the settings menu.',
 
 
     },
@@ -255,6 +258,12 @@ export const languageLibrary: Record<string, Record<string, string | string[]>> 
     locWorstCategory: 'Sämst Kategori: ',
     locExplain1: 'Du uppnår du bäst produktivitet mellan: ',
     locExplain2: 'Du har mest energi runt: ',
-    locNoData: 'Ingen data att visa'
+    locNoData: 'Ingen data att visa',
+
+    // LANDING PAGE:
+    welcome: 'Välkommen till',
+    prompt: 'Ange uppgifterna för din arbetsdag för att få tillgång till appen.',
+    change: 'Du kan komma åt eller ändra detta senare via inställningsmenyn.',
+
     },
 }
