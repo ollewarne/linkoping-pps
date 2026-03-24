@@ -16,7 +16,7 @@ import { useTranslator } from "../../contexts/languageContext";
 import { languageLibrary } from "../../locales/language.ts";
 
 
-function Planner() {
+export default function Planner() {
     const { language } = useTranslator();
     const { activityDispatch, plannedActivities, plannerMode, setPlannerMode } = useActivities();
     const { activeActivity } = useTimer();
@@ -93,52 +93,92 @@ function Planner() {
     let workformData = getWorkdayFromStorage();
     const date = new Date().toLocaleDateString();
 
+
     return (
+
+    workformData ? (
         <>
+        <div className={styles.plannerContainer}>
+            <h2 className={styles.date}>{date}</h2>
 
-        {workformData ? (
-            <>
-            <div className={styles.plannerContainer}>
-                <h2 className={styles.date}>{date}</h2>
+            <div className={styles.plannerGrid}>
 
-                <div className={styles.plannerGrid}>
+                {/* --------------- HISTORY --------------- */}
+                <div className={styles.historyContainer}>
+                    <p className={styles.historyTitle} onClick={() => setHistoryOpen(!historyOpen)}>
+                        {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <img className={styles.historyExpandable} src={historyOpen ? "/collaps.svg" : "/expand.svg"} />}
+                    </p>
+                    {(historyOpen || window.innerWidth > 768) && historyActivities.map((a, index) => (
+                        <HistoryCard key={a.id} activity={a} index={index} />
+                    ))}
+                </div>
 
-                    {/* --------------- HISTORY --------------- */}
-                    <div className={styles.historyContainer}>
-                        <p className={styles.historyTitle} onClick={() => setHistoryOpen(!historyOpen)}>
-                            {languageLibrary[language].homeHistoryTitle} {window.innerWidth <= 768 && <img className={styles.historyExpandable} src={historyOpen ? "/collaps.svg" : "/expand.svg"} />}
-                        </p>
-                        {(historyOpen || window.innerWidth > 768) && historyActivities.map((a, index) => (
-                            <HistoryCard key={a.id} activity={a} index={index} />
-                        ))}
-                    </div>
+                {/* --------------- AGENDA --------------- */}
+                <div className={styles.agendaContainer}>
+                    {workformData &&
+                        <p className={styles.agendaTime}><span>{languageLibrary[language].start}</span> {workformData.workHours.start}</p> /* Start xx:xx */
+                    }
 
-                    {/* --------------- AGENDA --------------- */}
-                    <div className={styles.agendaContainer}>
-                        {workformData &&
-                            <p className={styles.agendaTime}><span>{languageLibrary[language].start}</span> {workformData.workHours.start}</p> // Start xx:xx
-                        }
+                    <CountdownDisplay />
 
-                        <CountdownDisplay />
+                    {/* --------------- EMPTY PAGE --------------- */}
+                    {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
+                        ? <div className={styles.emptyContainer}>
+                            <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
+                            <p className={styles.emptyText}>{languageLibrary[language].homeEmptyPage}</p>
+                        </div>
 
-                        {/* --------------- EMPTY PAGE --------------- */}
-                        {agendaActivities.length === 0 && activeActivities.length === 0 && !activeActivity
-                            ? <div className={styles.emptyContainer}>
-                                <img src="/empty.svg" alt="Empty box" className={styles.emptyImg} />
-                                <p className={styles.emptyText}>{languageLibrary[language].homeEmptyPage}</p> {/* A bit empty here...? */}
-                            </div>
+                        /* --------------- ACTIVITY CARDS PAGE --------------- */
+                        : <>
+                            {
+                                agendaActivities.map((a, index) => (
+                                    <ActivityCard key={a.id} activity={a} index={index} />
+                                ))
+                            }
+                        </>
+                    }
+                    <p className={styles.endTime}><span>{languageLibrary[language].end}</span> {workformData.workHours.end}</p>
+                </div>
 
-                            // --------------- ACTIVITY CARDS PAGE ---------------
-                            : <>
-                                {
-                                    agendaActivities.map((a, index) => (
-                                        <ActivityCard key={a.id} activity={a} index={index} />
-                                    ))
-                                }
+                {/* --------------- BUTTONS --------------- */}
+                <div className={styles.buttonsContainer}> 
+
+                    {/* --------------- START ACTIVITY BTN --------------- */}
+                    <Modal trigger={(
+                        <button
+                            id='start-activity'
+                            className={styles.startActivityBtn}
+                        >
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
+                            <img src="/timer.svg" alt="" />
+                            <p>{languageLibrary[language].homePageBtnStartActivity}</p>
+                        </button>                      
+                    )}>
+                        <ActivityForm
+                            planMode={false}
+                        />
+                    </Modal>
+
+                    {/* --------------- ADD BTN --------------- */}
+                    <Modal trigger={(
+                        <button className={styles.addActivityBtn}>                      
+                            <div className={styles.colorBlock} style={{ backgroundColor: '#358C4E' }}></div>
+                            <img src="/add-large.svg" alt="" />
+                            <p>{languageLibrary[language].homePageBtnAddActivity}</p>
+                        </button>)}                  
+                    >
+
+                        {workformData ? (
+                            <ActivityForm
+                                planMode={true}
+                            />
+                        ) : (
+                            <>
+                                <p>{languageLibrary[language].aFormEnterWD}</p>
+                                <WorkDayForm />
                             </>
-                        }
-                        <p className={styles.endTime}><span>{languageLibrary[language].end}</span> {workformData.workHours.end}</p> {/* End */}
-                    </div>
+                        )}
+                    </Modal>
 
                     {/* --------------- START / STOP BTN --------------- */}
                     {agendaActivities.length === 0 && !plannerMode
@@ -146,28 +186,27 @@ function Planner() {
                         : <button onClick={() => setPlannerMode(!plannerMode)} className={styles.startActivityBtn}>
                             <div className={styles.colorBlock} style={{ backgroundColor: plannerMode ? '#EF2917' : '#358C4E' }}></div>
                             <img src={plannerMode ? "/stop.svg" : "/play.svg"} alt="" />
-                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner}</p> {/* Stop Planned : Start Planned */}
+                            <p>{plannerMode ? languageLibrary[language].homePageBtnStopPlanner : languageLibrary[language].homePageBtnStartPlanner}</p>
                         </button>
                     }
                 </div>
             </div>
-            </>
-        ) : (
+        </div>
+        </>
+    ) : (
 
-                <div style={{display: 'flex', flexDirection: 'column'}}>
-                <p style={{margin: '5% 0 0 0', fontSize: '1.5rem', textAlign: 'center'}}>
-                    {languageLibrary[language].welcome} <span style={{fontWeight: '700'}}>BAE {languageLibrary[language].pageTitle}</span>
-                </p>
-                <p>{languageLibrary[language].prompt}</p>
-                <p style={{margin: '0 0 3% 0', fontStyle: 'italic', fontSize: '0.9rem'}}>
-                    {languageLibrary[language].change}</p>
-                    <div style={{ padding: '18px', borderRadius: '16px', marginTop: '2%'} }
-                        className={styles.firstPrompt}>
-                        <WorkDayForm />
-                    </div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            <p style={{margin: '5% 0 0 0', fontSize: '1.5rem', textAlign: 'center'}}>
+                {languageLibrary[language].welcome} <span style={{fontWeight: '700'}}>BAE {languageLibrary[language].pageTitle}</span>
+            </p>
+            <p>{languageLibrary[language].prompt}</p>
+            <p style={{margin: '0 0 3% 0', fontStyle: 'italic', fontSize: '0.9rem'}}>
+                {languageLibrary[language].change}
+            </p>
+            <div style={{ padding: '18px', borderRadius: '16px', marginTop: '2%'}} className={styles.firstPrompt}>
+                <WorkDayForm />
+            </div>
+        </div>
+    )
+)};
 
-                </div>
-                )}
-    </>)};
-
-export default Planner;
