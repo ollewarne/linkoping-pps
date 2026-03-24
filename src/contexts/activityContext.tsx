@@ -180,7 +180,7 @@ export function ActivityProvider({ children }: { children: React.ReactNode }) {
                     scheduledTimeStop: workday.nonWorkHours.end,
                     isActive: false,
                     isCompleted: false,
-                    totalDuration: totalDuration
+                    totalDuration: totalDuration * 60
                 };
 
                 basePlannedActivity.push(nonWorkPlan);
